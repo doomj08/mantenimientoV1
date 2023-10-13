@@ -2,19 +2,17 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Articulo;
+use App\Models\Cliente;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\App;
-use Barryvdh\DomPDF\Facade\Pdf;
 
-class InformeController extends Controller
+class ClienteController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
-        
+        //
     }
 
     /**
@@ -36,22 +34,15 @@ class InformeController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show($id)
+    public function show(Cliente $cliente)
     {
-        $articulo=Articulo::with('Propiedad.CampoPropiedad','Componente.Propiedad.CampoPropiedad')->find($id);
-        //dd($articulo->Componente);
-        $data=[
-            "articulo"=>$articulo
-        ];
-        $pdf = Pdf::loadView('pdf.invoice', $data);
-        return $pdf->stream();
-        return $pdf->download('invoice.pdf');
+        //
     }
 
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(string $id)
+    public function edit(Cliente $cliente)
     {
         //
     }
@@ -59,7 +50,7 @@ class InformeController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(Request $request, Cliente $cliente)
     {
         //
     }
@@ -67,7 +58,7 @@ class InformeController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    public function destroy(Cliente $cliente)
     {
         //
     }

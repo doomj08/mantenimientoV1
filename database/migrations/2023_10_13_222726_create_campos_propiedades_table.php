@@ -15,6 +15,7 @@ return new class extends Migration
             $table->id();
             $table->foreignId('tipo_articulo_id')->constrained();
             $table->string('nombre_propiedad');
+            $table->foreignId('seccion_formato_id')->constrained();
             $table->timestamps();
         });
     }

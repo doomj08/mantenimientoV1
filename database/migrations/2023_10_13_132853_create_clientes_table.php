@@ -11,12 +11,9 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('propiedad', function (Blueprint $table) {
+        Schema::create('clientes', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('articulo_id')->constrained();
-            $table->unsignedBigInteger('campo_propiedad_id');
-            $table->foreign('campo_propiedad_id')->on('campos_propiedades')->references('id');
-            $table->string('propiedad');
+            $table->string('nombre');
             $table->timestamps();
         });
     }
@@ -26,6 +23,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('propiedad');
+        Schema::dropIfExists('clientes');
     }
 };
