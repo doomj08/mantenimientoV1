@@ -3,9 +3,12 @@
 namespace App\Http\Controllers;
 
 use App\Models\Articulo;
+use App\Models\Informe;
+use App\Models\SeccionFormato;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\App;
 use Barryvdh\DomPDF\Facade\Pdf;
+use Carbon\Carbon;
 
 class InformeController extends Controller
 {
@@ -36,12 +39,16 @@ class InformeController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show($id)
+    public function show(Informe $informe)
     {
-        $articulo=Articulo::with('Propiedad.CampoPropiedad','Componente.Propiedad.CampoPropiedad')->find($id);
+        //$informe=Informe::with('Articulo.Propiedad.CampoPropiedad','Articulo.Componente.Propiedad.CampoPropiedad')->find($id);
+        //$articulo=Articulo::with('Propiedad.CampoPropiedad','Componente.Propiedad.CampoPropiedad')->find($id);
+        $seccionesformato=SeccionFormato::where('formato_id',1)->get();
         //dd($articulo->Componente);
         $data=[
-            "articulo"=>$articulo
+            "fecha_consulta"=>Carbon::now(),
+            "articulo"=>$informe->articulo,
+            "seccionesformato"=>$seccionesformato
         ];
         $pdf = Pdf::loadView('pdf.invoice', $data);
         return $pdf->stream();
