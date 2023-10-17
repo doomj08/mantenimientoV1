@@ -9,6 +9,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\App;
 use Barryvdh\DomPDF\Facade\Pdf;
 use Carbon\Carbon;
+use Symfony\Component\HttpFoundation\BinaryFileResponse;
 
 class InformeController extends Controller
 {
@@ -17,23 +18,23 @@ class InformeController extends Controller
      */
     public function index()
     {
-        
+        $informes=Informe::get();
+        return response()->json([
+            'status'=>true,
+            'message' => 'Lista de artículos completada',
+            'data'=>[
+                'informes'=>$informes
+                ]
+        ],200);
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
-    {
-        //
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     */
     public function store(Request $request)
     {
-        //
+        $informe=Informe::create($request->all());
+        return response()->json([
+            'status'=>true,
+            'message' => 'Coordenadas cargadas sin errores en mapas'
+        ],200);
     }
 
     /**
@@ -41,18 +42,17 @@ class InformeController extends Controller
      */
     public function show(Informe $informe)
     {
-        //$informe=Informe::with('Articulo.Propiedad.CampoPropiedad','Articulo.Componente.Propiedad.CampoPropiedad')->find($id);
-        //$articulo=Articulo::with('Propiedad.CampoPropiedad','Componente.Propiedad.CampoPropiedad')->find($id);
         $seccionesformato=SeccionFormato::where('formato_id',1)->get();
-        //dd($articulo->Componente);
+        
         $data=[
             "fecha_consulta"=>Carbon::now(),
             "articulo"=>$informe->articulo,
             "seccionesformato"=>$seccionesformato
         ];
         $pdf = Pdf::loadView('pdf.invoice', $data);
+        $base64 = base64_encode($pdf->stream());
         return $pdf->stream();
-        return $pdf->download('invoice.pdf');
+        //return $pdf->download('invoice.pdf');
     }
 
     /**
@@ -74,8 +74,12 @@ class InformeController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    public function destroy(Informe $informe)
     {
-        //
+        $informe->delete();
+        return response()->json([
+            'status'=>true,
+            'message' => 'Artículo eliminado correctamente'            
+        ],200);
     }
 }

@@ -8,4 +8,11 @@ use Illuminate\Database\Eloquent\Model;
 class SeccionFormato extends Model
 {
     use HasFactory;
+
+    protected $fillable=['seccion','formato_id','order'];
+
+    public function CampoPropiedad() {
+        return $this->hasMany('App\Models\CampoPropiedad');
+        
+    }
 }

@@ -7,6 +7,7 @@ use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Str;
 
+
 class Articulo extends Seeder
 {
     /**
@@ -15,7 +16,7 @@ class Articulo extends Seeder
     public function run(): void
     {
         DB::table('articulos')->insert([
-            'tipo_articulo_id' => 1,
+            'tipo_articulo_id' => Str::random(10),
         ]);
     }
 }

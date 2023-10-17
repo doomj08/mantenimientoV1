@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Cliente;
 use App\Models\Formato;
 use Illuminate\Http\Request;
 
@@ -12,23 +13,35 @@ class FormatoController extends Controller
      */
     public function index()
     {
-        //
+        $formatos=Formato::get();
+
+        $clientes=Cliente::get();
+        $select_clientes=Array();
+        foreach($clientes as $cliente){
+            $new_option=[
+                "value"=>$cliente->id,
+                "name"=>$cliente->nombre,
+            ];
+            array_push($select_clientes,$new_option);
+        }
+
+        return response()->json([
+            'status'=>true,
+            'message' => 'Lista de artículos completada',
+            'data'=>[
+                'formatos'=>$formatos,
+                'clientes'=>$select_clientes
+                ]
+        ],200);
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
-    {
-        //
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     */
     public function store(Request $request)
     {
-        //
+        $formato=Formato::create($request->all());
+        return response()->json([
+            'status'=>true,
+            'message' => 'Coordenadas cargadas sin errores en mapas'
+        ],200);
     }
 
     /**
@@ -36,7 +49,13 @@ class FormatoController extends Controller
      */
     public function show(Formato $formato)
     {
-        //
+        return response()->json([
+            'status'=>true,
+            'message' => 'Lista de artículos completada',
+            'data'=>[
+                'formato'=>$formato
+                ]
+        ],200);
     }
 
     /**
@@ -52,7 +71,13 @@ class FormatoController extends Controller
      */
     public function update(Request $request, Formato $formato)
     {
-        //
+        $formato->update($request->all());
+
+        return response()->json([
+            'status'=>true,
+            'message' => 'Artículo actualizado correctamente',
+            'data'=>$formato
+        ],200);
     }
 
     /**
@@ -60,6 +85,10 @@ class FormatoController extends Controller
      */
     public function destroy(Formato $formato)
     {
-        //
+        $formato->delete();
+        return response()->json([
+            'status'=>true,
+            'message' => 'Artículo eliminado correctamente'            
+        ],200);
     }
 }

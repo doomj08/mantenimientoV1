@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\ArticuloRequest;
 use App\Models\Articulo;
+use App\Models\TipoArticulo;
 use Illuminate\Http\Request;
 
 class ArticuloController extends Controller
@@ -12,23 +14,38 @@ class ArticuloController extends Controller
      */
     public function index()
     {
-        //
+        $articulos=Articulo::with('TipoArticulo')->get();
+        $tipo_articulos=TipoArticulo::get();
+        $select_tipo_articulos=Array();
+
+        foreach($tipo_articulos as $tipo_articulo){
+            $new_option=[
+                "value"=>$tipo_articulo->id,
+                "name"=>$tipo_articulo->tipo,
+            ];
+            array_push($select_tipo_articulos,$new_option);
+        }
+        return response()->json([
+            'status'=>true,
+            'message' => 'Lista de artículos completada',
+            'data'=>[
+                'articulos'=>$articulos,
+                'tipo_articulos'=>$select_tipo_articulos
+                ]
+        ],200);
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
+    public function store(ArticuloRequest $request)
     {
-        //
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     */
-    public function store(Request $request)
-    {
-        //
+        $articulo=Articulo::create([
+            "nombre_interno"=>$request->input('nombre_interno'),
+            "tipo_articulo_id"=>$request->input('tipo_articulo_id'),
+        ]);
+        return response()->json([
+            'status'=>true,
+            'message' => 'Coordenadas cargadas sin errores en mapas',
+            
+        ],200);
     }
 
     /**
@@ -36,30 +53,44 @@ class ArticuloController extends Controller
      */
     public function show(Articulo $articulo)
     {
-        //
+        $tipo_articulos=TipoArticulo::get();
+        $select_tipo_articulos=Array();
+
+        foreach($tipo_articulos as $tipo_articulo){
+            $new_option=[
+                "value"=>$tipo_articulo->id,
+                "name"=>$tipo_articulo->tipo,
+            ];
+            array_push($select_tipo_articulos,$new_option);
+        }
+        return response()->json([
+            'status'=>true,
+            'message' => 'Información del artículo descargado completada',
+            'data'=>[
+                'articulo'=>$articulo,
+                'tipo_articulos'=>$select_tipo_articulos
+                ]
+        ],200);
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(Articulo $articulo)
+    public function update(ArticuloRequest $request, Articulo $articulo)
     {
-        //
+        $articulo->update($request->all());
+
+        return response()->json([
+            'status'=>true,
+            'message' => 'Artículo actualizado correctamente',
+            'data'=>$articulo
+        ],200);
     }
 
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, Articulo $articulo)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     */
     public function destroy(Articulo $articulo)
     {
-        //
+        $articulo->delete();
+        return response()->json([
+            'status'=>true,
+            'message' => 'Artículo eliminado correctamente',
+            'data'=>$articulo
+        ],200);
     }
 }

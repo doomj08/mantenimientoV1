@@ -8,4 +8,6 @@ use Illuminate\Database\Eloquent\Model;
 class Formato extends Model
 {
     use HasFactory;
+
+    protected $fillable=['cliente_id','version'];
 }

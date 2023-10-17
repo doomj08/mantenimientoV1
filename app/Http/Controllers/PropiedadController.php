@@ -12,23 +12,23 @@ class PropiedadController extends Controller
      */
     public function index()
     {
-        //
+        $propiedades=Propiedad::get();
+        return response()->json([
+            'status'=>true,
+            'message' => 'Lista de artículos completada',
+            'data'=>[
+                'propiedades'=>$propiedades
+                ]
+        ],200);
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
-    {
-        //
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     */
     public function store(Request $request)
     {
-        //
+        $propiedad=Propiedad::create($request->all());
+        return response()->json([
+            'status'=>true,
+            'message' => 'Coordenadas cargadas sin errores en mapas'
+        ],200);
     }
 
     /**
@@ -36,7 +36,13 @@ class PropiedadController extends Controller
      */
     public function show(Propiedad $propiedad)
     {
-        //
+        return response()->json([
+            'status'=>true,
+            'message' => 'Lista de artículos completada',
+            'data'=>[
+                'propiedad'=>$propiedad
+                ]
+        ],200);
     }
 
     /**
@@ -52,7 +58,13 @@ class PropiedadController extends Controller
      */
     public function update(Request $request, Propiedad $propiedad)
     {
-        //
+        $propiedad->update($request->all());
+
+        return response()->json([
+            'status'=>true,
+            'message' => 'Artículo actualizado correctamente',
+            'data'=>$propiedad
+        ],200);
     }
 
     /**
@@ -60,6 +72,10 @@ class PropiedadController extends Controller
      */
     public function destroy(Propiedad $propiedad)
     {
-        //
+        $propiedad->delete();
+        return response()->json([
+            'status'=>true,
+            'message' => 'Artículo eliminado correctamente'            
+        ],200);
     }
 }

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\ClienteCreateRequest;
 use App\Models\Cliente;
 use Illuminate\Http\Request;
 
@@ -12,23 +13,26 @@ class ClienteController extends Controller
      */
     public function index()
     {
-        //
+        $clientes=Cliente::get();
+        return response()->json([
+            'status'=>true,
+            'message' => 'Lista de clientes completada',
+            'data'=>[
+                'clientes'=>$clientes
+                ]
+        ],200);
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
+    public function store(ClienteCreateRequest $request)
     {
-        //
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     */
-    public function store(Request $request)
-    {
-        //
+        $cliente=Cliente::create($request->all());
+        return response()->json([
+            'status'=>true,
+            'message' => 'Cliente creado correctamente',
+            'data'=>[
+                'cliente'=>$cliente,
+                ]
+        ],200);
     }
 
     /**
@@ -36,7 +40,13 @@ class ClienteController extends Controller
      */
     public function show(Cliente $cliente)
     {
-        //
+        return response()->json([
+            'status'=>true,
+            'message' => 'Lista de artículos completada',
+            'data'=>[
+                'cliente'=>$cliente
+                ]
+        ],200);
     }
 
     /**
@@ -52,7 +62,14 @@ class ClienteController extends Controller
      */
     public function update(Request $request, Cliente $cliente)
     {
-        //
+        $cliente->update($request->all());
+
+        return response()->json([
+            'status'=>true,
+            'message' => 'Cliente actualizado correctamente',
+            'data'=>$cliente
+            
+        ],200);
     }
 
     /**
@@ -60,6 +77,10 @@ class ClienteController extends Controller
      */
     public function destroy(Cliente $cliente)
     {
-        //
+        $cliente->delete();
+        return response()->json([
+            'status'=>true,
+            'message' => 'Cliente eliminado correctamente'            
+        ],200);
     }
 }
