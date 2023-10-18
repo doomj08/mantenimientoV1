@@ -7,6 +7,7 @@ use App\Http\Controllers\ClienteController;
 use App\Http\Controllers\FormatoController;
 use App\Http\Controllers\InformeController;
 use App\Http\Controllers\SeccionFormatoController;
+use App\Http\Controllers\TicketController;
 use App\Http\Controllers\TipoArticuloController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -21,6 +22,7 @@ use Illuminate\Support\Facades\Route;
 | be assigned to the "api" middleware group. Make something great!
 |
 */
+
 Route::post('auth/register',[AuthController::class,'create']);
 Route::post('auth/login',[AuthController::class,'login']);
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
@@ -36,6 +38,7 @@ Route::middleware(['auth:sanctum'])->group(function (){
     Route::resource('tipo_articulos',TipoArticuloController::class);
     Route::resource('articulo',ArticuloController::class);
     Route::resource('clientes',ClienteController::class);
+    Route::resource('tickets',TicketController::class);
     Route::resource('informes',InformeController::class);
     Route::resource('formatos',FormatoController::class);
     Route::resource('formatos.seccion_formato',SeccionFormatoController::class);
