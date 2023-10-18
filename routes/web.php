@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Controller;
+use App\Http\Controllers\HomeController;
 use App\Http\Controllers\InformeController;
 
 use Illuminate\Support\Facades\App;
@@ -33,3 +34,6 @@ Route::get('/clear-cache', function() {
     $exitCode = Artisan::call('config:cache');
     return 'DONE'; //Return anything
 });
+Auth::routes();
+
+Route::get('/home', [HomeController::class, 'index'])->name('home');
