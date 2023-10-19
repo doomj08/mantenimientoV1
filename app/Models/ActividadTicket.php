@@ -8,4 +8,11 @@ use Illuminate\Database\Eloquent\Model;
 class ActividadTicket extends Model
 {
     use HasFactory;
+
+    protected $fillable=[
+        'ticket_id',
+        'fecha_hora',
+        "estado_ticket",
+        "descripcion"
+    ];
 }

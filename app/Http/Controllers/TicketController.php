@@ -69,7 +69,24 @@ class TicketController extends Controller
      */
     public function show(Ticket $ticket)
     {
-        //
+        $clientes=Cliente::get();
+        $select_clientes=Array();
+
+        foreach($clientes as $cliente){
+            $new_option=[
+                "value"=>$cliente->id,
+                "name"=>$cliente->nombre,
+            ];
+            array_push($select_clientes,$new_option);
+        }
+        return response()->json([
+            'status'=>true,
+            'message' => 'Información del artículo descargado completada',
+            'data'=>[
+                'ticket'=>$ticket,
+                'clientes'=>$select_clientes
+                ]
+        ],200);
     }
 
     /**
@@ -83,9 +100,16 @@ class TicketController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Ticket $ticket)
+    public function update($id,Request $request, Ticket $ticket)
     {
-        //
+        $ticket->update($request->all());
+        return response()->json([
+            'status'=>true,
+            'message' => 'Categoría actualizada correctamente',
+            'data'=>[
+                'ticket'=>$ticket
+                ]
+        ],200);
     }
 
     /**
@@ -93,6 +117,10 @@ class TicketController extends Controller
      */
     public function destroy(Ticket $ticket)
     {
-        //
+        $ticket->delete();
+        return response()->json([
+            'status'=>true,
+            'message' => 'Artículo eliminado correctamente'            
+        ],200);
     }
 }

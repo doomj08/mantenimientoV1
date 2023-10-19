@@ -11,9 +11,8 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('actividad_tickets', function (Blueprint $table) {
-            $table->id();
-            $table->timestamps();
+        Schema::table('tickets', function (Blueprint $table) {
+            $table->datetime('fecha_hora')->nullable()->after('id');
         });
     }
 
@@ -22,6 +21,8 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('actividad_tickets');
+        Schema::table('tickets', function (Blueprint $table) {
+            $table->dropColumn('fecha_hora');
+        });
     }
 };

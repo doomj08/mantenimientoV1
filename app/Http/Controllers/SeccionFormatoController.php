@@ -32,7 +32,7 @@ class SeccionFormatoController extends Controller
         ]);
         return response()->json([
             'status'=>true,
-            'message' => 'Coordenadas cargadas sin errores en mapas'
+            'message' => 'Sección agregada correctamente'
         ],200);
     }
 
@@ -67,7 +67,7 @@ class SeccionFormatoController extends Controller
 
         return response()->json([
             'status'=>true,
-            'message' => 'Artículo actualizado correctamente',
+            'message' => 'Sección actualizado correctamente',
             'data'=>$seccionFormato
         ],200);
     }

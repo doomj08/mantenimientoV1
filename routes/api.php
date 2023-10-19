@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\ActividadTicketController;
 use App\Http\Controllers\ArticuloController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\CampoPropiedadController;
@@ -34,11 +35,12 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 });
 
 Route::middleware(['auth:sanctum'])->group(function (){
-    
+
     Route::resource('tipo_articulos',TipoArticuloController::class);
     Route::resource('articulo',ArticuloController::class);
     Route::resource('clientes',ClienteController::class);
     Route::resource('tickets',TicketController::class);
+    Route::resource('tickets.actividad_ticket',ActividadTicketController::class);
     Route::resource('informes',InformeController::class);
     Route::resource('formatos',FormatoController::class);
     Route::resource('formatos.seccion_formato',SeccionFormatoController::class);
@@ -57,4 +59,5 @@ Route::middleware(['auth:sanctum'])->group(function (){
     
     //Route::fetch('get_coordenadas',[MapaController::class,'getCoordenadas'])->name('api.coordenadas.store_fetch');
     Route::get('auth/logout',[AuthController::class,'logout']);
+    
 });

@@ -43,7 +43,7 @@ class ArticuloController extends Controller
         ]);
         return response()->json([
             'status'=>true,
-            'message' => 'Coordenadas cargadas sin errores en mapas',
+            'message' => 'Artículo creado correctamente',
             
         ],200);
     }

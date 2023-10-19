@@ -5,6 +5,7 @@ use App\Http\Controllers\HomeController;
 use App\Http\Controllers\InformeController;
 
 use Illuminate\Support\Facades\App;
+use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -18,7 +19,7 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
+Route::get('/*', function () {
     return view('welcome');
 });
 
@@ -34,6 +35,16 @@ Route::get('/clear-cache', function() {
     $exitCode = Artisan::call('config:cache');
     return 'DONE'; //Return anything
 });
+
+Route::get('/migrate', function() {
+    $exitCode = Artisan::call('migrate');
+    return 'DONE'; //Return anything
+});
+Route::get('/rollback', function() {
+    $exitCode = Artisan::call('rollback');
+    return 'DONE'; //Return anything
+});
 Auth::routes();
 
-Route::get('/home', [HomeController::class, 'index'])->name('home');
+Route::get('/', [HomeController::class, 'index'])->name('home');
+Route::any('{any?}', [HomeController::class, 'index'])->name('home');

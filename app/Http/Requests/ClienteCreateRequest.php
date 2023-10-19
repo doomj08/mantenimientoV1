@@ -22,7 +22,16 @@ class ClienteCreateRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'nombre'=>'required'
+            'nombre'=>'required',
+            'tipo_documento'=>'required',
+            'num_documento'=>'required',
+            'contacto'=>'required',
+            'correo'=>'required',
+            'telefono'=>'required',
+            'direccion'=>'required',
+            'correo'=>'required',
+            'ciudad'=>'required',
+            
         ];
     }
 }

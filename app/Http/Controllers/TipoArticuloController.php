@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\TipoArticuloCreateRequest;
 use App\Models\TipoArticulo;
 use Illuminate\Http\Request;
 
@@ -22,7 +23,7 @@ class TipoArticuloController extends Controller
         ],200);
     }
 
-    public function store(Request $request)
+    public function store(TipoArticuloCreateRequest $request)
     {
         $tipo=TipoArticulo::create($request->all());
         return response()->json([

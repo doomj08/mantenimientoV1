@@ -22,6 +22,6 @@ class Ticket extends Model
     }
 
     public function getEstadoTicketAttribute(){
-        return $this->ActividadTicket()->where('estado_ticket','cerrado')->count();
+        return  $this->ActividadTicket()->where('estado_ticket','cerrado')->count();
     }
 }

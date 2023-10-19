@@ -1,0 +1,118 @@
+<template>
+    <EncabezadoVue 
+        :namePage="'CAMPOS DE INFORMES ['+ [tipo_articulo_id]+']'"
+    >
+        <template #button_create>
+            
+
+        </template>
+    </EncabezadoVue>
+    
+    <div class="flex flex-col">
+    <div class="overflow-x-auto">
+        <div class="inline-block min-w-full align-middle">
+            <div class="overflow-hidden shadow">
+                
+                <Accordion flush>
+                    <accordion-panel v-for="(seccion_all, index) in all_secciones" :key="index">
+                    <accordion-header>
+                        <span class="flex">
+                            {{seccion_all.seccion}}
+                            <DeleteForm :name="seccion_all.seccion" url="seccion_formato" :id="seccion_all.id"/>
+                        </span>
+                        
+                    </accordion-header>
+                    <accordion-content>
+                        
+                        <emply v-for="(seccion,index) in secciones_formato" :key="index">                          
+                                <label v-if="seccion.id==seccion_all.id" type="button" data-modal-toggle="add-user-modal" class="m-0.5 inline-flex items-center justify-center w-1/2 px-3 py-2 text-sm font-medium text-center text-gray-900 bg-white border border-gray-300 rounded-lg focus:ring-4 focus:ring-primary-300 sm:w-auto dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700 dark:focus:ring-gray-700"
+                                v-for="(campo,index) in seccion.campo_propiedad" :key="index">
+                                    <svg class="w-5 h-5 mr-2 -ml-1" fill="#000" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"></svg>
+                                    {{campo.nombre_propiedad}}
+                                    <EditForm :id="campo.id" @update="getPropiedades()"/>
+                                    <DeleteForm :id="campo.id" url="campos_propiedades" @update="getPropiedades()"/>
+                                </label>
+                        </emply>
+                        <CreateForm :tipo_articulo="tipo_articulo_id" :seccion_formato_id="seccion_all.id"/>
+                    </accordion-content>
+                    </accordion-panel>
+
+                   
+                </Accordion>
+                <div >
+                    <CreateSeccion :formato_id="1"/>
+                </div>
+                
+            </div>
+        </div>
+    </div>
+</div>
+</template>
+
+<script setup>
+    import axios from 'axios'
+    import { ref, onMounted } from 'vue';
+    import { confirmation } from '../../functions'
+    import { useAuthStore } from '../../stores/auth';
+    import { show_alerta } from '../../functions';
+    import EncabezadoVue from '../../pages/master/encabezado.vue'
+    
+    import CreateForm from './Create.vue';
+    import CreateSeccion from '../SeccionFormatos/Create.vue';
+
+    import EditForm from './Edit.vue';
+    import DeleteForm from './Delete.vue';
+    import TableBodyVue from '../../pages/master/tablabody.vue'
+
+    import { Accordion, AccordionPanel, AccordionHeader, AccordionContent, Badge, Button } from 'flowbite-vue'
+
+    
+    const authStore = useAuthStore();
+    const campo_propiedades=ref([]);
+    const secciones_formato=ref([]);
+    const all_secciones=ref([]);
+    
+    const load=ref(false);
+
+    const props = defineProps({
+        tipo_articulo_id: Number,
+    })
+
+    axios.defaults.headers.common['Authorization']='Bearer'+authStore.authToken;
+
+    onMounted(()=>{getPropiedades()})
+
+    const getPropiedades=async () =>{
+        console.log('api/tipo_articulos/'+props.tipo_articulo_id+'/campos_propiedades')
+        let res;
+            const config = {
+            headers: {
+                'Authorization': 'Bearer '+authStore.authToken,
+            }
+        };
+            await axios(
+            {
+                method:'GET', url:'api/tipo_articulos/'+props.tipo_articulo_id+'/campos_propiedades', data:null,headers:config.headers
+            }
+        )
+        .then(
+            (response) => {
+                campo_propiedades.value=response.data.data.campo_propiedad
+                secciones_formato.value=response.data.data.secciones
+                all_secciones.value=response.data.data.all_secciones
+                
+                console.log(response)
+                res= response.data.status
+                //show_alerta(response.data.message,'success','')
+            }
+        )
+        .catch((e)=>{
+            let desc='';
+            res = e.data;
+            console.log('errores')
+            console.log(e)
+            show_alerta(e.response.data.message,'error','')
+        });
+        return res;
+    }
+</script>
