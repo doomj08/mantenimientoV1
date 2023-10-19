@@ -14,12 +14,14 @@ class ActividadTicketController extends Controller
      */
     public function index($id)
     {   
-        $actividadTicket=ActividadTicket::where('ticket_id',$id)->get();
+        $actividadTicket=ActividadTicket::with('Ticket')->where('ticket_id',$id)->get();
+        $clienteId=Ticket::find($id)->cliente_id;
         return response()->json([
             'status'=>true,
             'message' => 'Lista de artículos completada',
             'data'=>[
                 'actividades_ticket'=>$actividadTicket,
+                'cliente_id'=>$clienteId
                 ]
         ],200);
     }

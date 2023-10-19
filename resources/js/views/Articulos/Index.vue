@@ -46,10 +46,6 @@
                                 <DeleteForm  @update="getArticulos()" :name="articulo.nombre_interno" url="articulo" :id="articulo.id"/>
                             </td>
                         </tr>
-                        
-                        
-                        
-                        
                     </tbody>
                 </table>
             </div>

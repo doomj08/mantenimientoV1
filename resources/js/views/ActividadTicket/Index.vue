@@ -5,6 +5,7 @@
     >
         <template #button_create>
             <CreateForm :ticket_id="ticket_id" @update="getActividades()" />
+            <AddArticulo :cliente_id="cliente_id" :ticket_id="ticket_id" @update="getActividades()" />
 
         </template>
     </EncabezadoVue>
@@ -20,10 +21,10 @@
                                 N° 
                             </th>
                             <th scope="col" class="p-4 text-xs font-medium text-left text-gray-500 uppercase dark:text-gray-400">
-                                Descripción
+                                Fecha / Hora
                             </th>
                             <th scope="col" class="p-4 text-xs font-medium text-left text-gray-500 uppercase dark:text-gray-400">
-                                Cliente 
+                                Descripción 
                             </th>
                             <th scope="col" class="p-4 text-xs font-medium text-left text-gray-500 uppercase dark:text-gray-400">
                                 Estado 
@@ -38,14 +39,14 @@
                         
                         <tr class="hover:bg-gray-100 dark:hover:bg-gray-700" v-for="(actividad,index) in actividades_ticket" :key="index">
 
+                            <td class="items-center p-4 mr-12 space-x-6 whitespace-nowrap">
+                                <div class="text-sm font-normal text-gray-500 dark:text-gray-400">
+                                    <div class="text-base font-semibold text-gray-900 dark:text-white">{{ actividad.id }}</div>
+                                </div>
+                            </td>
                             <td class="flex items-center p-4 mr-12 space-x-6 whitespace-nowrap">
                                 <div class="text-sm font-normal text-gray-500 dark:text-gray-400">
                                     <div class="text-base font-semibold text-gray-900 dark:text-white">{{ actividad.fecha_hora }}</div>
-                                </div>
-                            </td>
-                            <td class=" items-center p-4 mr-12 space-x-6 whitespace-nowrap">
-                                <div class="text-sm font-normal text-gray-500 dark:text-gray-400">
-                                    <div class="text-base font-semibold text-gray-900 dark:text-white">{{ actividad.estado_ticket }}</div>
                                 </div>
                             </td>
                             <td class=" items-center p-4 mr-12 space-x-6 whitespace-nowrap">
@@ -58,6 +59,7 @@
                                     <div class="text-base font-semibold text-gray-900 dark:text-white">{{ (actividad['estado-ticket']>0)?'Cerrado':'Abierto' }}</div>
                                 </div>
                             </td>
+
                           
                             <td class="p-4 space-x-2 whitespace-nowrap">
                                 <EditForm @update="getActividades()" class="text-left" :id="actividad.id"/>
@@ -85,12 +87,14 @@
     import { show_alerta } from '../../functions';
     import EncabezadoVue from '../../pages/master/encabezado.vue'
     import CreateForm from './Create.vue';
+    import AddArticulo from './AddArticulo.vue';
     import EditForm from './Edit.vue';
     import DeleteForm from './Delete.vue';
     import TableBodyVue from '../../pages/master/tablabody.vue'
     
     const authStore = useAuthStore();
     const actividades_ticket=ref([]);
+    const cliente_id=ref([]);
 
     const load=ref(false);
 
@@ -117,7 +121,7 @@
         .then(
             (response) => {
                 actividades_ticket.value=response.data.data.actividades_ticket
-                
+                cliente_id.value=response.data.data.cliente_id
                 console.log(response)
                 res= response.data.status
                 //show_alerta(response.data.message,'success','')

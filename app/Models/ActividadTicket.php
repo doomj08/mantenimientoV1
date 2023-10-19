@@ -15,4 +15,8 @@ class ActividadTicket extends Model
         "estado_ticket",
         "descripcion"
     ];
+
+    public function Ticket(){
+        return $this->belongsTo('App\Models\Ticket');
+    }
 }

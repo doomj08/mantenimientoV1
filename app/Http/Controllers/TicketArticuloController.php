@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Ticket;
 use App\Models\TicketArticulo;
 use Illuminate\Http\Request;
 
@@ -26,9 +27,19 @@ class TicketArticuloController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(Ticket $ticket,Request $request)
     {
-        //
+        $newArray=Array();
+        foreach($request->articulos_seleccionados as $seleccionado){
+            array_push($newArray,$seleccionado);
+        }
+        //$new=Ticket::with('TicketArticulo')->find($ticket->id);
+        $ticket->TicketArticulo()->sync($newArray);
+        return response()->json([
+            'status'=>true,
+            'message' => 'Sección agregada correctamente'
+        ],200);
+        //$ticket->ticket_articulos()->sync($request->articulos_seleccionados);
     }
 
     /**

@@ -21,6 +21,10 @@ class Ticket extends Model
         return $this->hasMany('App\Models\ActividadTicket');
     }
 
+    public function TicketArticulo(){
+        return $this->belongsToMany('App\Models\Articulo','ticket_articulos');
+    }
+
     public function getEstadoTicketAttribute(){
         return  $this->ActividadTicket()->where('estado_ticket','cerrado')->count();
     }

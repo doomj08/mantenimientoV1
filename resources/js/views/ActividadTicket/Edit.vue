@@ -119,6 +119,7 @@ const getTicket=async () =>{
         </div>
       </template>
       <template #body>
+        
         <Textarea size="sm" v-model="form.descripcion" label="Descripcion / Falla" :validationStatus="(form.errors.descripcion?'error':'')">
             <template #validationMessage v-if="form.errors.descripcion">
                 <ul>

@@ -9,6 +9,7 @@ use App\Http\Controllers\FormatoController;
 use App\Http\Controllers\InformeController;
 use App\Http\Controllers\PropiedadController;
 use App\Http\Controllers\SeccionFormatoController;
+use App\Http\Controllers\TicketArticuloController;
 use App\Http\Controllers\TicketController;
 use App\Http\Controllers\TipoArticuloController;
 use Illuminate\Http\Request;
@@ -44,6 +45,7 @@ Route::middleware(['auth:sanctum'])->group(function (){
     Route::resource('articulo.propiedad',PropiedadController::class);
     Route::resource('tickets',TicketController::class);
     Route::resource('tickets.actividad_ticket',ActividadTicketController::class);
+    Route::resource('tickets.articulos',TicketArticuloController::class);
     Route::resource('informes',InformeController::class);
     Route::resource('formatos',FormatoController::class);
     Route::resource('formatos.seccion_formato',SeccionFormatoController::class);
@@ -55,6 +57,9 @@ Route::middleware(['auth:sanctum'])->group(function (){
     Route::get('campos_propiedades/{campoPropiedad}',[CampoPropiedadController::class,'show']);
     Route::put('campos_propiedades/{campoPropiedad}',[CampoPropiedadController::class,'update']);
     Route::delete('campos_propiedades/{campoPropiedad}',[CampoPropiedadController::class,'destroy']);
+
+    Route::get('articulos_cliente/{cliente_id}/{ticket_id?}',[ArticuloController::class,'getArticulosCliente']);
+    //Route::post('articulos_cliente/{ticket_id}',[ArticuloController::class,'getArticulosCliente']);
 
     Route::resource('informe',InformeController::class);
 

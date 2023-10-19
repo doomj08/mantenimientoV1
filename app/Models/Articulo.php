@@ -9,7 +9,7 @@ class Articulo extends Model
 {
     use HasFactory;
 
-    protected $fillable=["nombre_interno","tipo_articulo_id"];
+    protected $fillable=["nombre_interno","tipo_articulo_id","cliente_id"];
 
     public function Propiedad(){
         return $this->hasMany('App\Models\Propiedad');
