@@ -11,6 +11,8 @@ class Propiedad extends Model
 
     protected $table = "propiedades";
 
+    protected $fillable = ['campo_propiedad_id','propiedad','articulo_id'];
+
     public function CampoPropiedad(){
         return $this->belongsTo('App\Models\CampoPropiedad');
     }

@@ -7,6 +7,7 @@ use App\Http\Controllers\CampoPropiedadController;
 use App\Http\Controllers\ClienteController;
 use App\Http\Controllers\FormatoController;
 use App\Http\Controllers\InformeController;
+use App\Http\Controllers\PropiedadController;
 use App\Http\Controllers\SeccionFormatoController;
 use App\Http\Controllers\TicketController;
 use App\Http\Controllers\TipoArticuloController;
@@ -39,6 +40,8 @@ Route::middleware(['auth:sanctum'])->group(function (){
     Route::resource('tipo_articulos',TipoArticuloController::class);
     Route::resource('articulo',ArticuloController::class);
     Route::resource('clientes',ClienteController::class);
+    Route::resource('propiedad',PropiedadController::class);
+    Route::resource('articulo.propiedad',PropiedadController::class);
     Route::resource('tickets',TicketController::class);
     Route::resource('tickets.actividad_ticket',ActividadTicketController::class);
     Route::resource('informes',InformeController::class);

@@ -3,7 +3,7 @@
 use App\Http\Controllers\Controller;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\InformeController;
-
+use App\Http\Controllers\PropiedadController;
 use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\Route;
@@ -47,4 +47,5 @@ Route::get('/rollback', function() {
 Auth::routes();
 
 Route::get('/', [HomeController::class, 'index'])->name('home');
-Route::any('{any?}', [HomeController::class, 'index'])->name('home');
+//Route::any('{any?}', [HomeController::class, 'index'])->name('home');
+Route::resource('propiedad',PropiedadController::class);

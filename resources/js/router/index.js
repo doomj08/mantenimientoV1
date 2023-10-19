@@ -12,6 +12,7 @@ import Propiedades from '../views/Propiedades/Index.vue'
 import SeccionFormatos from '../views/SeccionFormatos/Index.vue'
 import TicketVue from '../views/Ticket/Index.vue'
 import ActividadTicketVue from '../views/ActividadTicket/Index.vue'
+import PropiedadVue from '../views/Propiedad/Index.vue'
 
 import Home from '../views/HomeView.vue'
 
@@ -37,6 +38,12 @@ const router = createRouter({
       component: ActividadTicketVue,      
       props: true,
       
+    },
+    {
+      path: '/propiedad:articulo_id/:nombre_interno/:tipo_articulo_id',
+      name: 'propiedad',
+      component: PropiedadVue,
+      props: true,
     },
     {
       path: '/login',
