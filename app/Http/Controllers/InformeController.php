@@ -66,7 +66,7 @@ class InformeController extends Controller
         $informe=Informe::create($request->all());
         return response()->json([
             'status'=>true,
-            'message' => 'Coordenadas cargadas sin errores en mapas'
+            'message' => 'Informe creado correctamente'
         ],200);
     }
 
@@ -79,7 +79,7 @@ class InformeController extends Controller
         
         return response()->json([
             'status'=>true,
-            'message' => 'Información del artículo descargado completada',
+            'message' => 'Listado de informes descargados completamente',
             'data'=>[
                 'informe'=>$informe
                 ]
@@ -111,9 +111,13 @@ class InformeController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(Request $request, Informe $informe)
     {
-        //
+        $informe->update($request->all());
+        return response()->json([
+            'status'=>true,
+            'message' => 'Informe actualizado correctamente'
+        ],200);
     }
 
     /**

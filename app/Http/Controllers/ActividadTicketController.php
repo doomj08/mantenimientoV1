@@ -17,11 +17,13 @@ class ActividadTicketController extends Controller
     {   
         $actividadTicket=ActividadTicket::with('Ticket')->where('ticket_id',$id)->get();
         $articulos=TicketArticulo::with('Articulo')->where('ticket_id',$id)->get();
+        $ticket=Ticket::find($id);
         $clienteId=Ticket::find($id)->cliente_id;
         return response()->json([
             'status'=>true,
             'message' => 'Lista de artículos completada',
             'data'=>[
+                'ticket'=>$ticket,
                 'actividades_ticket'=>$actividadTicket,
                 'cliente_id'=>$clienteId,
                 'articulos_ticket'=>$articulos

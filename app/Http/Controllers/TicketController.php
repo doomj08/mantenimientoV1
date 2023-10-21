@@ -7,6 +7,7 @@ use App\Models\Ticket;
 use Barryvdh\DomPDF\Facade\Pdf;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 
 class TicketController extends Controller
@@ -17,7 +18,7 @@ class TicketController extends Controller
 
     public function index()
     {
-        $tickets=Ticket::with('Cliente')->withCount('ActividadTicket')->get();
+        $tickets=Ticket::with('Cliente')->withCount('ActividadTicket')->orderBy('num_ticket')->get();
         return response()->json([
             'status'=>true,
             'message' => 'Lista de tickets completada',
@@ -57,14 +58,19 @@ class TicketController extends Controller
      */
     public function store(Request $request)
     {
+        $empresa_id=auth()->user()->empresa_id;
+        //$max_id=Ticket::where('empresa_id',$empresa_id)->max('num_ticket')+1;
+        $max_id=Ticket::max('num_ticket')+1;
         $ticket=Ticket::create([
+            "num_ticket"=>$max_id,
             "descripcion"=>$request->input('descripcion'),
             "cliente_id"=>$request->input('cliente_id'),
             "fecha_hora"=>$request->input('fecha_hora'),
+            "empresa_id"=>$empresa_id
         ]);
         return response()->json([
             'status'=>true,
-            'message' => 'Ticket generado correctamente',
+            'message' => 'Ticket generado correctamente '.$max_id.'...',
             
         ],200);
     }

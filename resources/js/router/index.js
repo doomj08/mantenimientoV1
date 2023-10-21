@@ -11,7 +11,7 @@ import Informes from '../views/Informes/Index.vue'
 import Propiedades from '../views/Propiedades/Index.vue'
 import SeccionFormatos from '../views/SeccionFormatos/Index.vue'
 import TicketVue from '../views/Ticket/Index.vue'
-import ActividadTicketVue from '../views/ActividadTicket/Index.vue'
+import TicketServicioVue from '../views/TicketServicio/Index.vue'
 import PropiedadVue from '../views/Propiedad/Index.vue'
 
 import Home from '../views/HomeView.vue'
@@ -33,9 +33,9 @@ const router = createRouter({
       component: TicketVue
     },
     {
-      path: '/actividad_ticket:ticket_id',
-      name: 'actividad_ticket',
-      component: ActividadTicketVue,      
+      path: '/ticket_servicios:ticket_id',
+      name: 'ticket_servicios',
+      component: TicketServicioVue,      
       props: true,
       
     },

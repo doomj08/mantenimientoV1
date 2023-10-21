@@ -69,6 +69,11 @@
         height: 6px;
         background-color: #000;
     }
+    .separador_delgado{
+        height: 2px;
+        background-color: #aaa;
+        border: #aaa;
+    }
     .cliente{
         margin-bottom: 4px;
         font-weight: bold;
@@ -122,8 +127,12 @@
         padding: 0px;
         width: 100%;
     }
+    
     .logo{
         height: 60px;
+    }
+    .recomendaciones thead th{
+        text-align: left;
     }
     /* todo el otro CSS necesario para el PDF */
     /* ... */
@@ -179,17 +188,24 @@
     </tbody>
 </table>
 <hr>
+@foreach($ticket->servicio as $index=>$servicio)
+    @if($index>0)
+        <hr class="separador_delgado">
+    @endif
 <table class="body">
+
     <tbody>
-        <tr class="">
-            <th colspan="2">Servicio</th>
-            <th colspan="2">Falla reportada</th>
-            <th>Precio</th>
-        </tr>
+        
+            <tr class="">
+                <th colspan="2">Servicio</th>
+                <th colspan="2">Falla reportada</th>
+                <th>Precio</th>
+            </tr>
+        
         <tr>
-            <td colspan="2">Cliente</td>
-            <td colspan="2">Contacto</td>
-            <td>Correo</td>
+            <td colspan="2">{{$servicio->descripcion}}</td>
+            <td colspan="2">{{$ticket->descripcion}}</td>
+            <td>{{$servicio->precio?'$'.$servicio->precio:''}}</td>
             
         </tr>
         <div class="separador"></div>
@@ -201,14 +217,15 @@
         </tr>
         
         <tr class="">
-            <td>Fecha programada</td>
-            <td>Fecha inicio</td>
-            <td>Fecha fin</td>
-            <td>Duración</td>
+            <td>{{$servicio->fecha_programada}}</td>
+            <td>{{$servicio->fecha_inicio}}</td>
+            <td>{{$servicio->fecha_fin}}</td>
+            <td>{!! \Carbon\Carbon::parse($servicio->fecha_inicio)->diff(\Carbon\Carbon::parse($servicio->fecha_fin))->format('%d días %H:%I:%S horas')!!}</td>
         </tr>
     </tbody>
+    
 </table>
-
+@endforeach
 <table class="productos">
     
     <thead>
@@ -241,18 +258,47 @@
 <hr>
 <table class="actividades">
     <thead>
-
+    <tr>
+            <th >Actividades</th>
+        </tr>
     </thead>
     <tbody>
-         <tr>
-            <th sty>Actividades</th>
-        </tr>
+
         <tr>
             <td>
                 <ul style="padding: 0px 0px 0px 10px; margin: 0px;">
                 @foreach($ticket->ActividadTicket as $actividadTicket)
                     
                         <li>{{$actividadTicket->descripcion}}</li>
+                        
+                        
+                        
+                        
+                    
+                @endforeach
+                </ul>
+            </td>
+        </tr>
+        
+ 
+    </tbody>
+</table>
+<table class="recomendaciones">
+    <thead>
+    <tr>
+            <th>Recomendaciones</th>
+        </tr>
+    </thead>
+    <tbody>
+
+        <tr>
+            <td>
+                <ul style="padding: 0px 0px 0px 10px; margin: 0px;">
+                @foreach($ticket->Servicio as $servicio)
+                    @foreach($servicio->Recomendacion as $recomendacion)
+                    
+                        <li>{{$recomendacion->descripcion}}</li>
+                    @endforeach
                         
                         
                         

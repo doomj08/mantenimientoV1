@@ -2,19 +2,32 @@
 
 namespace App\Models;
 
+use App\Models\Scopes\TicketScope;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\Auth;
 
 class Ticket extends Model
 {
     use HasFactory;
+    
+    protected static function boot()
+    {
+        parent::boot();
+        static::addGlobalScope(new TicketScope);
+        $empresa_id=auth()->user()->empresa_id;
 
-    protected $fillable=['descripcion','cliente_id','fecha_hora'];
+    }
 
+    protected $fillable=['num_ticket','empresa_id','descripcion','cliente_id','fecha_hora'];
     protected $appends = ['estado-ticket'];
 
     public function Cliente(){
         return $this->belongsTo('App\Models\Cliente');
+    }
+
+    public function Servicio(){
+        return $this->hasMany('App\Models\Servicio');
     }
 
     public function ActividadTicket(){

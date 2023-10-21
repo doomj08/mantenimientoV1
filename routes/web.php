@@ -5,6 +5,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\InformeController;
 use App\Http\Controllers\PropiedadController;
+use App\Http\Controllers\ServicioController;
 use App\Http\Controllers\TicketController;
 use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Artisan;
@@ -53,3 +54,4 @@ Auth::routes();
 
 //Route::get('/', [HomeController::class, 'index'])->name('home');
 Route::any('{any?}', [HomeController::class, 'index'])->name('home');
+Route::resource('tickets.servicio',ServicioController::class);

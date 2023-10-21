@@ -9,6 +9,7 @@ use App\Http\Controllers\FormatoController;
 use App\Http\Controllers\InformeController;
 use App\Http\Controllers\PropiedadController;
 use App\Http\Controllers\SeccionFormatoController;
+use App\Http\Controllers\ServicioController;
 use App\Http\Controllers\TicketArticuloController;
 use App\Http\Controllers\TicketController;
 use App\Http\Controllers\TipoArticuloController;
@@ -45,6 +46,7 @@ Route::middleware(['auth:sanctum'])->group(function (){
     Route::resource('articulo.propiedad',PropiedadController::class);
     Route::resource('tickets',TicketController::class);
     Route::resource('tickets.actividad_ticket',ActividadTicketController::class);
+    Route::resource('tickets.servicio',ServicioController::class);
     Route::resource('tickets.articulos',TicketArticuloController::class);
 
     Route::get('add_actividad/{ticket}/',[ActividadTicketController::class,'store']);
