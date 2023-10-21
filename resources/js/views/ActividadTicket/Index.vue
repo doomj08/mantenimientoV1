@@ -5,12 +5,35 @@
     >
         <template #button_create>
             <CreateForm :ticket_id="ticket_id" @update="getActividades()" />
-            <AddArticulo :cliente_id="cliente_id" :ticket_id="ticket_id" @update="getActividades()" />
+            <AddArticulo :cliente_id="props.clienteId" :ticket_id="ticket_id" @update="getActividades()" />
 
         </template>
     </EncabezadoVue>
     
     <div class="flex flex-col">
+        <div class="overflow-x-auto">
+            <div class="inline-block min-w-full align-middle">
+                <div class="overflow-hidden shadow">
+                    <table class="min-w-full divide-y divide-gray-200 table-fixed dark:divide-gray-600">
+                        <thead class="bg-gray-100 dark:bg-gray-700">
+                            <tr>
+                                <th>Artículos</th>
+                            </tr>
+                        </thead>
+                        <tbody class="bg-white divide-y divide-gray-200 dark:bg-gray-800 dark:divide-gray-700">
+                            <tr>
+                            <td>
+                                <kbd v-for="(articulo,index) in articulos_ticket" :key="index" class="inline-flex m-1 items-center px-2 py-1.5 text-gray-800 bg-green-100 border border-gray-200 rounded-lg dark:bg-gray-600 dark:text-gray-100 dark:border-gray-500">
+                                        
+                                    <span class="">{{ articulo.articulo.nombre_interno }}</span>
+                                </kbd>
+                            </td>
+                            </tr>
+                        </tbody>
+                    </table>    
+                </div>    
+            </div>
+        </div>
     <div class="overflow-x-auto">
         <div class="inline-block min-w-full align-middle">
             <div class="overflow-hidden shadow">
@@ -94,6 +117,7 @@
     
     const authStore = useAuthStore();
     const actividades_ticket=ref([]);
+    const articulos_ticket=ref([]);
     const cliente_id=ref([]);
 
     const load=ref(false);
@@ -122,6 +146,7 @@
             (response) => {
                 actividades_ticket.value=response.data.data.actividades_ticket
                 cliente_id.value=response.data.data.cliente_id
+                articulos_ticket.value=response.data.data.articulos_ticket
                 console.log(response)
                 res= response.data.status
                 //show_alerta(response.data.message,'success','')

@@ -19,6 +19,9 @@
                                 N° 
                             </th>
                             <th scope="col" class="p-4 text-xs font-medium text-left text-gray-500 uppercase dark:text-gray-400">
+                                Fecha / Hora
+                            </th>
+                            <th scope="col" class="p-4 text-xs font-medium text-left text-gray-500 uppercase dark:text-gray-400">
                                 Descripción
                             </th>
                             <th scope="col" class="p-4 text-xs font-medium text-left text-gray-500 uppercase dark:text-gray-400">
@@ -43,18 +46,23 @@
                                 </div>
                             </td>
                             <td class=" items-center p-4 mr-12 space-x-6 whitespace-nowrap">
-                                <div class="text-sm font-normal text-gray-500 dark:text-gray-400">
-                                    <div class="text-base font-semibold text-gray-900 dark:text-white">{{ ticket.descripcion }}</div>
+                                <div class="text-sm font-normal text-gray-300 dark:text-gray-200">
+                                    <div class="text-base font-semibold text-gray-600 dark:text-white">{{ ticket.fecha_hora }}</div>
                                 </div>
                             </td>
                             <td class=" items-center p-4 mr-12 space-x-6 whitespace-nowrap">
-                                <div class="text-sm font-normal text-gray-500 dark:text-gray-400">
-                                    <div class="text-base font-semibold text-gray-900 dark:text-white">{{ ticket.cliente.nombre }}</div>
+                                <div class="text-sm font-normal text-gray-300 dark:text-gray-200">
+                                    <div class="text-base font-semibold text-gray-600 dark:text-white">{{ ticket.descripcion }}</div>
                                 </div>
                             </td>
                             <td class=" items-center p-4 mr-12 space-x-6 whitespace-nowrap">
-                                <div class="text-sm font-normal text-gray-500 dark:text-gray-400">
-                                    <div class="text-base font-semibold text-gray-900 dark:text-white">{{ (ticket['estado-ticket']>0)?'Cerrado':'Abierto' }}</div>
+                                <div class="text-sm font-normal text-gray-300 dark:text-gray-200">
+                                    <div class="text-base font-semibold text-gray-600 dark:text-white">{{ ticket.cliente.nombre }}</div>
+                                </div>
+                            </td>
+                            <td class=" items-center p-4 mr-12 space-x-6 whitespace-nowrap">
+                                <div class="text-sm font-normal text-gray-300 dark:text-gray-200">
+                                    <div class="text-base font-semibold text-gray-600 dark:text-white">{{ (ticket['estado-ticket']>0)?'Cerrado':'Abierto' }}</div>
                                 </div>
                             </td>
                           

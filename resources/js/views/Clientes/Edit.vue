@@ -62,6 +62,7 @@ async function sendRequestWithFiles(method, params, url, redirect=''){
         let desc='';
         res = e.data;
         console.log('errores')
+        form.value.errors=e.response.data.errors
         console.log(e)
         
     });
@@ -94,6 +95,8 @@ const getCliente=async () =>{
                 form.value.contacto=response.data.data.cliente.contacto
                 form.value.correo=response.data.data.cliente.correo
                 form.value.telefono=response.data.data.cliente.telefono
+                form.value.ciudad=response.data.data.cliente.ciudad
+                form.value.direccion=response.data.data.cliente.direccion
                 
                 console.log(response)
                 res= response.data.status
@@ -118,7 +121,7 @@ const getCliente=async () =>{
     <Modal :size="size" v-if="isShowModal" @close="closeModal">
       <template #header>
         <div class="flex items-center text-lg">
-          Editando Cliente
+          Editando Cliente {{ form.errors }}
         </div>
       </template>
       <template #body>
@@ -192,10 +195,10 @@ const getCliente=async () =>{
       <template #footer>
         <div class="flex justify-between">
           <button @click="closeModal" type="button" class="text-gray-500 bg-white hover:bg-gray-100 focus:ring-4 focus:outline-none focus:ring-blue-300 rounded-lg border border-gray-200 text-sm font-medium px-5 py-2.5 hover:text-gray-900 focus:z-10 dark:bg-gray-700 dark:text-gray-300 dark:border-gray-500 dark:hover:text-white dark:hover:bg-gray-600 dark:focus:ring-gray-600">
-            Decline
+            Cancelar
           </button>
           <button @click="save()" type="button" class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
-            I accept
+            Actualizar
           </button>
         </div>
       </template>

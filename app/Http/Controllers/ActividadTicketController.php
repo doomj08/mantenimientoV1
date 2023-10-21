@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Requests\ActividadTicketCreateRequest;
 use App\Models\ActividadTicket;
 use App\Models\Ticket;
+use App\Models\TicketArticulo;
 use Illuminate\Http\Request;
 
 class ActividadTicketController extends Controller
@@ -15,13 +16,15 @@ class ActividadTicketController extends Controller
     public function index($id)
     {   
         $actividadTicket=ActividadTicket::with('Ticket')->where('ticket_id',$id)->get();
+        $articulos=TicketArticulo::with('Articulo')->where('ticket_id',$id)->get();
         $clienteId=Ticket::find($id)->cliente_id;
         return response()->json([
             'status'=>true,
             'message' => 'Lista de artículos completada',
             'data'=>[
                 'actividades_ticket'=>$actividadTicket,
-                'cliente_id'=>$clienteId
+                'cliente_id'=>$clienteId,
+                'articulos_ticket'=>$articulos
                 ]
         ],200);
     }

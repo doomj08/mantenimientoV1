@@ -46,6 +46,18 @@ Route::middleware(['auth:sanctum'])->group(function (){
     Route::resource('tickets',TicketController::class);
     Route::resource('tickets.actividad_ticket',ActividadTicketController::class);
     Route::resource('tickets.articulos',TicketArticuloController::class);
+
+    Route::get('add_actividad/{ticket}/',[ActividadTicketController::class,'store']);
+    Route::post('add_actividad/{ticket}/',[ActividadTicketController::class,'store']);
+
+    Route::get('edit_actividad/{ticket}/{actividad_ticket}',[ActividadTicketController::class,'store']);
+    Route::post('edit_actividad/{ticket}/{actividad_ticket}',[ActividadTicketController::class,'store']);
+
+    Route::get('add_articulo/{ticket}/',[TicketArticuloController::class,'store']);
+    Route::post('add_articulo/{ticket}/',[TicketArticuloController::class,'store']);
+
+    
+
     Route::resource('informes',InformeController::class);
     Route::resource('formatos',FormatoController::class);
     Route::resource('formatos.seccion_formato',SeccionFormatoController::class);
@@ -59,7 +71,9 @@ Route::middleware(['auth:sanctum'])->group(function (){
     Route::delete('campos_propiedades/{campoPropiedad}',[CampoPropiedadController::class,'destroy']);
 
     Route::get('articulos_cliente/{cliente_id}/{ticket_id?}',[ArticuloController::class,'getArticulosCliente']);
-    //Route::post('articulos_cliente/{ticket_id}',[ArticuloController::class,'getArticulosCliente']);
+    Route::get('articulos_select',[ArticuloController::class,'getArticulosSelect']);
+    Route::get('informes_select',[InformeController::class,'getInformesSelect']);
+    Route::post('articulos_cliente/{ticket_id}',[ArticuloController::class,'getArticulosCliente']);
 
     Route::resource('informe',InformeController::class);
 

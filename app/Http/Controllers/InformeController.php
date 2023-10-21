@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Models\Articulo;
+use App\Models\Cliente;
+use App\Models\Formato;
 use App\Models\Informe;
 use App\Models\SeccionFormato;
 use Illuminate\Http\Request;
@@ -16,6 +18,37 @@ class InformeController extends Controller
     /**
      * Display a listing of the resource.
      */
+
+    public function getInformesSelect(){
+        
+        $articulos=Articulo::get();
+        $formatos=Formato::get();
+
+        $select_formatos=Array();
+        $select_articulos=Array();
+        foreach($articulos as $articulo){
+            $new_option=[
+                "value"=>$articulo->id,
+                "name"=>$articulo->nombre_interno,
+            ];
+            array_push($select_articulos,$new_option);
+        }
+        foreach($formatos as $formato){
+            $new_option=[
+                "value"=>$formato->id,
+                "name"=>$formato->version,
+            ];
+            array_push($select_formatos,$new_option);
+        }
+        return response()->json([
+            'status'=>true,
+            'message' => 'Lista de selects para informes completada',
+            'data'=>[
+                'select_formatos'=>$select_formatos,
+                'select_articulos'=>$select_articulos
+                ]
+        ],200);
+    }
     public function index()
     {
         $informes=Informe::get();
@@ -41,6 +74,18 @@ class InformeController extends Controller
      * Display the specified resource.
      */
     public function show(Informe $informe)
+    {
+        
+        
+        return response()->json([
+            'status'=>true,
+            'message' => 'Información del artículo descargado completada',
+            'data'=>[
+                'informe'=>$informe
+                ]
+        ],200);
+    }
+    public function getPDF(Informe $informe)
     {
         $seccionesformato=SeccionFormato::where('formato_id',1)->get();
         

@@ -65,7 +65,7 @@ async function sendRequestWithFiles(method, params, url, redirect=''){
 
 const save=()=>{
     
-    sendRequestWithFiles('POST',form.value,'api/tickets/'+props.ticket_id+'/actividad_ticket/');
+    sendRequestWithFiles('POST',form.value,'api/add_actividad/'+props.ticket_id);
     
 }
 

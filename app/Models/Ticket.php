@@ -9,7 +9,7 @@ class Ticket extends Model
 {
     use HasFactory;
 
-    protected $fillable=['descripcion','cliente_id'];
+    protected $fillable=['descripcion','cliente_id','fecha_hora'];
 
     protected $appends = ['estado-ticket'];
 

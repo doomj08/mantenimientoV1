@@ -47,7 +47,7 @@
                 </tr>
             @endif
         @endforeach
-    @endforeach
+@endforeach
 
 
 </table>

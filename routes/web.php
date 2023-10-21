@@ -1,9 +1,11 @@
 <?php
 
+use App\Http\Controllers\ArticuloController;
 use App\Http\Controllers\Controller;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\InformeController;
 use App\Http\Controllers\PropiedadController;
+use App\Http\Controllers\TicketController;
 use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\Route;
@@ -27,7 +29,10 @@ Route::get('/informe', function () {
     return view('welcome');
 });
 
-Route::resource('informe',InformeController::class);
+//Route::resource('informe',InformeController::class);
+
+Route::get('informe/{informe}',[InformeController::class,'getPDF']);
+Route::get('/pdf/ticket/{ticket}',[TicketController::class,'getPDF']);
 
 Route::get('/clear-cache', function() {
     $exitCode = Artisan::call('config:clear');
@@ -46,6 +51,5 @@ Route::get('/rollback', function() {
 });
 Auth::routes();
 
-Route::get('/', [HomeController::class, 'index'])->name('home');
-//Route::any('{any?}', [HomeController::class, 'index'])->name('home');
-Route::resource('propiedad',PropiedadController::class);
+//Route::get('/', [HomeController::class, 'index'])->name('home');
+Route::any('{any?}', [HomeController::class, 'index'])->name('home');

@@ -14,14 +14,17 @@ const props = defineProps({
 const emit = defineEmits('update');
 const authStore = useAuthStore();
 
+const options_formatos=ref([]);
+const options_articulos=ref([]);
 
 const isShowModal = ref(false)
-const form = ref({nombre_interno:'',tipo_articulo_id:'',errors:[]});
+const form = ref({formato_id:'',articulo_id:'',errors:[]});
 
 function closeModal() {
   isShowModal.value = false
 }
 function showModal() {
+  getSelects()
   isShowModal.value = true
 }
 
@@ -63,8 +66,37 @@ async function sendRequestWithFiles(method, params, url, redirect=''){
 
 const save=()=>{
     
-    sendRequestWithFiles('POST',form.value,'/api/articulo');
+    sendRequestWithFiles('POST',form.value,'/api/informes');
     
+}
+const getSelects=async () =>{
+    let res;
+        const config = {
+        headers: {
+            'Authorization': 'Bearer '+authStore.authToken,
+        }
+    };
+        await axios(
+        {
+            method:'GET', url:'api/informes_select', data:null,headers:config.headers
+        }
+    )
+    .then(
+        (response) => {
+            options_formatos.value=response.data.data.select_formatos     
+            options_articulos.value=response.data.data.select_articulos
+            console.log(response)
+            res= response.data.status
+        }
+    )
+    .catch((e)=>{
+    let desc='';
+    res = e.data;
+    console.log('errores')
+    console.log(e)
+
+});
+    return res;
 }
 
 </script>
@@ -80,17 +112,18 @@ const save=()=>{
         </div>
       </template>
       <template #body>
-        <Input size="sm" v-model="form.nombre_interno" label="Nombre interno" :validationStatus="(form.errors.nombre_interno?'error':'')">
-            <template #validationMessage v-if="form.errors.nombre_interno">
+
+        <Select v-model="form.articulo_id" :options="options_articulos" label="Artículo" :validationStatus="(form.errors.articulo_id?'error':'')">
+          <template #validationMessage v-if="form.errors.articulo_id">
                 <ul>
-                    <li v-for="(error,index) in form.errors.nombre_interno" :key="index">{{ error }}</li>
+                    <li v-for="(error,index) in form.errors.articulo_id" :key="index">{{ error }}</li>
                 </ul>
             </template>
-        </Input>
-        <Select v-model="form.tipo_articulo_id" :options="tipo_articulos" label="Categoría (Tipo de artículo)" :validationStatus="(form.errors.nombre_interno?'error':'')">
-          <template #validationMessage v-if="form.errors.tipo_articulo_id">
+        </Select>
+        <Select v-model="form.formato_id" :options="options_formatos" label="Formato" :validationStatus="(form.errors.formato_id?'error':'')">
+          <template #validationMessage v-if="form.errors.formato_id">
                 <ul>
-                    <li v-for="(error,index) in form.errors.tipo_articulo_id" :key="index">{{ error }}</li>
+                    <li v-for="(error,index) in form.errors.formato_id" :key="index">{{ error }}</li>
                 </ul>
             </template>
         </Select>

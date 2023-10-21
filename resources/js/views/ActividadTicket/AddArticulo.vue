@@ -37,7 +37,7 @@ async function sendRequestWithFiles(method, params, url, redirect=''){
             'Authorization': 'Bearer '+authStore.authToken,
         }
     };
-    
+    //await axios.post('/api/get_coordenadas',form,config)
     await axios(
         {
             method:method, url:url, data:params,headers:config.headers
@@ -46,30 +46,29 @@ async function sendRequestWithFiles(method, params, url, redirect=''){
     .then(
         (response) => {
             console.log(response)
-
-            
             res= response.data.status,
             show_toast(response.data.message,'success','')
             emit('update')
             setTimeout(
                  ()=>(redirect!=='')?window.location.href=redirect:'',2000
              )
-             closeModal();
         }
     )
     .catch((e)=>{
         let desc='';
         res = e.data;
         console.log('errores')
-        console.log(e)
-        
+        console.log(e.response)
+        form.value.errors=e.response.data.errors
+        show_alerta(e.response.data.message,'error','')
     });
     return res;
 }
 
+
 const save=()=>{
-    
-    sendRequestWithFiles('POST',form.value,'api/tickets/'+props.ticket_id+'/articulos/');
+    sendRequestWithFiles('POST',form.value,'api/add_articulo/'+props.ticket_id);
+
     closeModal();
     
 }

@@ -9,5 +9,5 @@ class Cliente extends Model
 {
     use HasFactory;
 
-    protected $fillable=['nombre','tipo_documento','num_documento','contacto','correo','telefono'];
+    protected $fillable=['nombre','tipo_documento','num_documento','contacto','correo','telefono','direccion','ciudad'];
 }

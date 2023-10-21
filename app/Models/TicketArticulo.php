@@ -8,4 +8,8 @@ use Illuminate\Database\Eloquent\Model;
 class TicketArticulo extends Model
 {
     use HasFactory;
+
+    public function Articulo(){
+        return $this->belongsTo('App\Models\Articulo');
+    }
 }

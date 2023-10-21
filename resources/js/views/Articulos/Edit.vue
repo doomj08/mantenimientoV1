@@ -16,13 +16,19 @@ const authStore = useAuthStore();
 
 
 const isShowModal = ref(false)
-const form = ref({nombre_interno:'',tipo_articulo_id:'',errors:[]});
+const form = ref({is_component:false,nombre_interno:null,tipo_articulo_id:null,articulo_padre_id:null,cliente_id:null,errors:[]});
+const options_clientes=ref([]);
+const options_tipo_articulos=ref([]);
+const options_articulos=ref([]);
+
 
 function closeModal() {
   isShowModal.value = false
 }
 function showModal() {
+    getSelects()
   getArticulo()
+  
   isShowModal.value = true
 
 }
@@ -87,7 +93,7 @@ const getArticulo=async () =>{
             (response) => {
                 form.value.nombre_interno=response.data.data.articulo.nombre_interno
                 form.value.tipo_articulo_id=response.data.data.articulo.tipo_articulo_id
-                tipo_articulos.value=response.data.data.tipo_articulos
+                //tipo_articulos.value=response.data.data.tipo_articulos
                 console.log(response)
                 res= response.data.status
             }
@@ -101,7 +107,36 @@ const getArticulo=async () =>{
     });
         return res;
     }
+const getSelects=async () =>{
+    let res;
+        const config = {
+        headers: {
+            'Authorization': 'Bearer '+authStore.authToken,
+        }
+    };
+        await axios(
+        {
+            method:'GET', url:'api/articulos_select', data:null,headers:config.headers
+        }
+    )
+    .then(
+        (response) => {
+            options_clientes.value=response.data.data.select_clientes
+            options_articulos.value=response.data.data.select_articulos          
+            options_tipo_articulos.value=response.data.data.select_tipo_articulos          
+            console.log(response)
+            res= response.data.status
+        }
+    )
+    .catch((e)=>{
+    let desc='';
+    res = e.data;
+    console.log('errores')
+    console.log(e)
 
+});
+    return res;
+}
 </script>
 <template>
     <button  @click="showModal" type="button"  class="inline-flex items-center px-3 py-2 text-sm font-medium text-center text-white rounded-lg bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-primary-300 dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800">
@@ -115,14 +150,34 @@ const getArticulo=async () =>{
         </div>
       </template>
       <template #body>
-        <Input size="sm" class="text-left" v-model="form.nombre_interno" label="Nombre interno" :validationStatus="(form.errors.nombre_interno?'error':'')">
+        <label class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300">¿Es componente?</label>
+        <label class="relative inline-flex items-center cursor-pointer">
+          <input type="checkbox"  v-model="form.is_component"  class="sr-only peer">
+          <div class="w-11 h-6 bg-red-300 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-green-300 dark:peer-focus:ring-green-800 rounded-full peer dark:bg-red-700 peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all dark:border-gray-600 peer-checked:bg-green-600"></div>
+          <span class="ml-3 text-sm font-medium text-gray-900 dark:text-gray-300">{{ (form.is_component)?'Si':'No'}}</span>
+        </label>
+          <Select size="sm" v-if="form.is_component" v-model="form.articulo_padre_id" :options="options_articulos" label="Artículo Principal" :validationStatus="(form.errors.articulo_padre_id?'error':'')">
+            <template #validationMessage v-if="form.errors.articulo_padre_id">
+                  <ul>
+                      <li v-for="(error,index) in form.errors.articulo_padre_id" :key="index">{{ error }}</li>
+                  </ul>
+              </template>
+          </Select>
+        <Select size="sm" v-model="form.cliente_id" :options="options_clientes" label="Cliente" :validationStatus="(form.errors.cliente_id?'error':'')">
+            <template #validationMessage v-if="form.errors.cliente_id">
+                  <ul>
+                      <li v-for="(error,index) in form.errors.cliente_id" :key="index">{{ error }}</li>
+                  </ul>
+              </template>
+          </Select>
+        <Input size="sm" v-model="form.nombre_interno" label="Nombre interno" :validationStatus="(form.errors.nombre_interno?'error':'')">
             <template #validationMessage v-if="form.errors.nombre_interno">
                 <ul>
                     <li v-for="(error,index) in form.errors.nombre_interno" :key="index">{{ error }}</li>
                 </ul>
             </template>
         </Input>
-        <Select class="text-left" v-model="form.tipo_articulo_id" :options="tipo_articulos" label="Categoría (Tipo de artículo)" :validationStatus="(form.errors.nombre_interno?'error':'')">
+        <Select v-model="form.tipo_articulo_id" :options="tipo_articulos" label="Categoría (Tipo de artículo)" :validationStatus="(form.errors.nombre_interno?'error':'')">
           <template #validationMessage v-if="form.errors.tipo_articulo_id">
                 <ul>
                     <li v-for="(error,index) in form.errors.tipo_articulo_id" :key="index">{{ error }}</li>

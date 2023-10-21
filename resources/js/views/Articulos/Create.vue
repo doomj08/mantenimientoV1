@@ -18,11 +18,15 @@ const authStore = useAuthStore();
 
 const isShowModal = ref(false)
 const form = ref({nombre_interno:'',tipo_articulo_id:'',cliente_id:props.cliente_id,errors:[]});
+const options_clientes=ref([]);
+const options_tipo_articulos=ref([]);
+const options_articulos=ref([]);
 
 function closeModal() {
   isShowModal.value = false
 }
 function showModal() {
+  getSelects()
   isShowModal.value = true
 }
 
@@ -68,7 +72,36 @@ const save=()=>{
     form.value.reset
     
 }
+const getSelects=async () =>{
+    let res;
+        const config = {
+        headers: {
+            'Authorization': 'Bearer '+authStore.authToken,
+        }
+    };
+        await axios(
+        {
+            method:'GET', url:'api/articulos_select', data:null,headers:config.headers
+        }
+    )
+    .then(
+        (response) => {
+            options_clientes.value=response.data.data.select_clientes          
+            options_articulos.value=response.data.data.select_articulos          
+            options_tipo_articulos.value=response.data.data.select_tipo_articulos          
+            console.log(response)
+            res= response.data.status
+        }
+    )
+    .catch((e)=>{
+    let desc='';
+    res = e.data;
+    console.log('errores')
+    console.log(e)
 
+});
+    return res;
+}
 </script>
 <template>
     <button @click="showModal" type="button"  class="inline-flex items-center justify-center w-1/2 px-3 py-2 text-sm font-medium text-center text-gray-900 bg-white border border-gray-300 rounded-lg hover:bg-gray-100 focus:ring-4 focus:ring-primary-300 sm:w-auto dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700 dark:focus:ring-gray-700">
@@ -78,10 +111,30 @@ const save=()=>{
     <Modal :size="size" v-if="isShowModal" @close="closeModal">
       <template #header>
         <div class="flex items-center text-lg">
-          Nuevo artículo {{ form }}
+          Nuevo artículo
         </div>
       </template>
       <template #body>
+        <label class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300">¿Es componente?</label>
+        <label class="relative inline-flex items-center cursor-pointer">
+          <input type="checkbox"  v-model="form.is_component"  class="sr-only peer">
+          <div class="w-11 h-6 bg-red-300 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-green-300 dark:peer-focus:ring-green-800 rounded-full peer dark:bg-red-700 peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all dark:border-gray-600 peer-checked:bg-green-600"></div>
+          <span class="ml-3 text-sm font-medium text-gray-900 dark:text-gray-300">{{ (form.is_component)?'Si':'No'}}</span>
+        </label>
+          <Select size="sm" v-if="form.is_component" v-model="form.articulo_padre_id" :options="options_articulos" label="Artículo Principal" :validationStatus="(form.errors.articulo_padre_id?'error':'')">
+            <template #validationMessage v-if="form.errors.articulo_padre_id">
+                  <ul>
+                      <li v-for="(error,index) in form.errors.articulo_padre_id" :key="index">{{ error }}</li>
+                  </ul>
+              </template>
+          </Select>
+        <Select size="sm" v-model="form.cliente_id" :options="options_clientes" label="Cliente" :validationStatus="(form.errors.cliente_id?'error':'')">
+            <template #validationMessage v-if="form.errors.cliente_id">
+                  <ul>
+                      <li v-for="(error,index) in form.errors.cliente_id" :key="index">{{ error }}</li>
+                  </ul>
+              </template>
+          </Select>
         <Input size="sm" v-model="form.nombre_interno" label="Nombre interno" :validationStatus="(form.errors.nombre_interno?'error':'')">
             <template #validationMessage v-if="form.errors.nombre_interno">
                 <ul>

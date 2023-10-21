@@ -40,7 +40,7 @@
                                 
                                 <EditForm @update="getArticulos()"  class="text-left" :id="propiedad.id" />
 
-                                <DeleteForm  @update="getArticulos()" :name="propiedad.propiedad" url="articulo" :id="propiedad.id"/>
+                                <DeleteForm  @update="getArticulos()" :name="propiedad.propiedad" url="propiedad" :id="propiedad.id"/>
                             </td>
                         </tr>
                         

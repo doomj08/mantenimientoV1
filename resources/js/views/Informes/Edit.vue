@@ -15,15 +15,18 @@ const props = defineProps({
 const emit = defineEmits('update');
 const authStore = useAuthStore();
 
+const options_formatos=ref([]);
+const options_articulos=ref([]);
 
 const isShowModal = ref(false)
-const form = ref({nombre_interno:'',tipo_articulo_id:'',errors:[]});
+const form = ref({formato_id:'',articulo_id:'',errors:[]});
 
 function closeModal() {
   isShowModal.value = false
 }
 function showModal() {
-  getArticulo()
+    getSelects()
+    getInforme()
   isShowModal.value = true
 
 }
@@ -72,7 +75,7 @@ const save=()=>{
     
 }
 
-const getArticulo=async () =>{
+const getInforme=async () =>{
         let res;
             const config = {
             headers: {
@@ -81,14 +84,14 @@ const getArticulo=async () =>{
         };
             await axios(
             {
-                method:'GET', url:'api/articulo/'+props.id, data:null,headers:config.headers
+                method:'GET', url:'api/informes/'+props.id, data:null,headers:config.headers
             }
         )
         .then(
             (response) => {
-                form.value.nombre_interno=response.data.data.articulo.nombre_interno
-                form.value.tipo_articulo_id=response.data.data.articulo.tipo_articulo_id
-                tipo_articulos.value=response.data.data.tipo_articulos
+                form.value.articulo_id=response.data.data.informe.articulo_id
+                form.value.formato_id=response.data.data.informe.formato_id
+                
                 console.log(response)
                 res= response.data.status
             }
@@ -102,6 +105,35 @@ const getArticulo=async () =>{
     });
         return res;
     }
+    const getSelects=async () =>{
+    let res;
+        const config = {
+        headers: {
+            'Authorization': 'Bearer '+authStore.authToken,
+        }
+    };
+        await axios(
+        {
+            method:'GET', url:'api/informes_select', data:null,headers:config.headers
+        }
+    )
+    .then(
+        (response) => {
+            options_formatos.value=response.data.data.select_formatos     
+            options_articulos.value=response.data.data.select_articulos
+            console.log(response)
+            res= response.data.status
+        }
+    )
+    .catch((e)=>{
+    let desc='';
+    res = e.data;
+    console.log('errores')
+    console.log(e)
+
+});
+    return res;
+}
 
 </script>
 <template>
@@ -116,29 +148,30 @@ const getArticulo=async () =>{
         </div>
       </template>
       <template #body>
-        <Input size="sm" class="text-left" v-model="form.nombre_interno" label="Nombre interno" :validationStatus="(form.errors.nombre_interno?'error':'')">
-            <template #validationMessage v-if="form.errors.nombre_interno">
-                <ul>
-                    <li v-for="(error,index) in form.errors.nombre_interno" :key="index">{{ error }}</li>
-                </ul>
-            </template>
-        </Input>
-        <Select class="text-left" v-model="form.tipo_articulo_id" :options="tipo_articulos" label="Categoría (Tipo de artículo)" :validationStatus="(form.errors.nombre_interno?'error':'')">
-          <template #validationMessage v-if="form.errors.tipo_articulo_id">
-                <ul>
-                    <li v-for="(error,index) in form.errors.tipo_articulo_id" :key="index">{{ error }}</li>
-                </ul>
-            </template>
-        </Select>
-        
-      </template>
+
+<Select v-model="form.articulo_id" :options="options_articulos" label="Artículo" :validationStatus="(form.errors.articulo_id?'error':'')">
+  <template #validationMessage v-if="form.errors.articulo_id">
+        <ul>
+            <li v-for="(error,index) in form.errors.articulo_id" :key="index">{{ error }}</li>
+        </ul>
+    </template>
+</Select>
+<Select v-model="form.formato_id" :options="options_formatos" label="Formato" :validationStatus="(form.errors.formato_id?'error':'')">
+  <template #validationMessage v-if="form.errors.formato_id">
+        <ul>
+            <li v-for="(error,index) in form.errors.formato_id" :key="index">{{ error }}</li>
+        </ul>
+    </template>
+</Select>
+
+</template>
       <template #footer>
         <div class="flex justify-between">
           <button @click="closeModal" type="button" class="text-gray-500 bg-white hover:bg-gray-100 focus:ring-4 focus:outline-none focus:ring-blue-300 rounded-lg border border-gray-200 text-sm font-medium px-5 py-2.5 hover:text-gray-900 focus:z-10 dark:bg-gray-700 dark:text-gray-300 dark:border-gray-500 dark:hover:text-white dark:hover:bg-gray-600 dark:focus:ring-gray-600">
-            Decline
+            Cerrar
           </button>
           <button @click="save()" type="button" class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
-            I accept
+            Actualizar
           </button>
         </div>
       </template>

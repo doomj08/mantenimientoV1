@@ -16,7 +16,7 @@ const authStore = useAuthStore();
 
 
 const isShowModal = ref(false)
-const form = ref({descripcion:'',cliente_id:null, errors:[]});
+const form = ref({descripcion:'',fecha_hora:null,cliente_id:null, errors:[]});
 const options_clientes=ref([]);
 
 function closeModal() {
@@ -88,6 +88,7 @@ const getTicket=async () =>{
             (response) => {
                 form.value.descripcion=response.data.data.ticket.descripcion
                 form.value.cliente_id=response.data.data.ticket.cliente_id
+                form.value.fecha_hora=response.data.data.ticket.fecha_hora
                 options_clientes.value=response.data.data.clientes
                 
                 console.log(response)
@@ -117,13 +118,23 @@ const getTicket=async () =>{
         </div>
       </template>
       <template #body>
-        <Select v-model="form.cliente_id" :options="options_clientes" label="Cliente" :validationStatus="(form.errors.cliente_id?'error':'')">
-          <template #validationMessage v-if="form.errors.cliente_id">
-                <ul>
-                    <li v-for="(error,index) in form.errors.cliente_id" :key="index">{{ error }}</li>
-                </ul>
-            </template>
-        </Select>
+        <div class="flex">
+          <Input size="sm" type="datetime-local" class="text-left w-2/3" v-model="form.fecha_hora" label="Fecha Hora" :validationStatus="(form.errors.fecha_hora?'error':'')">
+              <template #validationMessage v-if="form.errors.fecha_hora">
+                  <ul>
+                      <li v-for="(error,index) in form.errors.fecha_hora" :key="index">{{ error }}</li>
+                  </ul>
+              </template>
+          </Input>
+          <Select size="sm" class="w-1/3" v-model="form.cliente_id" :options="options_clientes" label="Cliente" :validationStatus="(form.errors.cliente_id?'error':'')">
+            <template #validationMessage v-if="form.errors.cliente_id">
+                  <ul>
+                      <li v-for="(error,index) in form.errors.cliente_id" :key="index">{{ error }}</li>
+                  </ul>
+              </template>
+          </Select>
+        </div>
+        
         <Textarea size="sm" v-model="form.descripcion" label="Descripcion / Falla" :validationStatus="(form.errors.descripcion?'error':'')">
             <template #validationMessage v-if="form.errors.descripcion">
                 <ul>

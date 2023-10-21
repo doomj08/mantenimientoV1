@@ -18,6 +18,7 @@ const authStore = useAuthStore();
 const isShowModal = ref(false)
 const form = ref({cliente_id:'',version:'',errors:[]});
 
+
 function closeModal() {
   isShowModal.value = false
 }
@@ -43,6 +44,8 @@ async function sendRequestWithFiles(method, params, url, redirect=''){
             console.log(response)
             res= response.data.status,
             show_toast(response.data.message,'success','')
+            closeModal()
+            emit()
             setTimeout(
                  ()=>(redirect!=='')?window.location.href=redirect:'',2000
              )

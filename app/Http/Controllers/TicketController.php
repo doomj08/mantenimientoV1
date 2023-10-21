@@ -4,13 +4,17 @@ namespace App\Http\Controllers;
 
 use App\Models\Cliente;
 use App\Models\Ticket;
+use Barryvdh\DomPDF\Facade\Pdf;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class TicketController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
+
     public function index()
     {
         $tickets=Ticket::with('Cliente')->withCount('ActividadTicket')->get();
@@ -56,6 +60,7 @@ class TicketController extends Controller
         $ticket=Ticket::create([
             "descripcion"=>$request->input('descripcion'),
             "cliente_id"=>$request->input('cliente_id'),
+            "fecha_hora"=>$request->input('fecha_hora'),
         ]);
         return response()->json([
             'status'=>true,
@@ -89,6 +94,26 @@ class TicketController extends Controller
         ],200);
     }
 
+
+    public function getPDF(Ticket $ticket)
+    {
+        $encabezado=[
+            'titulo1'=>'ORDEN DE SERVICIO ITCOMN Tech Support',
+            'titulo2'=>'NIT: 1118542537-8',
+            'titulo3'=>'Cel: 318 694 3892   Email:soporte@itcomn.com'
+        ];
+        
+        $data=[
+            "fecha_consulta"=>Carbon::now(),
+            "encabezado"=>$encabezado,
+            "ticket"=>$ticket
+        ];
+        $pdf = Pdf::loadView('pdf.ticket', $data);
+        $pdf->setPaper('letter', 'portrait');
+        $base64 = base64_encode($pdf->stream());
+        return $pdf->stream();
+        //return $pdf->download('invoice.pdf');
+    }
     /**
      * Show the form for editing the specified resource.
      */
@@ -100,7 +125,8 @@ class TicketController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update($id,Request $request, Ticket $ticket)
+    //public function update($id=null,Request $request, Ticket $ticket)
+    public function update(Request $request, Ticket $ticket)
     {
         $ticket->update($request->all());
         return response()->json([
@@ -118,6 +144,7 @@ class TicketController extends Controller
     public function destroy(Ticket $ticket)
     {
         $ticket->delete();
+        DB::statement("ALTER TABLE tickets AUTO_INCREMENT = ".$ticket->count().";");
         return response()->json([
             'status'=>true,
             'message' => 'Artículo eliminado correctamente'            

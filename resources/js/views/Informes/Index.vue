@@ -1,10 +1,10 @@
 <template>
     <EncabezadoVue 
-        namePage="ARTICULOS"  
+        namePage="INFORMES"  
         createButtonText="Agregar artículo"
     >
         <template #button_create>
-            <CreateForm :tipo_articulos="tipo_articulos"/>
+            <CreateForm :tipo_articulos="tipo_articulos" @update="getInformes()"/>
 
         </template>
     </EncabezadoVue>
@@ -18,7 +18,10 @@
                         <tr>
 
                             <th scope="col" class="p-4 text-xs font-medium text-left text-gray-500 uppercase dark:text-gray-400">
-                                N° Informe
+                                Artículo
+                            </th>
+                            <th scope="col" class="p-4 text-xs font-medium text-left text-gray-500 uppercase dark:text-gray-400">
+                                Versión Formato
                             </th>
 
                             <th scope="col" class="p-4 text-xs font-medium text-left text-gray-500 uppercase dark:text-gray-400">
@@ -32,18 +35,21 @@
 
                             <td class="flex items-center p-4 mr-12 space-x-6 whitespace-nowrap">
                                 <div class="text-sm font-normal text-gray-500 dark:text-gray-400">
-                                    <div class="text-base font-semibold text-gray-900 dark:text-white">{{ informe.id }}</div>
-                                    
+                                    <div class="text-base font-semibold text-gray-900 dark:text-white">{{ informe.articulo_id }}</div>
+                                </div>
+                            </td>
+                            <td class="items-center p-4 mr-12 space-x-6 whitespace-nowrap">
+                                <div class="text-sm font-normal text-gray-500 dark:text-gray-400">
+                                    <div class="text-base font-semibold text-gray-900 dark:text-white">{{ informe.formato_id }}</div>
                                 </div>
                             </td>
                           
                             <td class="p-4 space-x-2 whitespace-nowrap">
+                                <a target="_blank"  :href="'/informe/'+informe.id" class="inline-flex items-center justify-center w-1/2 px-3 py-2 text-sm font-medium text-center text-gray-900 bg-white border border-gray-300 rounded-lg hover:bg-gray-100 focus:ring-4 focus:ring-primary-300 sm:w-auto dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700 dark:focus:ring-gray-700">
+                                    Ver Informe</a>
                                 <EditForm class="text-left" :id="informe.id" @update="getInformes()"/>
 
                                 <DeleteForm :name="informe.nombre_interno" url="informes" :id="informe.id" @update="getInformes()"/>
-                            </td>
-                            <td>
-                                <ShowPDF :informe_id="informe.id"/>
                             </td>
                         </tr>
                         
@@ -69,7 +75,7 @@
     import CreateForm from './Create.vue';
     import EditForm from './Edit.vue';
     import DeleteForm from './Delete.vue';
-    import ShowPDF from './Show.vue';
+    
     import TableBodyVue from '../../pages/master/tablabody.vue'
     
     const authStore = useAuthStore();
