@@ -19,3 +19,4 @@ yarn-error.log
 /.vscode
 app.zip
 vendor.zip
+public/build.zip
