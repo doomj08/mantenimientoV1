@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Servicio;
 use App\Models\ServicioArticulo;
 use Illuminate\Http\Request;
 
@@ -26,9 +27,19 @@ class ServicioArticuloController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(Servicio $servicio,Request $request)
     {
-        //
+        $newArray=Array();
+        foreach($request->articulos_seleccionados as $seleccionado){
+            array_push($newArray,$seleccionado);
+        }
+        
+        $servicio->ServicioArticulos()->sync($newArray);
+        return response()->json([
+            'status'=>true,
+            'message' => 'Sección agregada correctamente'
+        ],200);
+        
     }
 
     /**

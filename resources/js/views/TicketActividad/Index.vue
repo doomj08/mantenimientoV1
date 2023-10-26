@@ -124,6 +124,7 @@
 
     const props = defineProps({
         ticket_id: Number,
+        ticket_num: String,
     })
 
     axios.defaults.headers.common['Authorization']='Bearer'+authStore.authToken;

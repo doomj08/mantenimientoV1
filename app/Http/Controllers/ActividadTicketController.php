@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\ActividadTicketCreateRequest;
 use App\Models\ActividadTicket;
+use App\Models\Servicio;
 use App\Models\Ticket;
 use App\Models\TicketArticulo;
 use Illuminate\Http\Request;
@@ -15,8 +16,9 @@ class ActividadTicketController extends Controller
      */
     public function index($id)
     {   
-        $actividadTicket=ActividadTicket::with('Ticket')->where('ticket_id',$id)->get();
-        $articulos=TicketArticulo::with('Articulo')->where('ticket_id',$id)->get();
+        $actividadTicket=ActividadTicket::with('Ticket')->where('servicio',$id)->get();
+        $ticket_id=$actividadTicket->Ticket->id;
+        $articulos=TicketArticulo::with('Articulo')->where('ticket_id',$ticket_id)->get();
         $ticket=Ticket::find($id);
         $clienteId=Ticket::find($id)->cliente_id;
         return response()->json([
@@ -42,15 +44,25 @@ class ActividadTicketController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Ticket $ticket,ActividadTicketCreateRequest $request)
+    public function store(Servicio $servicio,ActividadTicketCreateRequest $request)
     {
-        if($request->input('estado_ticket'))
-            $estado_ticket='Cerrado';
+        
+
+        $estado=$request->input('estado_ticket');
+        if($estado)
+            $estado_ticket='cerrado';
         else
-            $estado_ticket='Abierto';
+            $estado_ticket='abierto';
+
+            // return response()->json([
+            //     'status'=>true,
+            //     'message' => 'Actividad registrada correctamente '.$estado_ticket,
+                
+            // ],200);
         
         $actividadTicket=ActividadTicket::create([
-            'ticket_id'=>$ticket->id,
+            'servicio_id'=>$servicio->id,
+            'ticket_id'=>$servicio->ticket_id,
             'fecha_hora'=>$request->input('fecha_hora'),
             "estado_ticket"=>$estado_ticket,
             "descripcion"=>$request->input('descripcion'),
@@ -88,9 +100,26 @@ class ActividadTicketController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, ActividadTicket $actividadTicket)
+    public function update(Request $request, $ticket, ActividadTicket $actividadTicket)
     {
-        //
+        $estado=$request->input('estado_ticket');
+        if($estado)
+            $estado_ticket='cerrado';
+        else
+            $estado_ticket='abierto';
+        $actividadTicket->update([
+            //'servicio_id'=>$servicio->id,
+            //'ticket_id'=>$servicio->ticket_id,
+            'fecha_hora'=>$request->input('fecha_hora'),
+            "estado_ticket"=>$estado_ticket,
+            "descripcion"=>$request->input('descripcion'),
+        ]);
+
+        return response()->json([
+            'status'=>true,
+            'message' => 'Actividad actualizada',
+
+        ],200);
     }
 
     /**

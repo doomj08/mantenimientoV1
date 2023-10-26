@@ -16,7 +16,7 @@ const authStore = useAuthStore();
 onMounted(()=>{getCliente()})
 
 const isShowModal = ref(false)
-const form = ref({descripcion:'',fecha_hora:null,estado_ticket:false, errors:[]});
+const form = ref({ticket_id:null,descripcion:'',fecha_programada:null,fecha_inicio:null,fecha_fin:null,precio:null,errors:[]});
 
 const options_clientes=ref([]);
 
@@ -65,7 +65,7 @@ async function sendRequestWithFiles(method, params, url, redirect=''){
 
 const save=()=>{
     
-    sendRequestWithFiles('POST',form.value,'api/add_actividad/'+props.ticket_id);
+    sendRequestWithFiles('POST',form.value,'api/tickets/'+props.ticket_id+'/servicio');
     
 }
 
@@ -78,7 +78,7 @@ const getCliente=async () =>{
         };
             await axios(
             {
-                method:'GET', url:'api/tickets/create', data:null,headers:config.headers
+                method:'GET', url:'api/tickets/'+props.ticket_id+'/servicio/create', data:null,headers:config.headers
             }
         )
         .then(
@@ -102,31 +102,54 @@ const getCliente=async () =>{
 <template>
     <button @click="showModal" type="button"  class="inline-flex items-center justify-center w-1/2 px-3 py-2 text-sm font-medium text-center text-gray-900 bg-white border border-gray-300 rounded-lg hover:bg-gray-100 focus:ring-4 focus:ring-primary-300 sm:w-auto dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700 dark:focus:ring-gray-700">
                 <svg class="w-5 h-5 mr-2 -ml-1" fill="#000" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M10 5a1 1 0 011 1v3h3a1 1 0 110 2h-3v3a1 1 0 11-2 0v-3H6a1 1 0 110-2h3V6a1 1 0 011-1z" clip-rule="evenodd"></path></svg>
-                Registrar Nueva Actividad
+                Registrar Nuevo Servicio
             </button>
     <Modal :size="size" v-if="isShowModal" @close="closeModal">
       <template #header>
         <div class="flex items-center text-lg">
-          Nuevo Ticket
+          Nuevo Servicio
         </div>
       </template>
       <template #body>
-        <Textarea size="sm" v-model="form.descripcion" label="Descripcion / Falla" :validationStatus="(form.errors.descripcion?'error':'')">
+        <Textarea size="sm" v-model="form.descripcion" label="Descripcion" :validationStatus="(form.errors.descripcion?'error':'')">
             <template #validationMessage v-if="form.errors.descripcion">
                 <ul>
                     <li v-for="(error,index) in form.errors.descripcion" :key="index">{{ error }}</li>
                 </ul>
             </template>
         </Textarea>
-        
-        <Input type="datetime-local" size="sm" v-model="form.fecha_hora" label="Fecha / Hora" :validationStatus="(form.errors.fecha_hora?'error':'')">
-            <template #validationMessage v-if="form.errors.fecha_hora">
+        <Input type="datetime-local" size="sm" v-model="form.fecha_programada" label="Fecha/Hora Programada" :validationStatus="(form.errors.fecha_programada?'error':'')">
+            <template #validationMessage v-if="form.errors.fecha_programada">
                 <ul>
                     <li v-for="(error,index) in form.errors.fecha_hora" :key="index">{{ error }}</li>
                 </ul>
             </template>
         </Input>
-
+        <br>
+        <div class="flex">
+            <Input type="datetime-local" size="sm" v-model="form.fecha_inicio" label="Fecha / Hora Inicio" :validationStatus="(form.errors.fecha_inicio?'error':'')">
+                <template #validationMessage v-if="form.errors.fecha_inicio">
+                    <ul>
+                        <li v-for="(error,index) in form.errors.fecha_hora" :key="index">{{ error }}</li>
+                    </ul>
+                </template>
+            </Input>
+            <Input type="datetime-local" size="sm" v-model="form.fecha_fin" label="Fecha / Hora Final" :validationStatus="(form.errors.fecha_fin?'error':'')">
+                <template #validationMessage v-if="form.errors.fecha_fin">
+                    <ul>
+                        <li v-for="(error,index) in form.errors.fecha_fin" :key="index">{{ error }}</li>
+                    </ul>
+                </template>
+            </Input>
+        </div>
+        <br>
+        <Input type="number" size="sm" v-model="form.precio" label="Precios" :validationStatus="(form.errors.precio?'error':'')">
+            <template #validationMessage v-if="form.errors.precio">
+                <ul>
+                    <li v-for="(error,index) in form.errors.fecha_hora" :key="index">{{ error }}</li>
+                </ul>
+            </template>
+        </Input>
         <br>
         <label class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300">Estado</label>
         <label class="relative inline-flex items-center cursor-pointer">

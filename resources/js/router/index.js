@@ -1,4 +1,4 @@
-import { createRouter, createWebHistory } from 'vue-router'
+import { createRouter, createWebHistory, createMemoryHistory } from 'vue-router'
 import { useAuthStore} from '../stores/auth'
 import HomeView from '../views/HomeView.vue'
 
@@ -20,7 +20,8 @@ import Login from '../views/User/Login.vue'
 import Register from '../views/User/Register.vue'
 
 const router = createRouter({
-  history: createWebHistory(import.meta.env.BASE_URL),
+  history: createMemoryHistory(import.meta.env.BASE_URL),
+  mode: 'abstract',
   routes: [
     {
       path: '/',
@@ -33,7 +34,7 @@ const router = createRouter({
       component: TicketVue
     },
     {
-      path: '/ticket_servicios:ticket_id',
+      path: '/ticket_servicios/:ticket_id:ticket_num',
       name: 'ticket_servicios',
       component: TicketServicioVue,      
       props: true,

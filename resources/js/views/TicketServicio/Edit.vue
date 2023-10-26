@@ -9,20 +9,21 @@ import {show_alerta, show_toast } from '../../functions';
 const props = defineProps({
   id: Number,
   ticket_id: Number,
+  servicio_id:Number,
   size:String
 })
 const authStore = useAuthStore();
 const emit = defineEmits('update');
 
 const isShowModal = ref(false)
-const form = ref({descripcion:'',fecha_hora:null,estado_ticket:false, errors:[]});
+const form = ref({ticket_id:null,descripcion:'',fecha_programada:null,fecha_inicio:null,fecha_fin:null,precio:null,errors:[]});
 const options_clientes=ref([]);
 
 function closeModal() {
   isShowModal.value = false
 }
 function showModal() {
-    getTicket()
+    getServicio()
   isShowModal.value = true
 
 }
@@ -67,11 +68,12 @@ async function sendRequestWithFiles(method, params, url, redirect=''){
 
 const save=()=>{
     
-    sendRequestWithFiles('PUT',form.value,'api/edit_actividad/'+props.ticket_id+'/'+props.id);
+    //sendRequestWithFiles('PUT',form.value,'api/edit_actividad/'+props.ticket_id+'/'+props.id);
+    sendRequestWithFiles('PUT',form.value,'api/tickets/'+props.ticket_id+'/servicio/'+props.servicio_id);
     
 }
 
-const getTicket=async () =>{
+const getServicio=async () =>{
         let res;
             const config = {
             headers: {
@@ -80,16 +82,16 @@ const getTicket=async () =>{
         };
             await axios(
             {
-                method:'GET', url:'api/tickets/'+props.id+'/actividad_ticket/'+props.id, data:null,headers:config.headers
+                method:'GET', url:'api/tickets/'+props.ticket_id+'/servicio/'+props.servicio_id+'/edit', data:null,headers:config.headers
             }
         )
         .then(
             (response) => {
-                form.value.descripcion=response.data.data.actividad_ticket.descripcion
-                form.value.fecha_hora =response.data.data.actividad_ticket.fecha_hora
-                form.value.estado_ticket=response.data.data.actividad_ticket.estado_ticket
-                
-                
+                form.value.descripcion=response.data.data.servicio.descripcion
+                form.value.fecha_programada =response.data.data.servicio.fecha_programada
+                form.value.fecha_inicio=response.data.data.servicio.fecha_inicio
+                form.value.fecha_fin=response.data.data.servicio.fecha_fin
+                form.value.precio=response.data.data.servicio.precio
                 options_clientes.value=response.data.data.clientes
                 
                 console.log(response)
@@ -115,27 +117,49 @@ const getTicket=async () =>{
     <Modal :size="size" v-if="isShowModal" @close="closeModal">
       <template #header>
         <div class="flex items-center text-lg">
-          Editando Actividad
+          Editando Servicio
         </div>
       </template>
       <template #body>
-        
-        <Textarea size="sm" v-model="form.descripcion" label="Descripcion / Falla" :validationStatus="(form.errors.descripcion?'error':'')">
+        <Textarea size="sm" v-model="form.descripcion" label="Descripcion" :validationStatus="(form.errors.descripcion?'error':'')">
             <template #validationMessage v-if="form.errors.descripcion">
                 <ul>
                     <li v-for="(error,index) in form.errors.descripcion" :key="index">{{ error }}</li>
                 </ul>
             </template>
         </Textarea>
-        
-        <Input type="datetime-local" size="sm" v-model="form.fecha_hora" label="Fecha / Hora" :validationStatus="(form.errors.fecha_hora?'error':'')">
-            <template #validationMessage v-if="form.errors.fecha_hora">
+        <Input type="datetime-local" size="sm" v-model="form.fecha_programada" label="Fecha/Hora Programada" :validationStatus="(form.errors.fecha_programada?'error':'')">
+            <template #validationMessage v-if="form.errors.fecha_programada">
                 <ul>
                     <li v-for="(error,index) in form.errors.fecha_hora" :key="index">{{ error }}</li>
                 </ul>
             </template>
         </Input>
-
+        <br>
+        <div class="flex">
+            <Input type="datetime-local" size="sm" v-model="form.fecha_inicio" label="Fecha / Hora Inicio" :validationStatus="(form.errors.fecha_inicio?'error':'')">
+                <template #validationMessage v-if="form.errors.fecha_inicio">
+                    <ul>
+                        <li v-for="(error,index) in form.errors.fecha_hora" :key="index">{{ error }}</li>
+                    </ul>
+                </template>
+            </Input>
+            <Input type="datetime-local" size="sm" v-model="form.fecha_fin" label="Fecha / Hora Final" :validationStatus="(form.errors.fecha_fin?'error':'')">
+                <template #validationMessage v-if="form.errors.fecha_fin">
+                    <ul>
+                        <li v-for="(error,index) in form.errors.fecha_fin" :key="index">{{ error }}</li>
+                    </ul>
+                </template>
+            </Input>
+        </div>
+        <br>
+        <Input type="number" size="sm" v-model="form.precio" label="Precios" :validationStatus="(form.errors.precio?'error':'')">
+            <template #validationMessage v-if="form.errors.precio">
+                <ul>
+                    <li v-for="(error,index) in form.errors.fecha_hora" :key="index">{{ error }}</li>
+                </ul>
+            </template>
+        </Input>
         <br>
         <label class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300">Estado</label>
         <label class="relative inline-flex items-center cursor-pointer">

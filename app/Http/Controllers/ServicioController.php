@@ -7,6 +7,7 @@ use App\Models\Servicio;
 use App\Models\Ticket;
 use App\Models\TicketArticulo;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class ServicioController extends Controller
 {
@@ -23,7 +24,7 @@ class ServicioController extends Controller
 
         $clienteId=$ticket->cliente_id;
         $actividadTicket=ActividadTicket::with('Ticket')->where('ticket_id',$ticket->id)->get();
-        $servicioTicket=Servicio::with('ServicioArticulos')->where('ticket_id',$ticket->id)->get();
+        $servicioTicket=Servicio::with('ServicioArticulos','Actividades')->where('ticket_id',$ticket->id)->get();
         $articulos=TicketArticulo::with('Articulo')->where('ticket_id',$ticket->id)->get();
         return response()->json([
             'status'=>true,
@@ -49,9 +50,22 @@ class ServicioController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store($ticket_id,Request $request)
     {
-        //
+        $servicio=Servicio::create([
+            'ticket_id'=>$ticket_id,
+            'user_id'=>auth()->user()->id,
+            'descripcion'=>$request->descripcion,
+            'fecha_programada'=>$request->fecha_programada,
+            'fecha_inicio'=>$request->fecha_inicio,
+            'fecha_fin'=>$request->fecha_fin,
+            'precio'=>$request->precio,
+        ]);
+
+        return response()->json([
+            'status'=>true,
+            'message' => 'Servicio agregado'
+        ],200);
     }
 
     /**
@@ -65,24 +79,44 @@ class ServicioController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(Servicio $servicio)
+    public function edit($ticket_id,Servicio $servicio)
     {
-        //
+        return response()->json([
+            'status'=>true,
+            'message' => 'Lista de servicios completada',
+            'data'=>[
+                'servicio'=>$servicio
+                ]
+        ],200);
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Servicio $servicio)
+    public function update($ticket_id,Request $request, Servicio $servicio)
     {
-        //
+        $servicio->update([
+            //'ticket_id'=>$servicio->ticket_id,
+            'user_id'=>auth()->user()->id,
+            'descripcion'=>$request->descripcion,
+            'fecha_programada'=>$request->fecha_programada,
+            'fecha_inicio'=>$request->fecha_inicio,
+            'fecha_fin'=>$request->fecha_fin,
+            'precio'=>$request->precio,
+
+        ]);
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Servicio $servicio)
+    public function destroy($ticket_id,Servicio $servicio)
     {
-        //
+        $servicio->delete();
+        DB::statement("ALTER TABLE servicios AUTO_INCREMENT = ".$servicio->count().";");
+        return response()->json([
+            'status'=>true,
+            'message' => 'Artículo eliminado correctamente'            
+        ],200);
     }
 }

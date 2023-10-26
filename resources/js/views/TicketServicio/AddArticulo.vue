@@ -10,13 +10,14 @@ import CreateForm from '../Articulos/Create.vue';
 const props = defineProps({
   id: Number,
   ticket_id: Number,
+  servicio_id:Number,
   cliente_id: Number,  
 })
 const authStore = useAuthStore();
 const emit = defineEmits('update');
 
 const isShowModal = ref(false)
-const form = ref({articulos_seleccionados:[],ticket_id:props.ticket_id});
+const form = ref({articulos_seleccionados:[],servicio_id:props.servicio_id,ticket_id:props.ticket_id});
 const articulos=ref([]);
 const tipo_articulos=ref([]);
 
@@ -67,7 +68,7 @@ async function sendRequestWithFiles(method, params, url, redirect=''){
 
 
 const save=()=>{
-    sendRequestWithFiles('POST',form.value,'api/add_articulo/'+props.ticket_id);
+    sendRequestWithFiles('POST',form.value,'api/add_articulo/'+props.servicio_id);
 
     closeModal();
     
@@ -82,7 +83,7 @@ const getTicket=async () =>{
         };
             await axios(
             {
-                method:'GET', url:'api/articulos_cliente/'+props.cliente_id+'/'+props.ticket_id, data:null,headers:config.headers
+                method:'GET', url:'api/articulos_cliente/'+props.cliente_id+'/'+props.servicio_id, data:null,headers:config.headers
             }
         )
         .then(

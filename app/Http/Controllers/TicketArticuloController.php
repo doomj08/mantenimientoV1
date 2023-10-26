@@ -35,6 +35,7 @@ class TicketArticuloController extends Controller
         }
         //$new=Ticket::with('TicketArticulo')->find($ticket->id);
         $ticket->TicketArticulo()->sync($newArray);
+        
         return response()->json([
             'status'=>true,
             'message' => 'Sección agregada correctamente'

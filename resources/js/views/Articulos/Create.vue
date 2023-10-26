@@ -10,7 +10,12 @@ import {show_alerta, show_toast } from '../../functions';
 const props = defineProps({
   tipo_articulos: Array,
   size:String,
-  cliente_id:Number
+  cliente_id:Number,
+  servicio_id:{
+    type:String,
+    required:true
+  }
+
 })
 const emit = defineEmits('update');
 const authStore = useAuthStore();

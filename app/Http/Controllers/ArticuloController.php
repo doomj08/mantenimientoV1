@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use App\Http\Requests\ArticuloRequest;
 use App\Models\Articulo;
 use App\Models\Cliente;
+use App\Models\Servicio;
+use App\Models\ServicioArticulo;
 use App\Models\TicketArticulo;
 use App\Models\TipoArticulo;
 use App\Models\Ticket;
@@ -16,12 +18,23 @@ class ArticuloController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function getArticulosCliente($cliente_id=null,$ticket_id)
+    public function getArticulosCliente($cliente_id=null,$servicio_id)
     {   
-        $ticket=Ticket::find($ticket_id);
+        $ticket=Servicio::with('Ticket')->find($servicio_id)->Ticket;
+        // return response()->json([
+        //     'status'=>true,
+        //     'message' => 'Lista de artículos completada, cliente:'.$cliente_id. ' servicio:'.$servicio_id.' ticket_id:'.$ticket->cliente_id,
+        //     'data'=>[
+
+        //         ]
+        // ],200);
+
+        
+        //$ticket=Servicio::with('Ticket')->find($servicio_id);
         $articulos=Articulo::with('TipoArticulo')->where('cliente_id',$ticket->cliente_id)->get();
 
-        $values=TicketArticulo::where('ticket_id',$ticket->id)->pluck('articulo_id');
+        $values=ServicioArticulo::where('servicio_id',$servicio_id)->pluck('articulo_id');
+        //$values=TicketArticulo::where('ticket_id',$ticket->id)->pluck('articulo_id');
 
         $tipo_articulos=TipoArticulo::get();
         $select_tipo_articulos=Array();
