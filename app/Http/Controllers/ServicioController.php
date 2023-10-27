@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\ServicioCreateRequest;
 use App\Models\ActividadTicket;
 use App\Models\Servicio;
 use App\Models\Ticket;
@@ -50,7 +51,7 @@ class ServicioController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store($ticket_id,Request $request)
+    public function store($ticket_id,ServicioCreateRequest $request)
     {
         $servicio=Servicio::create([
             'ticket_id'=>$ticket_id,

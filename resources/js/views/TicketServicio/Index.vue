@@ -1,12 +1,12 @@
 <template>
     <EncabezadoVue   
-        :namePage="'TICKET N° '+ticket.num_ticket"
+        :namePage="'TICKET N° '+ticket.num_ticket+' ticket_id:'+ticket.id"
         to2="Ticket"
         to3="Servicios"
         :descripcion="ticket.descripcion"
     >
         <template #button_create>
-            <CreateForm :ticket_id="ticket_id" @update="getActividades()" />
+            <CreateForm :ticket_id="ticket.id" @update="getActividades()" />
             
 
         </template>
