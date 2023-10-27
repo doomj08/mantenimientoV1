@@ -198,7 +198,7 @@
         
             <tr class="">
                 <th colspan="2">Servicio</th>
-                <th colspan="2">Falla reportada</th>
+                <th colspan="2">Novedad reportada</th>
                 <th>Precio</th>
             </tr>
         
