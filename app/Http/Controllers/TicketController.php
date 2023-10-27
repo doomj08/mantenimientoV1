@@ -103,10 +103,11 @@ class TicketController extends Controller
 
     public function getPDF(Ticket $ticket)
     {
+        //$empresa_id=Ticket->empresa_id;
         $encabezado=[
-            'titulo1'=>'ORDEN DE SERVICIO ITCOMN Tech Support',
-            'titulo2'=>'NIT: 1118542537-8',
-            'titulo3'=>'Cel: 318 694 3892   Email:soporte@itcomn.com'
+            'titulo1'=>'ORDEN DE SERVICIO '.$ticket->Empresa->razon_social,
+            'titulo2'=>'NIT: '.$ticket->Empresa->nit,
+            'titulo3'=>'Cel: '.$ticket->Empresa->telefono.'   Email:'.$ticket->Empresa->email
         ];
         
         $data=[
@@ -114,6 +115,7 @@ class TicketController extends Controller
             "encabezado"=>$encabezado,
             "ticket"=>$ticket
         ];
+
         $pdf = Pdf::loadView('pdf.ticket', $data);
         $pdf->setPaper('letter', 'portrait');
         return base64_encode($pdf->stream());

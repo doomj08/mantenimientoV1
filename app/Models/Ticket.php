@@ -26,6 +26,10 @@ class Ticket extends Model
         return $this->belongsTo('App\Models\Cliente');
     }
 
+    public function Empresa(){
+        return $this->belongsTo('App\Models\Empresa');
+    }
+
     public function Servicio(){
         return $this->hasMany('App\Models\Servicio');
     }

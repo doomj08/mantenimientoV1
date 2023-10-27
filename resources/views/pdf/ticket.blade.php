@@ -237,19 +237,21 @@
         </tr>
     </thead>
     <tbody>
-        @foreach($ticket->TicketArticulo as $ticket_articulo)
-            <tr>
-                <td>1</td>
-                <td>{{$ticket_articulo->id}}</td>
-                <td>{{$ticket_articulo->TipoArticulo->tipo}}</td>
-                
-                
-                <td style="width: 40%;">
-                    @foreach($ticket_articulo->Propiedad as $propiedad)
-                        {{$propiedad->propiedad}} /
-                    @endforeach
-                </td>
-            </tr>
+        @foreach($ticket->Servicio as $servicio)
+            @foreach($servicio->ServicioArticulos as $articulo)
+                <tr>
+                    <td>1</td>
+                    <td>{{$articulo->id}}</td>
+                    <td>{{$articulo->TipoArticulo->tipo}}</td>
+                    
+                    
+                    <td style="width: 40%;">
+                        @foreach($articulo->Propiedad as $propiedad)
+                            {{$propiedad->propiedad}} /
+                        @endforeach
+                    </td>
+                </tr>
+            @endforeach
         @endforeach
         
  
