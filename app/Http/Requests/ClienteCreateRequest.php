@@ -24,7 +24,7 @@ class ClienteCreateRequest extends FormRequest
         return [
             'nombre'=>'required',
             'tipo_documento'=>'required',
-            'num_documento'=>'required',
+            'num_documento'=>'required|unique:clientes',
             'contacto'=>'required',
             'correo'=>'required',
             'telefono'=>'required',
