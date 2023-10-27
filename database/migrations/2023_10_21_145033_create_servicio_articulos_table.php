@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('servicio_articulos', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('ticket_id')->constrained();
+            $table->foreignId('servicio_id')->constrained();
             $table->foreignId('articulo_id')->constrained();
             $table->timestamps();
         });

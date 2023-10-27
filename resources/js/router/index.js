@@ -11,6 +11,7 @@ import Informes from '../views/Informes/Index.vue'
 import Propiedades from '../views/Propiedades/Index.vue'
 import SeccionFormatos from '../views/SeccionFormatos/Index.vue'
 import TicketVue from '../views/Ticket/Index.vue'
+import PDFVue from '../views/Ticket/PDF.vue'
 import TicketServicioVue from '../views/TicketServicio/Index.vue'
 import PropiedadVue from '../views/Propiedad/Index.vue'
 
@@ -32,6 +33,12 @@ const router = createRouter({
       path: '/ticket',
       name: 'ticket',
       component: TicketVue
+    },
+    {
+      path: '/ticket_pdf:ticket_id',
+      name: 'ticket_pdf',
+      component: PDFVue,
+      props: true,
     },
     {
       path: '/ticket_servicios/:ticket_id:ticket_num',

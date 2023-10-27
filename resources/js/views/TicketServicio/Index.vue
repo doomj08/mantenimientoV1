@@ -79,7 +79,7 @@
         </accordion-header>
         <accordion-content>
           <div class="flex">
-            <div class="w-1/2">
+            <div class="w-full">
                 <div class="w-full">
                     <div href="#" class="flex flex-col items-center bg-white border border-gray-200 rounded-lg shadow md:flex-row md:max-w-xl hover:bg-gray-100 dark:border-gray-700 dark:bg-gray-800 dark:hover:bg-gray-700"
                         v-for="(actividad,index) in servicio.actividades" :key="index"

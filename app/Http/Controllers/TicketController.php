@@ -116,7 +116,7 @@ class TicketController extends Controller
         ];
         $pdf = Pdf::loadView('pdf.ticket', $data);
         $pdf->setPaper('letter', 'portrait');
-        $base64 = base64_encode($pdf->stream());
+        return base64_encode($pdf->stream());
         return $pdf->stream();
         //return $pdf->download('invoice.pdf');
     }

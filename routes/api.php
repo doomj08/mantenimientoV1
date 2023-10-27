@@ -39,7 +39,7 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 });
 
 Route::middleware(['auth:sanctum'])->group(function (){
-
+    Route::get('pdf/ticket/{ticket}',[TicketController::class,'getPDF']);
     Route::resource('tipo_articulos',TipoArticuloController::class);
     Route::resource('articulo',ArticuloController::class);
     Route::resource('clientes',ClienteController::class);
