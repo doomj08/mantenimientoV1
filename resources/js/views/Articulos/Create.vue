@@ -133,7 +133,7 @@ const getSelects=async () =>{
                   </ul>
               </template>
           </Select>
-        <Select size="sm" v-model="form.cliente_id" :options="options_clientes" label="Cliente" :validationStatus="(form.errors.cliente_id?'error':'')">
+        <Select :disabled="cliente_id" size="sm" v-model="form.cliente_id" :options="options_clientes" label="Cliente" :validationStatus="(form.errors.cliente_id?'error':'')">
             <template #validationMessage v-if="form.errors.cliente_id">
                   <ul>
                       <li v-for="(error,index) in form.errors.cliente_id" :key="index">{{ error }}</li>

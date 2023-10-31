@@ -128,7 +128,8 @@ class ArticuloController extends Controller
         $articulo=Articulo::create([
             "nombre_interno"=>$request->input('nombre_interno'),
             "tipo_articulo_id"=>$request->input('tipo_articulo_id'),
-            "cliente_id"=>$request->input('cliente_id')
+            "cliente_id"=>$request->input('cliente_id'),
+            "articulo_padre_id"=>$request->input('articulo_padre_id')
         ]);
         return response()->json([
             'status'=>true,

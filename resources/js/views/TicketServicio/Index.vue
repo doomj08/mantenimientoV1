@@ -16,65 +16,65 @@
         <accordion-header>
             <table 
                 class="min-w-full divide-y divide-gray-200 table-fixed dark:divide-gray-600">
-                    <tbody  class="bg-white divide-y divide-gray-200 dark:bg-gray-800 dark:divide-gray-700">
-                        <tr>
-                        <th scope="col" class="p-4 text-xs font-medium text-left text-gray-500 uppercase dark:text-gray-400">
-                        Descripción
-                    </th>
+                <tbody  class="bg-white divide-y divide-gray-200 dark:bg-gray-800 dark:divide-gray-700">
+                    <tr>
                     <th scope="col" class="p-4 text-xs font-medium text-left text-gray-500 uppercase dark:text-gray-400">
-                        Fecha / Hora Programada
-                    </th>
-                    <th scope="col" class="p-4 text-xs font-medium text-left text-gray-500 uppercase dark:text-gray-400">
-                        Fecha / Hora Inicio- Fin
-                    </th>
-                    <th v-if="false" scope="col" class="p-4 text-xs font-medium text-left text-gray-500 uppercase dark:text-gray-400">
-                        Artículos / Ítems
-                    </th>
-                    <th scope="col" class="p-4 text-xs font-medium text-left text-gray-500 uppercase dark:text-gray-400">
-                        Actions
-                    </th>
-                    </tr>
-                            <tr class="hover:bg-gray-100 dark:hover:bg-gray-500">
-                                <td class="items-center p-4 mr-12 whitespace-nowrap">
-                                    <div class="text-xs font-normal">
-                                        <div class=" font-semibold text-gray-900  dark:text-white">{{ (servicio.precio)?'$'+servicio.precio:'' }}</div>
-                                    </div>
-                                    <div class="text-sm font-normal">
-                                        <div class="text-base font-semibold text-gray-900 dark:text-white">{{ servicio.descripcion }}</div>
-                                    </div>
+                    Descripción
+                </th>
+                <th scope="col" class="p-4 text-xs font-medium text-left text-gray-500 uppercase dark:text-gray-400">
+                    Fecha / Hora Programada
+                </th>
+                <th scope="col" class="p-4 text-xs font-medium text-left text-gray-500 uppercase dark:text-gray-400">
+                    Fecha / Hora Inicio- Fin
+                </th>
+                <th v-if="false" scope="col" class="p-4 text-xs font-medium text-left text-gray-500 uppercase dark:text-gray-400">
+                    Artículos / Ítems
+                </th>
+                <th scope="col" class="p-4 text-xs font-medium text-left text-gray-500 uppercase dark:text-gray-400">
+                    Actions
+                </th>
+                </tr>
+                        <tr class="hover:bg-gray-100 dark:hover:bg-gray-500">
+                            <td class="items-center p-4 mr-12 whitespace-nowrap">
+                                <div class="text-xs font-normal">
+                                    <div class=" font-semibold text-gray-900  dark:text-white">{{ (servicio.precio)?'$'+servicio.precio:'' }}</div>
+                                </div>
+                                <div class="text-sm font-normal">
+                                    <div class="text-base font-semibold text-gray-900 dark:text-white">{{ servicio.descripcion }}</div>
+                                </div>
 
-                                </td>
-                                <td class=" items-center p-4 mr-12 space-x-6 whitespace-nowrap">
-                                    <div class="text-sm font-normal text-gray-500 dark:text-gray-400">
-                                        <div class="text-base font-semibold text-gray-900 dark:text-white">{{ servicio.fecha_programada }}</div>
-                                    </div>
-                                </td>
-                                <td class="whitespace-nowrap">
-                                    <div class="text-sm font-normal text-gray-500 dark:text-gray-400">
-                                        <div class="text-base font-semibold text-gray-900 dark:text-white">{{ servicio.fecha_inicio }}</div>
-                                    </div>
-                                    <div class="text-sm font-normal text-gray-500 dark:text-gray-400">
-                                        <div class="text-base font-semibold text-gray-900 dark:text-white">{{ servicio.fecha_fin }}</div>
-                                    </div>
-                                </td>
-                                <td v-if="false" class=" items-center p-4 mr-12 space-x-6 whitespace-nowrap">
-                                    <div class="text-sm font-normal text-gray-500 dark:text-gray-400">
-                                        <kbd v-for="(articulo,index) in servicio.servicio_articulos" :key="index" class="inline-flex m-1 items-center px-2 py-1.5 text-gray-800 bg-green-100 border border-gray-200 rounded-lg dark:bg-gray-600 dark:text-gray-100 dark:border-gray-500">
-                                            <span class="">{{ articulo.nombre_interno }}</span>
-                                        </kbd>
-                                    </div>
-                                </td>
+                            </td>
+                            <td class=" items-center p-4 mr-12 space-x-6 whitespace-nowrap">
+                                <div class="text-sm font-normal text-gray-500 dark:text-gray-400">
+                                    <div class="text-base font-semibold text-gray-900 dark:text-white">{{ servicio.fecha_programada }}</div>
+                                </div>
+                            </td>
+                            <td class="whitespace-nowrap">
+                                <div class="text-sm font-normal text-gray-500 dark:text-gray-400">
+                                    <div class="text-base font-semibold text-gray-900 dark:text-white">{{ servicio.fecha_inicio }}</div>
+                                </div>
+                                <div class="text-sm font-normal text-gray-500 dark:text-gray-400">
+                                    <div class="text-base font-semibold text-gray-900 dark:text-white">{{ servicio.fecha_fin }}</div>
+                                </div>
+                            </td>
+                            <td v-if="false" class=" items-center p-4 mr-12 space-x-6 whitespace-nowrap">
+                                <div class="text-sm font-normal text-gray-500 dark:text-gray-400">
+                                    <kbd v-for="(articulo,index) in servicio.servicio_articulos" :key="index" class="inline-flex m-1 items-center px-2 py-1.5 text-gray-800 bg-green-100 border border-gray-200 rounded-lg dark:bg-gray-600 dark:text-gray-100 dark:border-gray-500">
+                                        <span class="">{{ articulo.nombre_interno }}</span>
+                                    </kbd>
+                                </div>
+                            </td>
 
 
-                                <td class="p-4 space-x-2 whitespace-nowrap">{{ ticket.cliente_id}}
-                                    <AddArticulo :cliente_id="ticket.cliente_id" :servicio_id="servicio.id" :ticket_id="ticket_id" @update="getActividades()" />
-                                    <AddActividad :ticket_id="ticket_id" :servicio_id="servicio.id" @update="getActividades()"/>
-                                    <EditForm @update="getActividades()" class="text-left" :ticket_id="servicio.ticket_id" :servicio_id="servicio.id"/>
-                                    <DeleteForm @update="getActividades()" :name="servicio.id" :url="'tickets/'+props.ticket_id+'/servicio'" :id="servicio.id"/>
-                                </td>
-                            </tr>
-                    </tbody>
-                </table>
+                            <td class="p-4 space-x-2 whitespace-nowrap">{{ ticket.cliente_id}}
+                                <AddArticulo  v-if="(!servicio['estado-servicio']>0)" :cliente_id="ticket.cliente_id" :servicio_id="servicio.id" :ticket_id="ticket_id" @update="getActividades()" />
+                                <AddActividad v-if="(!servicio['estado-servicio']>0)" :ticket_id="ticket_id" :servicio_id="servicio.id" @update="getActividades()"/>
+                                <EditForm @update="getActividades()" class="text-left" :ticket_id="servicio.ticket_id" :servicio_id="servicio.id"/>
+                                <DeleteForm @update="getActividades()" :name="servicio.id" :url="'tickets/'+props.ticket_id+'/servicio'" :id="servicio.id"/>
+                            </td>
+                        </tr>
+                </tbody>
+            </table>
             
         </accordion-header>
         <accordion-content>

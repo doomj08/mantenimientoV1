@@ -3,6 +3,7 @@
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\Rule;
 
 class ClienteCreateRequest extends FormRequest
 {
@@ -24,7 +25,7 @@ class ClienteCreateRequest extends FormRequest
         return [
             'nombre'=>'required',
             'tipo_documento'=>'required',
-            'num_documento'=>'required|unique:clientes',
+            'num_documento'=>['required',Rule::unique('clientes')->ignore($this->cliente)],
             'contacto'=>'required',
             'correo'=>'required',
             'telefono'=>'required',
