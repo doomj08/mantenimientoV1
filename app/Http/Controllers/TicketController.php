@@ -18,7 +18,7 @@ class TicketController extends Controller
 
     public function index()
     {
-        $tickets=Ticket::with('Cliente')->withCount('ActividadTicket')->orderBy('num_ticket')->get();
+        $tickets=Ticket::with('Cliente')->withCount('Servicio','ActividadTicket')->orderBy('num_ticket')->get();
         return response()->json([
             'status'=>true,
             'message' => 'Lista de tickets completada',
