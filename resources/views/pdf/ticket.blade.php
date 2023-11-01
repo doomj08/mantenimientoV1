@@ -269,14 +269,16 @@
         <tr>
             <td>
                 <ul style="padding: 0px 0px 0px 10px; margin: 0px;">
-                @foreach($ticket->ActividadTicket as $actividadTicket)
-                    
-                        <li>{{$actividadTicket->descripcion}}</li>
+                @foreach($ticket->Servicio as $servicio)
+                    @foreach($servicio->Actividades as $actividadTicket)
                         
+                            <li>{{$actividadTicket->descripcion}}</li>
+                            
+                            
+                            
+                            
                         
-                        
-                        
-                    
+                    @endforeach
                 @endforeach
                 </ul>
             </td>
