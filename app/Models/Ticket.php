@@ -19,7 +19,7 @@ class Ticket extends Model
 
     }
 
-    protected $fillable=['num_ticket','empresa_id','descripcion','cliente_id','fecha_hora'];
+    protected $fillable=['num_ticket','empresa_id','register_user_id','descripcion','cliente_id','fecha_hora'];
     protected $appends = ['estado-ticket'];
 
     public function Cliente(){
@@ -28,6 +28,10 @@ class Ticket extends Model
 
     public function Empresa(){
         return $this->belongsTo('App\Models\Empresa');
+    }
+
+    public function RegisterUser(){
+        return $this->belongsTo('App\Models\User','register_user_id');
     }
 
     public function Servicio(){

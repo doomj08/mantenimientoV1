@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Cliente;
 use App\Models\Ticket;
+use App\Models\User;
 use Barryvdh\DomPDF\Facade\Pdf;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
@@ -59,6 +60,7 @@ class TicketController extends Controller
     public function store(Request $request)
     {
         $empresa_id=auth()->user()->empresa_id;
+        $tecnico_id=auth()->user()->id;
         //$max_id=Ticket::where('empresa_id',$empresa_id)->max('num_ticket')+1;
         $max_id=Ticket::max('num_ticket')+1;
         $ticket=Ticket::create([
@@ -66,7 +68,8 @@ class TicketController extends Controller
             "descripcion"=>$request->input('descripcion'),
             "cliente_id"=>$request->input('cliente_id'),
             "fecha_hora"=>$request->input('fecha_hora'),
-            "empresa_id"=>$empresa_id
+            "empresa_id"=>$empresa_id,
+            'register_user_id'=>$tecnico_id
         ]);
         return response()->json([
             'status'=>true,
@@ -104,6 +107,9 @@ class TicketController extends Controller
     public function getPDF(Ticket $ticket)
     {
         //$empresa_id=Ticket->empresa_id;
+        $tecnicos=User::with('FirmaDigitalizada')->whereHas('TecnicoActividades', function ($q) use($ticket){
+            $q->where('ticket_id',$ticket->id);
+        })->get();
         $encabezado=[
             'titulo1'=>'ORDEN DE SERVICIO '.$ticket->Empresa->razon_social,
             'titulo2'=>'NIT: '.$ticket->Empresa->nit,
@@ -113,7 +119,8 @@ class TicketController extends Controller
         $data=[
             "fecha_consulta"=>Carbon::now(),
             "encabezado"=>$encabezado,
-            "ticket"=>$ticket
+            "ticket"=>$ticket,
+            "tecnicos"=>$tecnicos
         ];
 
         $pdf = Pdf::loadView('pdf.ticket', $data);

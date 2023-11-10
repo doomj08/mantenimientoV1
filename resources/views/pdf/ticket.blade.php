@@ -136,6 +136,11 @@
     }
     /* todo el otro CSS necesario para el PDF */
     /* ... */
+    .firmas{
+        width: 45%;
+        display: inline-block;
+        vertical-align: top;
+    }
 </style>
 
 
@@ -247,7 +252,10 @@
                     
                     <td style="width: 40%;">
                         @foreach($articulo->Propiedad as $propiedad)
-                            {{$propiedad->propiedad}} /
+                            @if($propiedad->visible)
+                                |<strong>{{$propiedad->CampoPropiedad->nombre_propiedad}}: </strong>
+                                {{$propiedad->propiedad}}|
+                            @endif
                         @endforeach
                     </td>
                 </tr>
@@ -316,5 +324,36 @@
  
     </tbody>
 </table>
+<div class="firmas">
+<table>
+    <tbody>
+        @foreach($tecnicos as $tecnico)
+            <tr><td><strong>Correo técnico</strong></td></tr>
+            <tr><td>{{$tecnico->email}}</td></tr>
+            <tr><td><strong>{{$tecnico->name}}</strong></td></tr>
+            <tr><td>
+                <img
+                width="250px;"
+                src="{{($tecnico->FirmaDigitalizada)?$tecnico->FirmaDigitalizada->firma_digital:'Sin Firma'}}" 
+                alt="Firma Digitalizada">
+            </td></tr>
+        @endforeach
+    </tbody>
+</table>
+</div>
+<div class="firmas">
+<table>
+    <tbody>
+        @foreach($tecnicos as $tecnico)
+            <tr><td><strong>Correo cliente</strong></td></tr>
+            <tr><td>{{$ticket->Cliente->correo}}</td></tr>
+            <tr><td><strong>{{$ticket->Cliente->nombre}}</strong></td></tr>
+            
+        @endforeach
+    </tbody>
+</table>
+</div>
+
+
 
 

@@ -30,8 +30,8 @@
                         <tr class="hover:bg-gray-100 dark:hover:bg-gray-700" v-for="(propiedad,index) in propiedades" :key="index">
 
                             <td class="flex items-center p-4 mr-12 space-x-6 whitespace-nowrap">
-                                <div class="text-sm font-normal text-gray-500 dark:text-gray-400">
-                                    <div class="text-base font-semibold text-gray-900 dark:text-white">{{ propiedad.campo_propiedad_id }}</div>
+                                <div class="text-sm font-normal text-gray-500 dark:text-gray-400 flex">
+                                    <div class="text-sm font-semibold text-gray-900 dark:text-white mr-2">{{ propiedad.campo_propiedad_id }}</div>
                                     <div class="text-sm font-normal text-gray-500 dark:text-gray-400">{{ propiedad.propiedad }}</div>
                                 </div>
                             </td>

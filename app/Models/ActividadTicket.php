@@ -14,10 +14,15 @@ class ActividadTicket extends Model
         'servicio_id',
         'fecha_hora',
         "estado_ticket",
-        "descripcion"
+        "descripcion",
+        "tecnico_user_id"
     ];
 
     public function Ticket(){
         return $this->belongsTo('App\Models\Ticket');
+    }
+
+    public function TecnicoUser(){
+        return $this->belongsTo('App\Models\User','tecnico_user_id');
     }
 }

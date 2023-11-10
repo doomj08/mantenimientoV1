@@ -1,10 +1,12 @@
 <style>
 
+  @import url('https://fonts.googleapis.com/css2?family=Roboto+Condensed&family=Roboto:wght@500&display=swap');
+
     
     /* Añado la declaración de font-family, para usar la fuente de Google Fonts en este PDF */
     
     h1 {
-        font-family: 'Poppins', sans-serif;
+        font-family: 'Roboto Condensed', sans-serif;
         color: 303030;
         font-size: 20px;
     }

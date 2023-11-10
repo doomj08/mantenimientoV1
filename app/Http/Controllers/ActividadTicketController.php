@@ -59,13 +59,14 @@ class ActividadTicketController extends Controller
             //     'message' => 'Actividad registrada correctamente '.$estado_ticket,
                 
             // ],200);
-        
+        $tecnico_id=auth()->user()->id;
         $actividadTicket=ActividadTicket::create([
             'servicio_id'=>$servicio->id,
             'ticket_id'=>$servicio->ticket_id,
             'fecha_hora'=>$request->input('fecha_hora'),
             "estado_ticket"=>$estado_ticket,
             "descripcion"=>$request->input('descripcion'),
+            'tecnico_user_id'=>$tecnico_id
         ]);
         return response()->json([
             'status'=>true,

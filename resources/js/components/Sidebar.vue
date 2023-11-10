@@ -242,9 +242,14 @@
       </ul>
       <ul class="pt-4 mt-4 space-y-2 font-medium border-t border-gray-200 dark:border-gray-700" v-if="authStore.user">
          <li v-if="authStore.user">
+          <FirmaManoAlzada  @update="updateFirma()" />
+         </li>
+      </ul>
+      <ul class="pt-4 mt-4 space-y-2 font-medium border-t border-gray-200 dark:border-gray-700" v-if="authStore.user">
+         <li v-if="authStore.user">
           <Logout/>
          </li>
-    </ul>
+      </ul>
    </div>
 </aside>
 <div v-if="isShowSideBar" drawer-backdrop="" @click="closeSideBar" class="bg-gray-900 bg-opacity-50 sm:hidden dark:bg-opacity-80 fixed inset-0 z-30"></div>
@@ -253,6 +258,7 @@
   import { Sidebar, SidebarItem, SidebarLogo } from 'flowbite-vue'
   import {useAuthStore} from '../stores/auth'
   import Logout from '../views/User/Logout.vue';
+  import FirmaManoAlzada from '../views/User/FirmaManoAlzada.vue';
   import { ref } from 'vue'
   const authStore = useAuthStore();
   const isShowSideBar = ref(false)
@@ -262,5 +268,10 @@
   }
   function closeSideBar() {
     isShowSideBar.value = false
+  }
+
+  function updateFirma() {
+    console.log('actualizando firma')
+    authStore.refreshFirma();
   }
 </script>

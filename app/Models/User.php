@@ -42,4 +42,12 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
         'password' => 'hashed',
     ];
+
+    public function FirmaDigitalizada(){
+        return $this->hasOne('App\Models\FirmaDigitalizada')->latestOfMany();
+    }
+
+    public function TecnicoActividades(){
+        return $this->hasMany('App\Models\ActividadTicket','tecnico_user_id');
+    }
 }

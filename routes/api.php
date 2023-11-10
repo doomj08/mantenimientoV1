@@ -5,6 +5,7 @@ use App\Http\Controllers\ArticuloController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\CampoPropiedadController;
 use App\Http\Controllers\ClienteController;
+use App\Http\Controllers\FirmaDigitalizadaController;
 use App\Http\Controllers\FormatoController;
 use App\Http\Controllers\InformeController;
 use App\Http\Controllers\PropiedadController;
@@ -39,6 +40,11 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 });
 
 Route::middleware(['auth:sanctum'])->group(function (){
+    Route::resources([
+        'firma_digitalizada'=>FirmaDigitalizadaController::class,
+    ]);
+
+
     Route::get('pdf/ticket/{ticket}',[TicketController::class,'getPDF']);
     Route::resource('tipo_articulos',TipoArticuloController::class);
     Route::resource('articulo',ArticuloController::class);

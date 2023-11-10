@@ -3,10 +3,11 @@ import { defineStore } from "pinia";
 import {show_alerta } from '../functions';
 
 export const useAuthStore = defineStore('auth',{
-    state: ()=>({ authUser: null, authToken: null}),
+    state: ()=>({ authUser: null, authToken: null, firmaManoAlzada:null}),
     getters:{
         user:(state)=>state.authUser,
         token:(state)=>state.authToken,
+        firma_mano_alzada:(state)=>state.firmaManoAlzada,
     },
     actions:{
         async getToken(){
@@ -19,10 +20,25 @@ export const useAuthStore = defineStore('auth',{
                     console.log(res.data)
                     this.authToken = res.data.token,
                     this.authUser = res.data.user,
+                    this.firmaManoAlzada=res.data.firma_mano_alzada.firma_digital
                     this.router.push('/');
                 }
             ).catch(
                 (errors)=>{
+                    console.log(errors)
+                    show_alerta(errors, 'error','');
+                }
+            )
+        },
+        async refreshFirma(){
+            await this.getToken();
+            await axios.get('/api/firma_digitalizada').then(
+                (res)=>{
+                    this.firmaManoAlzada=res.data.firma_mano_alzada.firma_digital
+                }
+            ).catch(
+                (errors)=>{
+                    console.log(errors)
                     show_alerta(errors.response.data, 'error','');
                 }
             )

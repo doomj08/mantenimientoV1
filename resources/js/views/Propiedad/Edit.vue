@@ -15,7 +15,7 @@ const authStore = useAuthStore();
 
 
 const isShowModal = ref(false)
-const form = ref({campo_propiedad:null,propiedad:null,errors:[]});
+const form = ref({campo_propiedad:null,propiedad:null,errors:[],visible:0});
 
 function closeModal() {
   isShowModal.value = false
@@ -86,6 +86,13 @@ const getCampo=async () =>{
             (response) => {
                 form.value.propiedad=response.data.data.propiedad.propiedad
                 form.value.campo_propiedad=response.data.data.propiedad.campo_propiedad
+                if(response.data.data.propiedad.visible==1){
+                    form.value.visible=true
+                }
+                else{
+                    form.value.visible=false
+                }
+                
                 
                 console.log(response)
                 
@@ -110,7 +117,7 @@ const getCampo=async () =>{
     <Modal :size="size" v-if="isShowModal" @close="closeModal">
       <template #header>
         <div class="flex items-center text-lg">
-          Nuevo artículos
+          Propiedad {{ form.visible }}
         </div>
       </template>
       <template #body>
@@ -121,6 +128,12 @@ const getCampo=async () =>{
                 </ul>
             </template>
         </Input>
+        <label class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300 mt-4">¿Visible en Informe?</label>
+        <label class="relative inline-flex items-center cursor-pointer">
+          <input type="checkbox"  v-model="form.visible"  class="sr-only peer">
+          <div class="w-11 h-6 bg-red-300 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-green-300 dark:peer-focus:ring-green-800 rounded-full peer dark:bg-red-700 peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all dark:border-gray-600 peer-checked:bg-green-600"></div>
+          <span class="ml-3 text-sm font-medium text-gray-900 dark:text-gray-300">{{ (form.visible)?'Visible':'Oculto'}}</span>
+        </label>
         
       </template>
       <template #footer>
