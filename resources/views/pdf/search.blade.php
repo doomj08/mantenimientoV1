@@ -129,9 +129,7 @@
                                 <ul class="list">
                                     <template v-for="servicio in result.servicio">
                                         <li v-for="articulo in servicio.servicio_articulos">
-
-                                            @{{articulo}}
-                                            <a :href="'/informe/'+articulo.id" target="_blank">@{{articulo.nombre_interno}}</a>
+                                            <a :href="'/pdf/informe/'+articulo.id" target="_blank">@{{articulo.nombre_interno}}</a>
                                         </li>
                                     </template>
                                 </ul>
