@@ -115,7 +115,7 @@
                             
                             <td>@{{result["estado-ticket"]?'Abierto':'Cerrado'}}</td>
                             <td>@{{result.empresa.razon_social}}</td>
-                            <td><a :href="'/pdf/ticket/'+result.id+'/view'">Ver</a></td>
+                            <td><a :href="'/pdf/ticket/'+result.id+'/view'" target="_blank">Ver</a></td>
 
                             
                 
