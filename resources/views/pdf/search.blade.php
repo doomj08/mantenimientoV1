@@ -81,6 +81,17 @@
         td{
             border: 0px none #ddd;
         }
+        .list{
+
+            display: flex;
+
+            padding:0px;
+        }
+        .list li{
+            display: inline-block;
+            margin-left:5px;
+            margin-right:5px;
+        }
     </style>
 </head>
 <body>
@@ -88,6 +99,7 @@
         <div class="container">
             <form class="search-form" @submit.prevent="search">
                 <label for="search">Digite su número de Nit/CC para consultar sus tickets:</label>
+                <small>Para NIT ingrese el número completo con número de verificación, sin puntos ni comas</small>
                 <input v-model="searchTerm" type="text" id="search" name="search" placeholder="Ingrese su búsqueda">
                 <button type="submit">Buscar</button>
             </form>
@@ -101,6 +113,7 @@
                         <tr>
                             <th>Ticket</th>
                             <th>Descripción</th>
+                            <th>Artículos Relacionados</th>
                             <th>Estado</th>
                             <th>Empresa</th>
                             <th>Ver PDF</th>
@@ -112,8 +125,19 @@
                         <tr v-for="result in results">
                             <td>@{{result.num_ticket}}</td>
                             <td>@{{result.descripcion}}</td>
+                            <td>
+                                <ul class="list">
+                                    <template v-for="servicio in result.servicio">
+                                        <li v-for="articulo in servicio.servicio_articulos">
+
+                                            @{{articulo.nombre_interno}}
+                                        </li>
+                                    </template>
+                                </ul>
+
+                            </td>
                             
-                            <td>@{{result["estado-ticket"]?'Abierto':'Cerrado'}}</td>
+                            <td>@{{result["estado-ticket"]?'Cerrado':'Abierto'}}</td>
                             <td>@{{result.empresa.razon_social}}</td>
                             <td><a :href="'/pdf/ticket/'+result.id+'/view'" target="_blank">Ver</a></td>
 

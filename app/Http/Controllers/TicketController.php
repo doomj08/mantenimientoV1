@@ -178,7 +178,7 @@ class TicketController extends Controller
     public function search(Request $request)
     {
         $search_key=$request->input('search');
-        $tickets=Ticket::with('Cliente','Empresa')
+        $tickets=Ticket::with('Cliente','Empresa','Servicio.ServicioArticulos')
         ->withCount('Servicio','ActividadTicket')
         ->orderBy('num_ticket')
         ->whereHas('Cliente', function($q)  use($search_key){
