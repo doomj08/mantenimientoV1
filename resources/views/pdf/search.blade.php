@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Formulario de Búsqueda con Vue.js 3</title>
+    <title>Mantenimiento</title>
     <script src="https://unpkg.com/vue@next"></script>
     <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
     <style>
@@ -59,6 +59,8 @@
             padding: 8px 16px;
             font-size: 16px;
             cursor: pointer;
+            color:white;
+            background-color:rgba(4,4,50,1)
         }
 
         table {
@@ -73,7 +75,11 @@
         }
 
         th {
-            background-color: #f2f2f2;
+            background-color: #000;
+            color:white;
+        }
+        td{
+            border: 0px none #ddd;
         }
     </style>
 </head>
