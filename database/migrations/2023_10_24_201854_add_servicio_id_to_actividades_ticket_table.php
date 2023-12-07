@@ -11,10 +11,10 @@ return new class extends Migration
      */
     public function up(): void
     {
-        // Schema::table('actividad_tickets', function (Blueprint $table) {
-        //    $table->unsignedBigInteger('servicio_id')->nullable();
-        //    $table->foreign('servicio_id')->on('servicio')->references('id');
-        // });
+        Schema::table('actividad_tickets', function (Blueprint $table) {
+           $table->foreignId('servicio_id')->constrained();
+           //$table->foreign('servicio_id')->on('servicio')->references('id');
+        });
     }
 
     /**
@@ -23,7 +23,7 @@ return new class extends Migration
     public function down(): void
     {
         Schema::table('actividad_tickets', function (Blueprint $table) {
-            $table->dropForeign('servicio_id');
+            $table->dropForeign(['servicio_id']);
         });
     }
 };

@@ -29,6 +29,7 @@ class TicketController extends Controller
         ],200);
     }
 
+
     /**
      * Show the form for creating a new resource.
      */
@@ -164,5 +165,32 @@ class TicketController extends Controller
             'status'=>true,
             'message' => 'Artículo eliminado correctamente'            
         ],200);
+    }
+
+    public function showForm()
+    {
+        return view('pdf.search');
+    }
+
+    public function search(Request $request)
+    {
+        $search_key=$request->input('search');
+        $tickets=Ticket::with('Cliente','Empresa')
+        ->withCount('Servicio','ActividadTicket')
+        ->orderBy('num_ticket')
+        ->whereHas('Cliente', function($q)  use($search_key){
+            $q->where('num_documento',$search_key);
+        })
+        ->get();
+        return response()->json([
+            'status'=>true,
+            'message' => 'Lista de tickets completada',
+            'data'=>[
+                'tickets'=>$tickets,
+                'request'=>$request->input('search')
+
+                ]
+        ],200);
+        $searchTerm = $request->input('search');
     }
 }

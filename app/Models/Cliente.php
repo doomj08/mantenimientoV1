@@ -10,4 +10,8 @@ class Cliente extends Model
     use HasFactory;
 
     protected $fillable=['nombre','tipo_documento','num_documento','contacto','correo','telefono','direccion','ciudad'];
+
+    public function Ticket(){
+        return $this->hasMany('App\Models\Ticket');
+    }
 }

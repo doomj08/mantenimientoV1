@@ -34,6 +34,15 @@ Route::get('/informe', function () {
 
 Route::get('informe/{informe}',[InformeController::class,'getPDF']);
 Route::get('/pdf/ticket/{ticket}',[TicketController::class,'getPDF']);
+Route::get('/search/ticket/',[TicketController::class,'search_index']);
+Route::post('/search/ticket/',[TicketController::class,'search_show']);
+
+// Muestra el formulario
+Route::get('/search', [TicketController::class, 'showForm'])->name('search.form');
+
+// Procesa la búsqueda
+Route::post('/search', [TicketController::class, 'search'])->name('search');
+
 
 Route::get('/clear-cache', function() {
     $exitCode = Artisan::call('config:clear');

@@ -53,6 +53,7 @@ export const useAuthStore = defineStore('auth',{
                 }
             ).catch(
                 (errors)=>{
+                    console.log(errors)
                     let desc = '';
                     errors.response.data.errors.map(
                         (e)=>{desc = desc +' ' +e}

@@ -12,8 +12,8 @@ return new class extends Migration
     public function up(): void
     {
         Schema::table('tickets', function (Blueprint $table) {
-            $table->unsignedBigInteger('empresa_id')->nullable();
-            $table->foreign('empresa_id')->on('empresas')->references('id');
+            $table->foreignId('empresa_id')->constrained()->after('id');
+            //$table->foreign('empresa_id')->on('empresas')->references('id');
 
             $table->string('num_ticket')->after('id')->default('id');
             $table->unique(['empresa_id','num_ticket']);
@@ -26,9 +26,10 @@ return new class extends Migration
     public function down(): void
     {
         Schema::table('tickets', function (Blueprint $table) {
+            //$table->dropConstrainedForeignId('empresa_id');
             $table->dropUnique(['empresa_id','num_ticket']);
             $table->dropColumn('num_ticket');
-            $table->dropConstrainedForeignId('empresa_id');            
+                     
         });
     }
 };

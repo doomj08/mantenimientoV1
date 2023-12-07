@@ -11,7 +11,7 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('actividad_tichets', function (Blueprint $table) {
+        Schema::create('actividad_tickets', function (Blueprint $table) {
             $table->id();
             $table->foreignId('ticket_id')->constrained();
             $table->datetime('fecha_hora');
