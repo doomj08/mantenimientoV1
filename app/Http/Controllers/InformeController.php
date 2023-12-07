@@ -104,12 +104,12 @@ class InformeController extends Controller
     {
         $informe=Informe::where('articulo_id',$articulo_id)->first();
 
-        //dd($informe);
+        dd($informe);
         if($informe==null){
            // return "No encontrado";
             return back()->with('status', 'Informe inexistente');
         }
-        $seccionesformato=SeccionFormato::where('formato_id',$informe->formato_id)->get();
+        $seccionesformato=SeccionFormato::where('formato_id',1)->get();
         
         $data=[
             "fecha_consulta"=>Carbon::now(),
