@@ -103,10 +103,8 @@ class InformeController extends Controller
     public function getPDFArticulo($articulo_id)
     {
         $informe=Informe::where('articulo_id',$articulo_id)->first();
-
-        dd($informe);
         if($informe==null){
-           // return "No encontrado";
+            return "No encontrado";
             return back()->with('status', 'Informe inexistente');
         }
         $seccionesformato=SeccionFormato::where('formato_id',1)->get();
