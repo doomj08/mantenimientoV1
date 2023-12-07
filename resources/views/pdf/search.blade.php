@@ -21,7 +21,7 @@
             flex-direction: column;
             align-items: center;
 
-            width: 100%;
+            
             margin: 20px;
         }
 
@@ -30,7 +30,7 @@
             flex-direction: column;
             align-items: center;
 
-            width: 100%;
+           
             margin: 20px;
         }
 

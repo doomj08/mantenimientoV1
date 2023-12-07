@@ -105,7 +105,7 @@ class TicketController extends Controller
     }
 
 
-    public function getPDF(Ticket $ticket)
+    public function getPDF(Ticket $ticket,$view=false)
     {
         //$empresa_id=Ticket->empresa_id;
         $tecnicos=User::with('FirmaDigitalizada')->whereHas('TecnicoActividades', function ($q) use($ticket){
@@ -126,7 +126,10 @@ class TicketController extends Controller
 
         $pdf = Pdf::loadView('pdf.ticket', $data);
         $pdf->setPaper('letter', 'portrait');
-        return base64_encode($pdf->stream());
+        if($view)
+            return $pdf->stream();
+        else
+            return base64_encode($pdf->stream());
         return $pdf->stream();
         //return $pdf->download('invoice.pdf');
     }
