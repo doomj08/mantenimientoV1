@@ -130,7 +130,8 @@
                                     <template v-for="servicio in result.servicio">
                                         <li v-for="articulo in servicio.servicio_articulos">
 
-                                            @{{articulo.nombre_interno}}
+                                            @{{articulo}}
+                                            <a :href="'/informe/'+articulo.id" target="_blank">@{{articulo.nombre_interno}}</a>
                                         </li>
                                     </template>
                                 </ul>
@@ -139,7 +140,9 @@
                             
                             <td>@{{result["estado-ticket"]?'Cerrado':'Abierto'}}</td>
                             <td>@{{result.empresa.razon_social}}</td>
-                            <td><a :href="'/pdf/ticket/'+result.id+'/view'" target="_blank">Ver</a></td>
+                            <td>
+                                <a :href="'/pdf/ticket/'+result.id+'/view'" target="_blank">Ver</a>
+                            </td>
 
                             
                 

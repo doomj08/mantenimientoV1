@@ -133,6 +133,8 @@ class TicketController extends Controller
         return $pdf->stream();
         //return $pdf->download('invoice.pdf');
     }
+
+    
     /**
      * Show the form for editing the specified resource.
      */

@@ -100,6 +100,28 @@ class InformeController extends Controller
         //return $pdf->download('invoice.pdf');
     }
 
+    public function getPDFArticulo($articulo_id)
+    {
+        $informe=Informe::where('articulo_id',$articulo_id)->first();
+
+        //dd($informe);
+        if($informe==null){
+           // return "No encontrado";
+            return back()->with('status', 'Informe inexistente');
+        }
+        $seccionesformato=SeccionFormato::where('formato_id',$informe->formato_id)->get();
+        
+        $data=[
+            "fecha_consulta"=>Carbon::now(),
+            "articulo"=>$informe->articulo,
+            "seccionesformato"=>$seccionesformato
+        ];
+        $pdf = Pdf::loadView('pdf.invoice', $data);
+        $base64 = base64_encode($pdf->stream());
+        return $pdf->stream();
+        //return $pdf->download('invoice.pdf');
+    }
+
     /**
      * Show the form for editing the specified resource.
      */

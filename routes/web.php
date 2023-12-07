@@ -34,6 +34,7 @@ Route::get('/informe', function () {
 
 Route::get('informe/{informe}',[InformeController::class,'getPDF']);
 Route::get('/pdf/ticket/{ticket}/{view?}',[TicketController::class,'getPDF']);
+Route::get('/pdf/informe/{articulo}',[InformeController::class,'getPDFArticulo']);
 Route::get('/search/ticket/',[TicketController::class,'search_index']);
 Route::post('/search/ticket/',[TicketController::class,'search_show']);
 
