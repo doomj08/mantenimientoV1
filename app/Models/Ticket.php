@@ -15,7 +15,10 @@ class Ticket extends Model
     {
         parent::boot();
         static::addGlobalScope(new TicketScope);
-        $empresa_id=auth()->user()->empresa_id;
+        if(auth()->user())
+            $empresa_id=auth()->user()->empresa_id;
+        else
+            $empresa_id=null;
 
     }
 

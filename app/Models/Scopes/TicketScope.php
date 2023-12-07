@@ -13,7 +13,14 @@ class TicketScope implements Scope
      */
     public function apply(Builder $builder, Model $model): void
     {
-        $empresa_id=auth()->user()->empresa_id;
-        $builder->where('empresa_id',$empresa_id );
+        if(auth()->user()){
+            $empresa_id=auth()->user()->empresa_id;
+            $builder->where('empresa_id',$empresa_id );
+        }
+        else{
+            $empresa_id=null;
+            //$builder->where('empresa_id',$empresa_id );
+        }
+        
     }
 }

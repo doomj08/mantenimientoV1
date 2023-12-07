@@ -13,8 +13,8 @@ import router from './router/index'
 import axios from 'axios'
 
 window.axios = axios
-window.axios.defaults.baseURL='http://127.0.0.1:8000'
-//window.axios.defaults.baseURL='https://api21.itcomn.com/'
+//window.axios.defaults.baseURL='http://127.0.0.1:8000'
+window.axios.defaults.baseURL='https://api21.itcomn.com/'
 /**
  * Next, we will create a fresh Vue application instance. You may then begin
  * registering components with the application instance so they are ready
