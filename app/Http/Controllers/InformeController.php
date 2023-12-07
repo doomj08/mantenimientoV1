@@ -104,7 +104,7 @@ class InformeController extends Controller
     {
         $informe=Informe::where('articulo_id',$articulo_id)->first();
         if($informe==null){
-            return "No encontrado";
+            return "Informe no creado";
             return back()->with('status', 'Informe inexistente');
         }
         $seccionesformato=SeccionFormato::where('formato_id',1)->get();
