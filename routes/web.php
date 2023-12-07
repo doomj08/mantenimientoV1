@@ -33,7 +33,7 @@ Route::get('/informe', function () {
 //Route::resource('informe',InformeController::class);
 
 Route::get('informe/{informe}',[InformeController::class,'getPDF']);
-Route::get('/pdf/ticket/{ticket}',[TicketController::class,'getPDF']);
+Route::get('/pdf/ticket/{ticket}/{view?}',[TicketController::class,'getPDF']);
 Route::get('/search/ticket/',[TicketController::class,'search_index']);
 Route::post('/search/ticket/',[TicketController::class,'search_show']);
 
