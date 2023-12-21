@@ -16,7 +16,9 @@
         color: #303030;
         font-size: 12px;
     }
-
+    caption{
+        text-align:left;
+    }
     .fecha {
         font-family: 'Roboto Flex', sans-serif;
     }
