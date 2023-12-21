@@ -25,12 +25,23 @@
     /* ... */
 </style>
 <p class="fecha">Fecha de impresión: {{$fecha_consulta}}</p>
-@foreach ($seccionesformato as $seccion)
-    <h1>{{$seccion->seccion}}</h1>
+@foreach ($seccionesformato as $index=>$seccion)
+        @php
+            $titulo_base = "$seccion->seccion";
+            $titulo_base2 = "$seccion->seccion";
+        @endphp
+    
     <table>
     
-    @foreach ($articulo->Propiedad as $propiedad)
+    @foreach ($articulo->Propiedad as $index2=>$propiedad)
         @if($propiedad->CampoPropiedad->seccion_formato_id==$seccion->id)
+
+            @if($titulo_base2==$titulo_base)
+                <caption><h1>{{$seccion->seccion}}</h1></caption>
+            @endif
+            @php
+                $titulo_base2 = "$seccion->seccion_disabled";
+            @endphp
         <tr>
                 <td>{{ $propiedad->CampoPropiedad->nombre_propiedad }}</td>
                 <td>{{ $propiedad->propiedad }}</td>
