@@ -4,7 +4,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Mantenimiento</title>
-    <script src="https://unpkg.com/vue@next"></script>
+
+    <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
     <style>
        body {
@@ -107,6 +108,7 @@
 
         <!-- Tabla de resultados -->
         <div class="container">
+
             <div v-if="results.length > 0">
                 <table>
                     <thead>
@@ -156,7 +158,8 @@
     </div>
 
     <script>
-        const app = Vue.createApp({
+        const { createApp, ref } = Vue
+        createApp({
             data() {
                 return {
                     searchTerm: '',
@@ -177,9 +180,8 @@
                         });
                 }
             }
-        });
+        }).mount('#app')
 
-        app.mount('#app');
     </script>
 </body>
 </html>
