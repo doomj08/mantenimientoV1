@@ -218,14 +218,14 @@
             <th>Fecha programada</th>
             <th>Fecha inicio</th>
             <th>Fecha fin</th>
-            <th>Duración</th>
+            <th colspan="2">Duración</th>
         </tr>
         
         <tr class="">
             <td>{{$servicio->fecha_programada}}</td>
             <td>{{$servicio->fecha_inicio}}</td>
             <td>{{$servicio->fecha_fin}}</td>
-            <td>{!! \Carbon\Carbon::parse($servicio->fecha_inicio)->diff(\Carbon\Carbon::parse($servicio->fecha_fin))->format('%y año(s), %m mes(es), %d día(s) %H:%I:%S horas')!!}</td>
+            <td colspan="2">{!! \Carbon\Carbon::parse($servicio->fecha_inicio)->diff(\Carbon\Carbon::parse($servicio->fecha_fin))->format('%y año(s), %m mes(es), %d día(s) %H:%I:%S horas')!!}</td>
         </tr>
     </tbody>
     
