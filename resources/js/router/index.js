@@ -30,6 +30,11 @@ const router = createRouter({
       component: HomeView
     },
     {
+      path: '/home',
+      name: 'dashboard',
+      component: HomeView
+    },
+    {
       path: '/ticket',
       name: 'ticket',
       component: TicketVue
