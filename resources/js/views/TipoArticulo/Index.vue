@@ -1,6 +1,6 @@
 <template>
-    <CampoForm :tipo_articulo_id="tipo_articulo_id" v-if="showWindowSeccion"/>
-    <EncabezadoVue v-if="!showWindowSeccion"
+    
+    <EncabezadoVue v-if="false&&!showWindowSeccion"
         namePage="CATEGORÍA DE ARTÍCULOS"  
     >
         <template #button_create>
@@ -8,58 +8,81 @@
 
         </template>
     </EncabezadoVue>
-    
-    <div class="flex flex-col" v-if="!showWindowSeccion">
-    <div class="overflow-x-auto">
-        <div class="inline-block min-w-full align-middle">
-            <div class="overflow-hidden shadow">
-                <table class="min-w-full divide-y divide-gray-200 table-fixed dark:divide-gray-600">
-                    <thead class="bg-gray-100 dark:bg-gray-700">
-                        <tr>
-
-                            <th scope="col" class="p-4 text-xs font-medium text-left text-gray-500 uppercase dark:text-gray-400">
-                                Tipo
-                            </th>
-                            <th scope="col" class="p-4 text-xs font-medium text-left text-gray-500 uppercase dark:text-gray-400">
-                                Campos
-                            </th>
-
-
-                            <th scope="col" class="p-4 text-xs font-medium text-left text-gray-500 uppercase dark:text-gray-400">
-                                Actions
-                            </th>
-                        </tr>
-                    </thead>
-                    <tbody class="bg-white divide-y divide-gray-200 dark:bg-gray-800 dark:divide-gray-700">
-                        
-                        <tr class="hover:bg-gray-100 dark:hover:bg-gray-700" v-for="(tipo_articulo,index) in tipo_articulos" :key="index">
-
-                            <td class="flex items-center p-4 mr-12 space-x-6 whitespace-nowrap">
-                                <div class="text-sm font-normal text-gray-500 dark:text-gray-400">
-                                    <div class="text-base font-semibold text-gray-900 dark:text-white">{{ tipo_articulo.tipo }}</div>
-                                </div>
-                            </td>
-                            <td class=" items-center p-4 mr-12 space-x-6 whitespace-nowrap">
-                                    <div class="text-sm font-normal text-gray-500 dark:text-gray-400">
-                                        <button @click=openSeccion(tipo_articulo.id)>Ver</button>
-                                    </div>
-                                </td>
-                            <td class="p-4 space-x-2 whitespace-nowrap">
-                                <EditForm  @update="getTipoArticulos()" class="text-left" :id="tipo_articulo.id" :tipo_articulos="tipo_articulo.tipo"/>
-
-                                <DeleteForm @update="getTipoArticulos()" :name="tipo_articulo.tipo" url="tipo_articulos" :id="tipo_articulo.id"/>
-                            </td>
-                        </tr>
-                        
-                        
-                        
-                        
-                    </tbody>
-                </table>
+    <div v-if="!showWindowSeccion" class="card bg-info-subtle shadow-none position-relative overflow-hidden mb-4">
+        <div class="card-body px-4 py-3">
+            <div class="row align-items-center">
+                <div class="col-9">
+                    <h4 class="fw-semibold mb-8">Categoría de artículos</h4>
+                    <nav aria-label="breadcrumb">
+                    <ol class="breadcrumb">
+                        <li class="breadcrumb-item">
+                            <RouterLink to="/home" class="text-muted text-decoration-none">
+                                Home
+                            </RouterLink>
+                        </li>
+                        <li class="breadcrumb-item" aria-current="page">Categorías</li>
+                    </ol>
+                    </nav>
+                </div>
+                <div class="col-3">
+                    <div class="text-center mb-n5">
+                        <CreateForm  @update="getTipoArticulos()"/>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
-</div>
+    
+    <div class="table-responsive mb-4" v-if="!showWindowSeccion">
+
+        <table class="table table-responsive border text-nowrap customize-table mb-0 align-middle">
+            <thead class="text-dark fs-4">
+                <tr>
+
+                    <th scope="col">
+                        <h6 class="fs-4 fw-semibold mb-0">Tipo</h6>
+                    </th>
+                    <th scope="col">
+                        <h6 class="fs-4 fw-semibold mb-0">Campos</h6>
+                    </th>
+
+
+                    <th scope="col">
+                        <h6 class="fs-4 fw-semibold mb-0">Actions</h6>
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+                
+                <tr v-for="(tipo_articulo,index) in tipo_articulos" :key="index">
+
+                    <td>
+                        <div class="d-flex align-items-center text-wrap">
+                            {{ tipo_articulo.tipo }}
+                        </div>
+                    </td>
+                    <td>
+                        <div class="d-flex align-items-center text-wrap">
+                            <button @click=openSeccion(tipo_articulo.id,tipo_articulo.tipo)>Ver</button>
+                        </div>
+                    </td>
+                    <td>
+                        <div class="d-flex align-items-center text-wrap">
+                            <EditForm  @update="getTipoArticulos()" class="text-left" :id="tipo_articulo.id" :tipo_articulos="tipo_articulo.tipo"/>
+
+                            <DeleteForm @update="getTipoArticulos()" :name="tipo_articulo.tipo" url="tipo_articulos" :id="tipo_articulo.id"/>
+                        </div>
+                    </td>
+                </tr>
+                
+                
+                
+                
+            </tbody>
+        </table>
+            
+    </div>
+    <CampoForm :nombreArticulo="tipo_articulo" :tipo_articulo_id="tipo_articulo_id" v-if="showWindowSeccion"/>
 </template>
 
 <script setup>
@@ -80,15 +103,17 @@
     const tipo_articulos=ref([]);
     const showWindowSeccion = ref(false)
     const tipo_articulo_id=ref(0)
+    const tipo_articulo=ref('')
     const load=ref(false);
 
     axios.defaults.headers.common['Authorization']='Bearer'+authStore.authToken;
 
     onMounted(()=>{getTipoArticulos()})
 
-    const openSeccion=(id)=>{
+    const openSeccion=(id,name)=>{
         console.log("id:"+id)
         tipo_articulo_id.value=id
+        tipo_articulo.value=name
         console.log("id:"+tipo_articulo_id.value)
         showWindowSeccion.value=true
     }

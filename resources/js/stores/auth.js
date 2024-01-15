@@ -20,6 +20,7 @@ export const useAuthStore = defineStore('auth',{
                     console.log(res.data)
                     this.authToken = res.data.token,
                     this.authUser = res.data.user,
+                    this.logoEmpresa = res.data.logo,
                     this.firmaManoAlzada=res.data.firma_mano_alzada.firma_digital
                     this.router.push('/');
                 }

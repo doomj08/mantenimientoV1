@@ -5,7 +5,8 @@
       <div>
         <div class="brand-logo d-flex align-items-center justify-content-between">
           <router-link to="/" class="text-nowrap logo-img">
-            <img src="/theme/assets/images/logos/dark-logo.svg" width="180" alt="" />
+            <img :src="authStore.logoEmpresa" width="180" alt="" />
+            
           </router-link>
           <div class="close-btn d-xl-none d-block sidebartoggler cursor-pointer" id="sidebarCollapse">
             <i class="ti ti-x fs-8"></i>
@@ -117,6 +118,9 @@
                 </span>
                 <span class="hide-menu">Informes</span>
               </router-link>
+            </li>
+            <li class="sidebar-item" v-if="authStore.user">
+              <Logout/>
             </li>
 
            

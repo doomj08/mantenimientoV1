@@ -6,6 +6,7 @@ use App\Http\Requests\LoginRequest;
 use App\Http\Requests\UserRequest;
 use App\Models\FirmaDigitalizada;
 use App\Models\User;
+use App\Models\Empresa;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
@@ -32,13 +33,15 @@ class AuthController extends Controller
                 'errors'=>['Unauthorized']
             ],401);
         }
-        $user = User::where('email',$request->email)->first();
+        $user = User::with('Empresa')->where('email',$request->email)->first();
         $firma = FirmaDigitalizada::where('user_id',$user->id)->latest()->first();
+        $logo = $user->Empresa->logo;
         return response()->json([   
             'status'=>true,
             'message'=>'User logged is successfull',
             'user'=> $user,
             'firma_mano_alzada'=> $firma,
+            'logo'=>$logo,
             'token'=> $user->createToken('API TOKEN')->plainTextToken
         ],200);
     }

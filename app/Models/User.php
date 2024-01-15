@@ -50,4 +50,8 @@ class User extends Authenticatable
     public function TecnicoActividades(){
         return $this->hasMany('App\Models\ActividadTicket','tecnico_user_id');
     }
+
+    public function Empresa(){
+        return $this->belongsto('App\Models\Empresa');
+    }
 }
