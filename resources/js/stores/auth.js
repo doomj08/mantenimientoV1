@@ -3,11 +3,12 @@ import { defineStore } from "pinia";
 import {show_alerta } from '../functions';
 
 export const useAuthStore = defineStore('auth',{
-    state: ()=>({ authUser: null, authToken: null, firmaManoAlzada:null}),
+    state: ()=>({ authUser: null, authToken: null, firmaManoAlzada:null, logoEmpresa:null}),
     getters:{
         user:(state)=>state.authUser,
         token:(state)=>state.authToken,
         firma_mano_alzada:(state)=>state.firmaManoAlzada,
+        logo_empresa:(state)=>state.logoEmpresa,
     },
     actions:{
         async getToken(){
