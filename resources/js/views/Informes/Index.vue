@@ -1,5 +1,6 @@
 <template>
     <EncabezadoVue 
+    v-if="false"
         namePage="INFORMES"  
         createButtonText="Agregar artículo"
     >
@@ -8,48 +9,71 @@
 
         </template>
     </EncabezadoVue>
-    
-    <div class="flex flex-col">
-    <div class="overflow-x-auto">
-        <div class="inline-block min-w-full align-middle">
-            <div class="overflow-hidden shadow">
-                <table class="min-w-full divide-y divide-gray-200 table-fixed dark:divide-gray-600">
-                    <thead class="bg-gray-100 dark:bg-gray-700">
+    <div class="card bg-info-subtle shadow-none position-relative overflow-hidden mb-4">
+        <div class="card-body px-4 py-3">
+            <div class="row align-items-center">
+                <div class="col-9">
+                    <h4 class="fw-semibold mb-8">Configuración  Informes</h4>
+                    <nav aria-label="breadcrumb">
+                    <ol class="breadcrumb">
+                        <li class="breadcrumb-item">
+                            <RouterLink to="/home" class="text-muted text-decoration-none">
+                                Home
+                            </RouterLink>
+                        </li>
+                        <li class="breadcrumb-item" aria-current="page">Informes</li>
+                    </ol>
+                    </nav>
+                </div>
+                <div class="col-3">
+                    <div class="text-center mb-n5">
+                        <CreateForm  @update="getInformes()"/>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="table-responsive mb-4">
+
+                <table class="table table-responsive border text-nowrap customize-table mb-0 align-middle">
+                    <thead class="text-dark fs-4">
                         <tr>
 
-                            <th scope="col" class="p-4 text-xs font-medium text-left text-gray-500 uppercase dark:text-gray-400">
-                                Artículo
+                            <th scope="col">
+                                <h6 class="fs-4 fw-semibold mb-0">Artículo</h6>
                             </th>
-                            <th scope="col" class="p-4 text-xs font-medium text-left text-gray-500 uppercase dark:text-gray-400">
-                                Versión Formato
+                            <th scope="col">
+                                <h6 class="fs-4 fw-semibold mb-0">Versión Formato</h6>
                             </th>
 
-                            <th scope="col" class="p-4 text-xs font-medium text-left text-gray-500 uppercase dark:text-gray-400">
-                                Actions
+                            <th scope="col">
+                                <h6 class="fs-4 fw-semibold mb-0">Actions</h6>
                             </th>
                         </tr>
                     </thead>
-                    <tbody class="bg-white divide-y divide-gray-200 dark:bg-gray-800 dark:divide-gray-700">
+                    <tbody>
                         
-                        <tr class="hover:bg-gray-100 dark:hover:bg-gray-700" v-for="(informe,index) in informes" :key="index">
+                        <tr v-for="(informe,index) in informes" :key="index">
 
-                            <td class="flex items-center p-4 mr-12 space-x-6 whitespace-nowrap">
-                                <div class="text-sm font-normal text-gray-500 dark:text-gray-400">
-                                    <div class="text-base font-semibold text-gray-900 dark:text-white">{{ informe.articulo_id }}</div>
+                            <td>
+                                <div class="d-flex align-items-center text-wrap">
+                                    {{ informe.articulo_id }}
                                 </div>
                             </td>
-                            <td class="items-center p-4 mr-12 space-x-6 whitespace-nowrap">
-                                <div class="text-sm font-normal text-gray-500 dark:text-gray-400">
-                                    <div class="text-base font-semibold text-gray-900 dark:text-white">{{ informe.formato_id }}</div>
+                            <td>
+                                <div class="d-flex align-items-center text-wrap">
+                                    {{ informe.formato_id }}
                                 </div>
                             </td>
                           
-                            <td class="p-4 space-x-2 whitespace-nowrap">
-                                <a target="_blank"  :href="'/informe/'+informe.id" class="inline-flex items-center justify-center w-1/2 px-3 py-2 text-sm font-medium text-center text-gray-900 bg-white border border-gray-300 rounded-lg hover:bg-gray-100 focus:ring-4 focus:ring-primary-300 sm:w-auto dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700 dark:focus:ring-gray-700">
-                                    Ver Informe</a>
-                                <EditForm class="text-left" :id="informe.id" @update="getInformes()"/>
+                            <td>
+                                <div class="d-flex align-items-center text-wrap">
+                                    <a target="_blank"  :href="'/informe/'+informe.id" class="inline-flex items-center justify-center w-1/2 px-3 py-2 text-sm font-medium text-center text-gray-900 bg-white border border-gray-300 rounded-lg hover:bg-gray-100 focus:ring-4 focus:ring-primary-300 sm:w-auto dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700 dark:focus:ring-gray-700">
+                                        Ver Informe</a>
+                                    <EditForm class="text-left" :id="informe.id" @update="getInformes()"/>
 
-                                <DeleteForm :name="informe.nombre_interno" url="informes" :id="informe.id" @update="getInformes()"/>
+                                    <DeleteForm :name="informe.nombre_interno" url="informes" :id="informe.id" @update="getInformes()"/>
+                                </div>
                             </td>
                         </tr>
                         
@@ -58,10 +82,8 @@
                         
                     </tbody>
                 </table>
-            </div>
-        </div>
+           
     </div>
-</div>
 </template>
 
 <script setup>

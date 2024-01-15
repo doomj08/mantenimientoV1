@@ -1,7 +1,8 @@
 <script setup>
     import Sidebar from '../../components/SidebarTheme.vue'
     import TableVue from '../../components/Table.vue'
-    
+    import {useAuthStore} from '../../stores/auth'
+  const authStore = useAuthStore();
     //import EncabezadoVue from '../../pages/master/encabezado.vue'
     
 </script>
@@ -11,10 +12,11 @@
   <div class="page-wrapper" id="main-wrapper" data-layout="vertical" data-navbarbg="skin6" data-sidebartype="full"
     data-sidebar-position="fixed" data-header-position="fixed">
     <!-- Sidebar Start -->
-    <Sidebar/>
+    <Sidebar v-if="authStore.user"/>
+    <slot name="body" v-if="!authStore.user"/>
     <!--  Sidebar End -->
     <!--  Main wrapper -->
-    <div class="body-wrapper">
+    <div class="body-wrapper" v-if="authStore.user">
       <!--  Header Start -->
       <header class="app-header">
         <nav class="navbar navbar-expand-lg navbar-light">
@@ -32,7 +34,7 @@
       <!--  Header End -->
       <div class="container-fluid">
         <!--  Row 1 -->
-        <slot name="body"/>
+        <slot name="body" v-if="authStore.user"/>
         <div class="py-6 px-6 text-center">
           <p class="mb-0 fs-4">Design and Developed by <a href="https://adminmart.com/" target="_blank" class="pe-1 text-primary text-decoration-underline">AdminMart.com</a> Distributed by <a href="https://themewagon.com">ThemeWagon</a></p>
         </div>
@@ -42,4 +44,3 @@
  
 
 </template>
-

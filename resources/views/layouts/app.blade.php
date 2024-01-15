@@ -26,6 +26,7 @@
   <script src="/theme/assets/libs/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
   <script src="/theme/assets/js/sidebarmenu.js"></script>
   <script src="/theme/assets/js/app.min.js"></script>
+  <script src="/theme/assets/libs/apexcharts/dist/apexcharts.min.js"></script>
   <script src="/theme/assets/libs/simplebar/dist/simplebar.js"></script>
   <script src="/theme/assets/js/dashboard.js"></script>
 </body>

@@ -66,7 +66,7 @@
                     <td>
                         <div class="d-flex align-items-center text-wrap">{{ ticket.fecha_hora }}</div></td>
                     <td>
-                        <div class="d-flex align-items-center text-wrap">{{ ticket.descripcion }}</div></td>
+                        <div class="d-flex align-items-center text-wrap text-justify">{{ ticket.descripcion }}</div></td>
                     <td>
                         <div class="d-flex align-items-center text-wrap">{{ ticket.cliente.nombre }}</div></td>
                     <td>

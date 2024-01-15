@@ -1,6 +1,7 @@
 <template>
     <EncabezadoVue 
         :namePage="'SECCIONES DE FORMATO ['+formato_id+']'"
+        v-if="false"
     >
         <template #button_create>
             <CreateForm :formato_id="formato_id" @update="getSecciones()"/>
@@ -8,37 +9,37 @@
         </template>
     </EncabezadoVue>
     
-    <div class="flex flex-col">
-    <div class="overflow-x-auto">
-        <div class="inline-block min-w-full align-middle">
-            <div class="overflow-hidden shadow">
-                <table class="min-w-full divide-y divide-gray-200 table-fixed dark:divide-gray-600">
-                    <thead class="bg-gray-100 dark:bg-gray-700">
+    <div class="table-responsive mb-4">
+
+                <table class="table table-responsive border text-nowrap customize-table mb-0 align-middle">
+                    <thead class="text-dark fs-4">
                         <tr>
 
-                            <th scope="col" class="p-4 text-xs font-medium text-left text-gray-500 uppercase dark:text-gray-400">
-                                Sección
+                            <th scope="col" >
+                                <h6 class="fs-4 fw-semibold mb-0">Sección</h6>
                             </th>
 
-                            <th scope="col" class="p-4 text-xs font-medium text-left text-gray-500 uppercase dark:text-gray-400">
-                                Actions
+                            <th scope="col" >
+                                <h6 class="fs-4 fw-semibold mb-0">Actions</h6>
                             </th>
                         </tr>
                     </thead>
-                    <tbody class="bg-white divide-y divide-gray-200 dark:bg-gray-800 dark:divide-gray-700">
+                    <tbody>
                         
-                        <tr class="hover:bg-gray-100 dark:hover:bg-gray-700" v-for="(seccion_formato,index) in secciones_formato" :key="index">
+                        <tr v-for="(seccion_formato,index) in secciones_formato" :key="index">
 
-                            <td class="flex items-center p-4 mr-12 space-x-6 whitespace-nowrap">
-                                <div class="text-sm font-normal text-gray-500 dark:text-gray-400">
-                                    <div class="text-base font-semibold text-gray-900 dark:text-white">{{ seccion_formato.seccion }}</div>
+                            <td>
+                                <div class="d-flex align-items-center text-wrap">
+                                    {{ seccion_formato.seccion }}
                                 </div>
                             </td>
                           
-                            <td class="p-4 space-x-2 whitespace-nowrap">
-                                <EditForm  @update="getSecciones()" class="text-left" :id="seccion_formato.id" :formato_id="formato_id"/>
+                            <td>
+                                <div class="d-flex align-items-center text-wrap">
+                                    <EditForm  @update="getSecciones()" class="text-left" :id="seccion_formato.id" :formato_id="formato_id"/>
 
-                                <DeleteForm @update="getSecciones()" :name="seccion_formato.nombre_interno" :url="'formatos/'+formato_id+'/seccion_formato'" :id="seccion_formato.id"/>
+                                    <DeleteForm @update="getSecciones()" :name="seccion_formato.nombre_interno" :url="'formatos/'+formato_id+'/seccion_formato'" :id="seccion_formato.id"/>
+                                </div>
                             </td>
                         </tr>
                         
@@ -47,10 +48,8 @@
                         
                     </tbody>
                 </table>
-            </div>
-        </div>
+           
     </div>
-</div>
 </template>
 
 <script setup>
