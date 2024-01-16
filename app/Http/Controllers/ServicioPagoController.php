@@ -31,6 +31,8 @@ class ServicioPagoController extends Controller
             'servicio_id'=>$servicio_id,
             'fecha'=>$request->fecha,
             'tipo_pago'=>$request->tipo_pago,
+            'banco'=>$request->entidad_bancaria,
+            'num_cuenta'=>$request->num_cuenta,
             'referencia'=>$request->referencia,
             'concepto'=>$request->concepto,
             'valor'=>$request->valor,
@@ -72,9 +74,11 @@ class ServicioPagoController extends Controller
         $servicioPago->update([
             'fecha'=>$request->fecha,
             'tipo_pago'=>$request->tipo_pago,
+            'banco'=>$request->entidad_bancaria,
+            'num_cuenta'=>$request->num_cuenta,
             'referencia'=>$request->referencia,
             'concepto'=>$request->concepto,
-            'valor'=>$request->valor
+            'valor'=>$request->valor,
         ]);
     }
 
@@ -84,5 +88,32 @@ class ServicioPagoController extends Controller
     public function destroy(ServicioPago $servicioPago)
     {
         //
+    }
+
+    public function getTipoPagosSelect() {
+        $selectTipoPagos=Array();
+        $new_option=[
+            "value"=>'transferencia',
+            "name"=>'Transferencia',
+        ];
+        array_push($selectTipoPagos,$new_option);
+        $new_option=[
+            "value"=>'efectivo',
+            "name"=>'Efectivo',
+        ];
+        array_push($selectTipoPagos,$new_option);
+        $new_option=[
+            "value"=>'consignación',
+            "name"=>'Consignación',
+        ];
+        array_push($selectTipoPagos,$new_option);
+
+        return response()->json([
+            'status'=>true,
+            'message' => 'Lista de artículos completada',
+            'data'=>[
+                'select_tipo_pagos'=>$selectTipoPagos
+                ]
+        ],200);
     }
 }

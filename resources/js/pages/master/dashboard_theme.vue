@@ -1,6 +1,5 @@
 <script setup>
     import Sidebar from '../../components/SidebarTheme.vue'
-    import TableVue from '../../components/Table.vue'
     import {useAuthStore} from '../../stores/auth'
   const authStore = useAuthStore();
     //import EncabezadoVue from '../../pages/master/encabezado.vue'

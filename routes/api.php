@@ -97,6 +97,7 @@ Route::middleware(['auth:sanctum'])->group(function (){
     //Route::get('articulos_cliente/{cliente_id}/{ticket_id?}',[ArticuloController::class,'getArticulosCliente']);
     Route::get('articulos_cliente/{cliente_id}/{servicio_id?}',[ArticuloController::class,'getArticulosCliente']);
     Route::get('articulos_select',[ArticuloController::class,'getArticulosSelect']);
+    Route::get('tipo_pagos_select',[ServicioPagoController::class,'getTipoPagosSelect']);
     Route::get('informes_select',[InformeController::class,'getInformesSelect']);
     Route::post('articulos_cliente/{ticket_id}',[ArticuloController::class,'getArticulosCliente']);
 

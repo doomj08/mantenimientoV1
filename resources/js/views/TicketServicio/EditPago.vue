@@ -23,18 +23,49 @@ function closeModal() {
   isShowModal.value = false
 }
 function showModal() {
+    getSelects()
     getPagos()
   isShowModal.value = true
 
 }
 
-
+const options_tipo_pagos=ref([]);
 
 const save=()=>{
     sendRequestWithFiles('PUT',form.value,'api/tickets/'+props.ticket_id+'/servicio/'+props.servicio_id+'/pago/'+props.id_pago);
 
     closeModal();
     
+}
+
+const getSelects=async () =>{
+    let res;
+        const config = {
+        headers: {
+            'Authorization': 'Bearer '+authStore.authToken,
+        }
+    };
+        await axios(
+        {
+            method:'GET', url:'api/tipo_pagos_select', data:null,headers:config.headers
+        }
+    )
+    .then(
+        (response) => {
+            options_tipo_pagos.value=response.data.data.select_tipo_pagos          
+                
+            console.log(response)
+            res= response.data.status
+        }
+    )
+    .catch((e)=>{
+    let desc='';
+    res = e.data;
+    console.log('errores')
+    console.log(e)
+
+});
+    return res;
 }
 
 async function sendRequestWithFiles(method, params, url, redirect=''){
@@ -130,14 +161,13 @@ const getPagos=async () =>{
             </template>
         </Input>
         
-
-        <Input size="sm" v-model="form.tipo_pago" label="Tipo de pago" :validationStatus="(form.errors.tipo_pago?'error':'')">
+        <Select size="sm" v-model="form.tipo_pago" :options="options_tipo_pagos" label="Tipo de pago" :validationStatus="(form.errors.tipo_pago?'error':'')">
             <template #validationMessage v-if="form.errors.tipo_pago">
-                <ul>
-                    <li v-for="(error,index) in form.errors.tipo_pago" :key="index">{{ error }}</li>
-                </ul>
-            </template>
-        </Input>
+                  <ul>
+                      <li v-for="(error,index) in form.errors.tipo_pago" :key="index">{{ error }}</li>
+                  </ul>
+              </template>
+          </Select>
         <Input size="sm" v-model="form.entidad_bancaria" label="Entidad Bancaria" :validationStatus="(form.errors.entidad_bancaria?'error':'')">
             <template #validationMessage v-if="form.errors.entidad_bancaria">
                 <ul>

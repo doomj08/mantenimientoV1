@@ -5,7 +5,9 @@
       <div>
         <div class="brand-logo d-flex align-items-center justify-content-between">
           <router-link to="/" class="text-nowrap logo-img">
-            <img :src="'data:image/png;base64,'+authStore.logoEmpresa" width="180" alt="" />
+            <img :src="'data:image/png;base64,'+authStore.logoEmpresa"  width="180"
+              alt="Logo de la empresa" style="max-height: 60px;"
+              />
             
           </router-link>
           

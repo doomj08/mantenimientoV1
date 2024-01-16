@@ -9,6 +9,6 @@ class ServicioPago extends Model
 {
     use HasFactory;
 
-    protected $fillable=['servicio_id','fecha','tipo_pago','referencia','concepto','valor'];
+    protected $fillable=['servicio_id','fecha','tipo_pago','banco','num_cuenta','referencia','concepto','valor'];
 
 }
