@@ -16,7 +16,9 @@ return new class extends Migration
             $table->foreignId('servicio_id')->constrained();
             $table->date('fecha');
             $table->enum('tipo_pago',['transferencia', 'efectivo', 'consignación']);
-            $table->string('referencia2')->nullable();
+            $table->string('banco')->nullable();
+            $table->string('num_cuenta')->nullable();
+            $table->string('referencia')->nullable();
             $table->string('concepto');
             $table->double('valor');
             $table->timestamps();

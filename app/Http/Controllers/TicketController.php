@@ -69,6 +69,7 @@ class TicketController extends Controller
             "descripcion"=>$request->input('descripcion'),
             "cliente_id"=>$request->input('cliente_id'),
             "fecha_hora"=>$request->input('fecha_hora'),
+            "fecha_estimada"=>$request->input('fecha_estimada'),
             "empresa_id"=>$empresa_id,
             'register_user_id'=>$tecnico_id
         ]);

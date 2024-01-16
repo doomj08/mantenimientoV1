@@ -16,7 +16,7 @@ const authStore = useAuthStore();
 const emit = defineEmits('update');
 
 const isShowModal = ref(false)
-const form = ref({servicio_id:props.servicio_id,fecha:null,tipo_pago:null,referencia:null, concepto:null, valor:null ,ticket_id:props.ticket_id,errors:[]});
+const form = ref({servicio_id:props.servicio_id,fecha:null,tipo_pago:null,entidad_bancaria:null,num_cuenta:null,referencia:null, concepto:null, valor:null ,ticket_id:props.ticket_id,errors:[]});
 
 
 function closeModal() {
@@ -99,6 +99,20 @@ async function sendRequestWithFiles(method, params, url, redirect=''){
             <template #validationMessage v-if="form.errors.tipo_pago">
                 <ul>
                     <li v-for="(error,index) in form.errors.tipo_pago" :key="index">{{ error }}</li>
+                </ul>
+            </template>
+        </Input>
+        <Input size="sm" v-model="form.entidad_bancaria" label="Entidad Bancaria" :validationStatus="(form.errors.entidad_bancaria?'error':'')">
+            <template #validationMessage v-if="form.errors.entidad_bancaria">
+                <ul>
+                    <li v-for="(error,index) in form.errors.entidad_bancaria" :key="index">{{ error }}</li>
+                </ul>
+            </template>
+        </Input>
+        <Input size="sm" v-model="form.num_cuenta" label="Cuenta" :validationStatus="(form.errors.num_cuenta?'error':'')">
+            <template #validationMessage v-if="form.errors.num_cuenta">
+                <ul>
+                    <li v-for="(error,index) in form.errors.num_cuenta" :key="index">{{ error }}</li>
                 </ul>
             </template>
         </Input>

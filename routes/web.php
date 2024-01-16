@@ -60,6 +60,11 @@ Route::get('/rollback', function() {
     $exitCode = Artisan::call('rollback');
     return 'DONE'; //Return anything
 });
+
+Route::get('/sello', function() {
+    return view('pdf.sello');
+    return 'DONE'; //Return anything
+});
 Auth::routes();
 
 //Route::get('/', [HomeController::class, 'index'])->name('home');

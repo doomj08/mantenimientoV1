@@ -22,8 +22,8 @@ class Ticket extends Model
 
     }
 
-    protected $fillable=['num_ticket','empresa_id','register_user_id','descripcion','cliente_id','fecha_hora'];
-    protected $appends = ['estado-ticket'];
+    protected $fillable=['num_ticket','empresa_id','register_user_id','descripcion','cliente_id','fecha_hora','fecha_estimada'];
+    protected $appends = ['estado-ticket','min-tiempo-inicial','max-tiempo-final'];
 
     public function Cliente(){
         return $this->belongsTo('App\Models\Cliente');
@@ -51,5 +51,13 @@ class Ticket extends Model
 
     public function getEstadoTicketAttribute(){
         return  $this->ActividadTicket()->where('estado_ticket','cerrado')->count();
+    }
+
+    public function getMinTiempoInicialAttribute(){
+        return $this->Servicio()->min('fecha_inicio');
+    }
+
+    public function getMaxTiempoFinalAttribute(){
+        return $this->Servicio()->max('fecha_fin');
     }
 }

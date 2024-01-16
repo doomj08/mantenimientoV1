@@ -1,8 +1,5 @@
 <style>
 
-    
-    /* Añado la declaración de font-family, para usar la fuente de Google Fonts en este PDF */
-    
     h1 {
         font-family: 'Poppins', sans-serif;
         color: 303030;
@@ -141,7 +138,77 @@
         display: inline-block;
         vertical-align: top;
     }
+    .desgaste {
+        font-family: 'Black Ops One', system-ui;
+            font-size: 14px;
+            position: absolute;
+            right:-10px;
+            top:140px;
+            border-radius:50%;
+            padding:0px 5px 2px 5px;
+            text-align:center;
+            line-height: 0.7;
+    }
+    .cerrado_ok{
+        border: 0 solid rgba(200, 250, 100, 1); /* Borde blanco con 50% de transparencia */
+            color: #069867;
+    }
+    .cerrado_no_ok{
+        border: 0 solid rgba(200, 250, 100, 1); /* Borde blanco con 50% de transparencia */
+            color: #399012;
+    }
+    .abierto_ok{
+        border: 0 solid rgba(255, 100, 100, 0.9); /* Borde blanco con 50% de transparencia */
+            color: #e20b4a;
+    }
+    .abierto_no_ok{
+        border: 0 solid rgba(255, 100, 100, 0.9); /* Borde blanco con 50% de transparencia */
+            color: #8c0012;
+    }
+
+
 </style>
+@if($ticket['estado-ticket'])
+
+
+        @if($ticket['max-tiempo-final']<=$ticket->fecha_estimada)
+            <div class="desgaste cerrado_ok" data-text="Cerrado">
+            CERRADO
+            <br>
+                <small>          {!! \Carbon\Carbon::parse($ticket['max-tiempo-final'])->diffForHumans(\Carbon\Carbon::parse($ticket->fecha_estimada),false,false,3)!!} <br> de la fecha estimada</small>
+                <br>{{$ticket->fecha_estimada}}
+            </div>
+        @else
+        
+        <div class="desgaste cerrado_no_ok" data-text="Cerrado">
+        CERRADO
+        <br>
+            <small>     {!! \Carbon\Carbon::parse($ticket['max-tiempo-final'])->diffForHumans(\Carbon\Carbon::parse($ticket->fecha_estimada),false,false,3)!!}<br> de la fecha estimada</small>
+            <br>{{$ticket->fecha_estimada}}
+        </div>
+        @endif
+
+@else
+    @if($ticket['max-tiempo-final']<=$ticket->fecha_estimada)
+    <div class="desgaste abierto_ok" data-text="Cerrado">
+        ABIERTO
+        <br>
+        <small>            {!! \Carbon\Carbon::parse($ticket['max-tiempo-final'])->diffForHumans(\Carbon\Carbon::parse($ticket->fecha_estimada),false,false,3)!!}<br> de la fecha estimada</small> 
+        <br>{{$ticket->fecha_estimada}}
+    </div>
+    @else
+    <div class="desgaste abierto_no_ok" data-text="Cerrado">
+        ABIERTO
+        <br>
+        <small>            {!! \Carbon\Carbon::parse($ticket['max-tiempo-final'])->diffForHumans(\Carbon\Carbon::parse($ticket->fecha_estimada),false,false,3)!!}<br> de la fecha estimada</small> 
+        <br>{{$ticket->fecha_estimada}}
+    </div>
+    @endif
+@endif
+
+
+
+
 
 
 <table class="table">
@@ -178,17 +245,17 @@
             <td>{{$ticket->cliente->nombre}}</td>
             <td>{{$ticket->cliente->contacto}}</td>
             <td>{{$ticket->cliente->correo}}</td>
-            <td colspan="2">{{$ticket->cliente->telefono}}</td>
+            <td colspan="1">{{$ticket->cliente->telefono}}</td>
             <td></td>
         </tr>
         <div class="separador"></div>
         <tr>
-            <th colspan="2">Dirección</th>
-            <th colspan="2">Ciudad</th>
+            <th colspan="1">Dirección</th>
+            <th colspan="1">Ciudad</th>
         </tr>
         <tr>
-            <td colspan="2">{{$ticket->cliente->direccion}}</td>
-            <td colspan="2">{{$ticket->cliente->ciudad}}</td>
+            <td colspan="1">{{$ticket->cliente->direccion}}</td>
+            <td colspan="1">{{$ticket->cliente->ciudad}}</td>
         </tr>
     </tbody>
 </table>
@@ -198,7 +265,7 @@
         <hr class="separador_delgado">
     @endif
 <table class="body">
-
+    
     <tbody>
         
             <tr class="">
@@ -225,11 +292,40 @@
             <td>{{$servicio->fecha_programada}}</td>
             <td>{{$servicio->fecha_inicio}}</td>
             <td>{{$servicio->fecha_fin}}</td>
-            <td colspan="2">{!! \Carbon\Carbon::parse($servicio->fecha_inicio)->diff(\Carbon\Carbon::parse($servicio->fecha_fin))->format('%y año(s), %m mes(es), %d día(s) %H:%I:%S horas')!!}</td>
+            <td colspan="2">
+                {!! \Carbon\Carbon::parse($servicio->fecha_inicio)->diffForHumans(\Carbon\Carbon::parse($servicio->fecha_fin),true,false,3)!!}
+            </td>
+        </tr>
+        <div class="separador"></div>
+        <tr>
+            <th colspan="3">Pagos recibidos</th>
+            <th>Pago total</th>
+            <th>Saldo pendiente</th>
+        </tr>
+        <tr>
+            <td colspan="3">
+                @foreach($servicio->pagos as $index=>$pagos)
+                    <span>{{$pagos->concepto}}: ${{$pagos->valor}}
+                    @if($servicio['count-pagos']>0 && $index<$servicio['count-pagos']-1)
+                    ,
+                    @endif
+                    </span>
+                @endforeach
+            </td>
+            <td>
+                ${{($servicio['pago-total']*1)}}
+            </td>
+            <td>
+                ${{($servicio->precio*1)-($servicio['pago-total']*1)}}
+            </td>
+
         </tr>
     </tbody>
     
 </table>
+<ul>
+    
+</ul>
 @endforeach
 <table class="productos">
     
