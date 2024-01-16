@@ -27,7 +27,7 @@ class ServicioPagoController extends Controller
      */
     public function store($ticket_id,$servicio_id,Request $request)
     {
-        $servicio=ServicioPago::create([
+        $newPago=ServicioPago::create([
             'servicio_id'=>$servicio_id,
             'fecha'=>$request->fecha,
             'tipo_pago'=>$request->tipo_pago,
@@ -35,14 +35,24 @@ class ServicioPagoController extends Controller
             'concepto'=>$request->concepto,
             'valor'=>$request->valor,
         ]);
+        
     }
 
     /**
      * Display the specified resource.
      */
-    public function show(ServicioPago $servicioPago)
+    public function show($ticket_id,$servicio_id, $servicioPagoId)
     {
-        //
+        $servicioPago=ServicioPago::find($servicioPagoId);
+        return response()->json([
+            'status'=>true,
+            'message' => 'Pagos descargados correctamente',
+            'data'=>[
+                'servicio_pago'=>$servicioPago,
+                'ticket'=>$ticket_id,
+                'servicio'=>$servicio_id
+                ]
+        ],200);
     }
 
     /**
@@ -56,9 +66,16 @@ class ServicioPagoController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, ServicioPago $servicioPago)
+    public function update(Request $request,$ticket_id,$servicio_id,$servicioPagoId)
     {
-        //
+        $servicioPago=ServicioPago::find($servicioPagoId);
+        $servicioPago->update([
+            'fecha'=>$request->fecha,
+            'tipo_pago'=>$request->tipo_pago,
+            'referencia'=>$request->referencia,
+            'concepto'=>$request->concepto,
+            'valor'=>$request->valor
+        ]);
     }
 
     /**

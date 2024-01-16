@@ -47,18 +47,26 @@ class TicketRecomendacionController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(TicketRecomendacion $ticketRecomendacion)
+    public function edit($ticket_id,$ticketRecomendacionId)
     {
-        //
+        
+        $ticketRecomendacion=TicketRecomendacion::find($ticketRecomendacionId);
+        return response()->json([
+            'status'=>true,
+            'message' => 'Lista de recomendaciones completada',
+            'data'=>[
+                'recomendacion'=>$ticketRecomendacion
+                ]
+        ],200);
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, TicketRecomendacion $ticketRecomendacion)
+    public function update(Request $request,$ticket_id, $ticketRecomendacionId)
     {
-        $servicio->update([
-            //'ticket_id'=>$servicio->ticket_id,
+        $ticketRecomendacion=TicketRecomendacion::find($ticketRecomendacionId);
+        $ticketRecomendacion->update([
             'user_id'=>auth()->user()->id,
             'recomendacion'=>$request->recomendacion
         ]);

@@ -8,7 +8,7 @@ import {show_alerta, show_toast } from '../../functions';
 import CreateForm from '../Articulos/Create.vue';
 
 const props = defineProps({
-  id: Number,
+  id_pago: Number,
   ticket_id: Number,
   servicio_id:Number,
 })
@@ -23,6 +23,7 @@ function closeModal() {
   isShowModal.value = false
 }
 function showModal() {
+    getPagos()
   isShowModal.value = true
 
 }
@@ -30,7 +31,7 @@ function showModal() {
 
 
 const save=()=>{
-    sendRequestWithFiles('POST',form.value,'api/tickets/'+props.ticket_id+'/servicio/'+props.servicio_id+'/pago');
+    sendRequestWithFiles('PUT',form.value,'api/tickets/'+props.ticket_id+'/servicio/'+props.servicio_id+'/pago/'+props.id_pago);
 
     closeModal();
     
@@ -71,14 +72,49 @@ async function sendRequestWithFiles(method, params, url, redirect=''){
     });
     return res;
 }
+const getPagos=async () =>{
+        let res;
+            const config = {
+            headers: {
+                'Authorization': 'Bearer '+authStore.authToken,
+            }
+        };
+            await axios(
+            {
+                method:'GET', url:'api/tickets/'+props.ticket_id+'/servicio/'+props.servicio_id+'/pago/'+props.id_pago, data:null,headers:config.headers
+            }
+        )
+        .then(
+            (response) => {
+                
+                form.value.fecha=response.data.data.servicio_pago.fecha
+                form.value.tipo_pago=response.data.data.servicio_pago.tipo_pago
+                form.value.entidad_bancaria =response.data.data.servicio_pago.banco
+                form.value.num_cuenta =response.data.data.servicio_pago.num_cuenta
+                form.value.referencia =response.data.data.servicio_pago.referencia
+                form.value.concepto =response.data.data.servicio_pago.concepto
+                form.value.valor =response.data.data.servicio_pago.valor                
+                
+                
+                console.log(response)
+                res= response.data.status
+            }
+        )
+        .catch((e)=>{
+        let desc='';
+        res = e.data;
+        console.log('errores')
+        console.log(e)
 
+    });
+        return res;
+    }
 
 </script>
 <template>
-    <button @click="showModal" type="button"  class="inline-flex items-center justify-center w-1/2 px-3 py-2 text-sm font-medium text-center text-gray-900 bg-white border border-gray-300 rounded-lg hover:bg-gray-100 focus:ring-4 focus:ring-primary-300 sm:w-auto dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700 dark:focus:ring-gray-700">
-                <svg class="w-5 h-5 mr-2 -ml-1" fill="#000" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M10 5a1 1 0 011 1v3h3a1 1 0 110 2h-3v3a1 1 0 11-2 0v-3H6a1 1 0 110-2h3V6a1 1 0 011-1z" clip-rule="evenodd"></path></svg>
-                Agregar Pagos
-            </button>
+    <button @click="showModal" type="button"  class="flex flex-col py-1 px-2  items-center bg-green-200 border border-gray-200 rounded-lg shadow md:flex-row  hover:bg-gray-100 dark:border-gray-700 dark:bg-gray-800 dark:hover:bg-gray-700">  
+        <slot></slot>
+    </button>
     <Modal :size="size" v-if="isShowModal" @close="closeModal">
       <template #header>
         <div class="flex items-center text-lg">
@@ -86,7 +122,7 @@ async function sendRequestWithFiles(method, params, url, redirect=''){
         </div>
       </template>
       <template #body>
-        <Input type="datetime-local" size="sm" v-model="form.fecha" label="Fecha del pago" :validationStatus="(form.errors.fecha?'error':'')">
+        <Input type="date" size="sm" v-model="form.fecha" label="Fecha del pago" :validationStatus="(form.errors.fecha?'error':'')">
             <template #validationMessage v-if="form.errors.fecha">
                 <ul>
                     <li v-for="(error,index) in form.errors.fecha" :key="index">{{ error }}</li>

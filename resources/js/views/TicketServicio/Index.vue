@@ -16,7 +16,7 @@
         <div class="card-body px-4 py-3">
             <div class="row align-items-center">
                 <div class="col-8">
-                    <h4 class="fw-semibold mb-8">Ticket N° {{ticket.num_ticket}}</h4>
+                    <h4 class="fw-semibold mb-8">Servicios del Ticket N° {{ticket.num_ticket}}</h4>
                     <nav aria-label="breadcrumb">
                     <ol class="breadcrumb">
                         <li class="breadcrumb-item">
@@ -24,7 +24,12 @@
                                 Home
                             </RouterLink>
                         </li>
-                        <li class="breadcrumb-item" aria-current="page">Tickets</li>
+                        <li class="breadcrumb-item">
+                            <RouterLink to="/ticket" class="text-muted text-decoration-none">
+                                Tickets
+                            </RouterLink>
+                        </li>
+                        <li class="breadcrumb-item" aria-current="page">Servicios</li>
                     </ol>
                     </nav>
                 </div>
@@ -42,6 +47,7 @@
         <ul style="list-style:disc; padding-left: 30px;">
             <li v-for="(recomendacion,index) in ticket.recomendaciones" :key="index">
                 {{ recomendacion.recomendacion }}
+                <EditRecomendacion @update="getActividades()" :recomendacion_id="recomendacion.id" :ticket_id="ticket.id"/>
             </li>
         </ul>
        
@@ -108,6 +114,19 @@
         </accordion-header>
         <accordion-content>
             <div class="w-full">
+                <div class="flex flex-col p-4 items-center bg-white border border-gray-200 rounded-lg shadow md:flex-row  hover:bg-gray-100 dark:border-gray-700 dark:bg-gray-800 dark:hover:bg-gray-700">
+                    <strong>Pagos realizados: </strong>
+                    <EditPago v-for="(pago,index) in servicio.pagos" :key="index"
+                        :ticket_id="ticket.id"
+                        :servicio_id="servicio.id"
+                        :id_pago="pago.id"
+                        @update="getActividades()"
+                    >
+                        {{ pago.concepto }}: ${{ pago.valor }}
+                    </EditPago>
+            </div>
+            </div>  
+            <div class="w-full">
                     <div class="flex flex-col p-4 items-center bg-white border border-gray-200 rounded-lg shadow md:flex-row  hover:bg-gray-100 dark:border-gray-700 dark:bg-gray-800 dark:hover:bg-gray-700"
                         v-for="(actividad,index) in servicio.actividades" :key="index"
                         >
@@ -166,10 +185,12 @@
     import AddActividad from './AddActividad.vue';
     import AddArticulo from './AddArticulo.vue';
     import AddPago from './AddPago.vue';
+    import EditPago from './EditPago.vue';
     import EditActividad from '../TicketActividad/Edit.vue';
     import DeleteActividad from '../TicketActividad/Delete.vue';
     import EditForm from './Edit.vue';
     import AddRecomendacion from './../TicketRecomendacion/Create.vue';
+    import EditRecomendacion from './../TicketRecomendacion/Edit.vue';
     import DeleteForm from './Delete.vue';
     import TableBodyVue from '../../pages/master/tablabody.vue'
 
