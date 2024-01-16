@@ -21,7 +21,7 @@ class ServicioController extends Controller
         
         
         
-        $ticket=Ticket::where('num_ticket',$id)->first();
+        $ticket=Ticket::with('Recomendaciones')->where('num_ticket',$id)->first();
 
         $clienteId=$ticket->cliente_id;
         $actividadTicket=ActividadTicket::with('Ticket')->where('ticket_id',$ticket->id)->get();

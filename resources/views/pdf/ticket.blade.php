@@ -402,11 +402,9 @@
         <tr>
             <td>
                 <ul style="padding: 0px 0px 0px 10px; margin: 0px;">
-                @foreach($ticket->Servicio as $servicio)
-                    @foreach($servicio->Recomendacion as $recomendacion)
+                @foreach($ticket->Recomendaciones as $recomendacion)
                     
-                        <li>{{$recomendacion->descripcion}}</li>
-                    @endforeach
+                        <li>{{$recomendacion->recomendacion}}</li>
                         
                         
                         

@@ -37,15 +37,81 @@
             </div>
         </div>
     </div>
-    <div class="w-full">
-        <strong>Recomendaciones</strong>
-        <ul style="list-style:disc; padding-left: 30px;">
-            <li v-for="(recomendacion,index) in ticket.recomendaciones" :key="index">
-                {{ recomendacion.recomendacion }}
-            </li>
-        </ul>
-       
-    </div>
+    <div class="card w-100">
+                <div class="card-body">
+                  <div class="mb-4">
+                    <h5 class="mb-0">Accordian</h5>
+                  </div>
+                  <div class="accordion" id="accordionExample">
+                    <div class="accordion-item">
+                      <h2 class="accordion-header" id="headingOne">
+                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="false" aria-controls="collapseOne">
+                          Accordion Item #1
+                        </button>
+                      </h2>
+                      <div id="collapseOne" class="accordion-collapse collapse" aria-labelledby="headingOne" data-bs-parent="#accordionExample" style="">
+                        <div class="accordion-body">
+                          <strong>This is the first item's accordion body.</strong>
+                          It is hidden by default, until the collapse plugin
+                          adds the appropriate classes that we use to style
+                          each element. These classes control the overall
+                          appearance, as well as the showing and hiding via
+                          CSS transitions. You can modify any of this with
+                          custom CSS or overriding our default variables. It's
+                          also worth noting that just about any HTML can go
+                          within the
+                          <code>.accordion-body</code>, though the transition
+                          does limit overflow.
+                        </div>
+                      </div>
+                    </div>
+                    <div class="accordion-item">
+                      <h2 class="accordion-header" id="headingTwo">
+                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+                          Accordion Item #2
+                        </button>
+                      </h2>
+                      <div id="collapseTwo" class="accordion-collapse collapse" aria-labelledby="headingTwo" data-bs-parent="#accordionExample" style="">
+                        <div class="accordion-body">
+                          <strong>This is the second item's accordion body.</strong>
+                          It is hidden by default, until the collapse plugin
+                          adds the appropriate classes that we use to style
+                          each element. These classes control the overall
+                          appearance, as well as the showing and hiding via
+                          CSS transitions. You can modify any of this with
+                          custom CSS or overriding our default variables. It's
+                          also worth noting that just about any HTML can go
+                          within the
+                          <code>.accordion-body</code>, though the transition
+                          does limit overflow.
+                        </div>
+                      </div>
+                    </div>
+                    <div class="accordion-item">
+                      <h2 class="accordion-header" id="headingThree">
+                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
+                          Accordion Item #3
+                        </button>
+                      </h2>
+                      <div id="collapseThree" class="accordion-collapse collapse" aria-labelledby="headingThree" data-bs-parent="#accordionExample" style="">
+                        <div class="accordion-body">
+                          <strong>This is the third item's accordion body.</strong>
+                          It is hidden by default, until the collapse plugin
+                          adds the appropriate classes that we use to style
+                          each element. These classes control the overall
+                          appearance, as well as the showing and hiding via
+                          CSS transitions. You can modify any of this with
+                          custom CSS or overriding our default variables. It's
+                          also worth noting that just about any HTML can go
+                          within the
+                          <code>.accordion-body</code>, though the transition
+                          does limit overflow.
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
     <Accordion flush>
         <accordion-panel  v-for="(servicio, index) in servicios" :key="index">
         <accordion-header>
@@ -93,7 +159,7 @@
                         </table>
                     </div>
                     <div class=" card-footer">
-                                        Valor: {{ (servicio.precio)?'$'+servicio.precio:'' }},
+                        Valor: {{ (servicio.precio)?'$'+servicio.precio:'' }},
                                     <span class="mx-2"> 
                                         Total de pagos recibidos: {{ servicio['pago-total'] }} 
                                         en
@@ -103,7 +169,6 @@
                                     </span>
                     </div>
                   </div>
-
             
         </accordion-header>
         <accordion-content>
@@ -131,7 +196,7 @@
                     </div>
             </div>
             <div class="w-full">
-                <div class="flex flex-col items-center bg-white border border-gray-200 rounded-lg shadow md:flex-row  hover:bg-gray-100 dark:border-gray-700 dark:bg-gray-800 dark:hover:bg-gray-700"
+                <div href="#" class="flex flex-col items-center bg-white border border-gray-200 rounded-lg shadow md:flex-row  hover:bg-gray-100 dark:border-gray-700 dark:bg-gray-800 dark:hover:bg-gray-700"
                     
                 >
                 <kbd v-for="(articulo,index) in servicio.servicio_articulos" :key="index" class="inline-flex m-1 items-center px-2 py-1.5 text-gray-800 bg-green-100 border border-gray-200 rounded-lg dark:bg-gray-600 dark:text-gray-100 dark:border-gray-500">
@@ -139,8 +204,8 @@
                     <span class="">{{ articulo.nombre_interno }}</span>
                 </kbd>
                 </div>
-            </div>  
 
+            </div>  
           
 
 
@@ -174,7 +239,6 @@
     import TableBodyVue from '../../pages/master/tablabody.vue'
 
     
-    import { Accordion, AccordionPanel, AccordionHeader, AccordionContent, Badge, Button } from 'flowbite-vue'
     
     
     const authStore = useAuthStore();

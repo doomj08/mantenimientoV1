@@ -45,6 +45,10 @@ class Ticket extends Model
         return $this->hasMany('App\Models\ActividadTicket');
     }
 
+    public function Recomendaciones(){
+        return $this->hasMany('App\Models\TicketRecomendacion');
+    }
+
     public function TicketArticulo(){
         return $this->belongsToMany('App\Models\Articulo','ticket_articulos');
     }

@@ -21,6 +21,7 @@
         "vue-drawing-canvas": "^1.0.14"
     },
     "dependencies": {
+        "@coreui/vue": "^4.10.2",
         "flowbite": "^1.8.1",
         "flowbite-vue": "^0.0.17",
         "pinia": "^2.1.7",
