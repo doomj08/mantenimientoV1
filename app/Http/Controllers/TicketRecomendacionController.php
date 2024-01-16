@@ -26,9 +26,14 @@ class TicketRecomendacionController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store($ticket_id,Request $request)
     {
-        //
+
+        $ticketRecomendacion=TicketRecomendacion::create([
+            'ticket_id'=>$ticket_id,
+            'user_id'=>auth()->user()->id,
+            'recomendacion'=>$request->recomendacion
+        ]);
     }
 
     /**
@@ -52,7 +57,11 @@ class TicketRecomendacionController extends Controller
      */
     public function update(Request $request, TicketRecomendacion $ticketRecomendacion)
     {
-        //
+        $servicio->update([
+            //'ticket_id'=>$servicio->ticket_id,
+            'user_id'=>auth()->user()->id,
+            'recomendacion'=>$request->recomendacion
+        ]);
     }
 
     /**

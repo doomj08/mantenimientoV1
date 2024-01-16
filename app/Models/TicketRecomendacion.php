@@ -8,4 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 class TicketRecomendacion extends Model
 {
     use HasFactory;
+
+    protected $fillable=['ticket_id','user_id','recomendacion'];
+
 }

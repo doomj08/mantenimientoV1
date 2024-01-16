@@ -8,6 +8,30 @@
 
         </template>
     </EncabezadoVue>
+    <div class="card bg-info-subtle shadow-none position-relative overflow-hidden mb-4">
+        <div class="card-body px-4 py-3">
+            <div class="row align-items-center">
+                <div class="col-9">
+                    <h4 class="fw-semibold mb-8">Secciones Formatos</h4>
+                    <nav aria-label="breadcrumb">
+                    <ol class="breadcrumb">
+                        <li class="breadcrumb-item">
+                            <RouterLink to="/home" class="text-muted text-decoration-none">
+                                Home
+                            </RouterLink>
+                        </li>
+                        <li class="breadcrumb-item" aria-current="page">Formatos</li>
+                    </ol>
+                    </nav>
+                </div>
+                <div class="col-3">
+                    <div class="text-center mb-n5">
+                        <CreateForm :formato_id="formato_id" @update="getSecciones()"/>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
     
     <div class="table-responsive mb-4">
 

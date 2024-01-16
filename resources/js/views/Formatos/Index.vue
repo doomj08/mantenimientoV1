@@ -8,7 +8,7 @@
 
         </template>
     </EncabezadoVue>
-    <div class="card bg-info-subtle shadow-none position-relative overflow-hidden mb-4">
+    <div v-if="!showWindowSeccion" class="card bg-info-subtle shadow-none position-relative overflow-hidden mb-4">
         <div class="card-body px-4 py-3">
             <div class="row align-items-center">
                 <div class="col-9">

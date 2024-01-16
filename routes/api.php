@@ -15,6 +15,7 @@ use App\Http\Controllers\ServicioPagoController;
 use App\Http\Controllers\ServicioController;
 use App\Http\Controllers\TicketArticuloController;
 use App\Http\Controllers\TicketController;
+use App\Http\Controllers\TicketRecomendacionController;
 use App\Http\Controllers\TipoArticuloController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -55,7 +56,7 @@ Route::middleware(['auth:sanctum'])->group(function (){
  
     Route::resource('tickets.servicio.pago',ServicioPagoController::class);
     Route::resource('tickets.servicio',ServicioController::class);
-    Route::resource('tickets.recomendacion',ServicioController::class);
+    Route::resource('tickets.recomendacion',TicketRecomendacionController::class);
     Route::resource('tickets',TicketController::class);
     Route::resource('tickets.actividad_ticket',ActividadTicketController::class);
     

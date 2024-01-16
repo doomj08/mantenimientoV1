@@ -13,6 +13,8 @@ return new class extends Migration
     {
         Schema::create('ticket_recomendacions', function (Blueprint $table) {
             $table->id();
+            $table->unsignedBigInteger('user_id');
+            $table->foreign('user_id')->on('users')->references('id');
             $table->foreignId('ticket_id')->constrained();
             $table->text('recomendacion');
             $table->timestamps();

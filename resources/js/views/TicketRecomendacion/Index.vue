@@ -15,7 +15,7 @@
     <div class="card bg-info-subtle shadow-none position-relative overflow-hidden mb-4">
         <div class="card-body px-4 py-3">
             <div class="row align-items-center">
-                <div class="col-8">
+                <div class="col-9">
                     <h4 class="fw-semibold mb-8">Ticket N° {{ticket.num_ticket}}</h4>
                     <nav aria-label="breadcrumb">
                     <ol class="breadcrumb">
@@ -28,10 +28,9 @@
                     </ol>
                     </nav>
                 </div>
-                <div class="col-4">
-                    <div class="text-center mb-1">
-                        <CreateForm :ticket_id="ticket.id"  @update="getActividades()"/>
-                        <AddRecomendacion :ticket_id="ticket.id" @update="getActividades()"/>
+                <div class="col-3">
+                    <div class="text-center mb-n5">
+                        <CreateForm  @update="getActividades()"/>
                     </div>
                 </div>
             </div>
@@ -175,7 +174,6 @@
     import EditActividad from '../TicketActividad/Edit.vue';
     import DeleteActividad from '../TicketActividad/Delete.vue';
     import EditForm from './Edit.vue';
-    import AddRecomendacion from './../TicketRecomendacion/Create.vue';
     import DeleteForm from './Delete.vue';
     import TableBodyVue from '../../pages/master/tablabody.vue'
 
