@@ -25,7 +25,7 @@ class ServicioController extends Controller
 
         $clienteId=$ticket->cliente_id;
         $actividadTicket=ActividadTicket::with('Ticket')->where('ticket_id',$ticket->id)->get();
-        $servicioTicket=Servicio::with('ServicioArticulos','Actividades')->where('ticket_id',$ticket->id)->get();
+        $servicioTicket=Servicio::with('Pagos','ServicioArticulos','Actividades')->where('ticket_id',$ticket->id)->get();
         $articulos=TicketArticulo::with('Articulo')->where('ticket_id',$ticket->id)->get();
         return response()->json([
             'status'=>true,

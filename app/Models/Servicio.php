@@ -11,7 +11,7 @@ class Servicio extends Model
 
     protected $fillable=['ticket_id','user_id','descripcion','fecha_programada','fecha_inicio','fecha_fin','precio'];
 
-    protected $appends = ['estado-servicio'];
+    protected $appends = ['estado-servicio','pago-total','count-pagos'];
 
     public function Recomendacion(){
         return $this->hasMany('App\Models\Recomendacion');
@@ -25,6 +25,12 @@ class Servicio extends Model
         return $this->hasMany('App\Models\ActividadTicket');
     }
 
+    public function Pagos(){
+        return $this->hasMany('App\Models\ServicioPago');
+    }
+
+
+
     public function Ticket() {
         return $this->belongsTo('App\Models\Ticket');
     }
@@ -32,6 +38,16 @@ class Servicio extends Model
     public function getEstadoServicioAttribute(){
         return  $this->Actividades()->where('estado_ticket','cerrado')->count();
     }
+
+    public function getCountPagosAttribute(){
+        return $this->Pagos()->count('valor');
+    }
+
+    public function getPagoTotalAttribute(){
+        return $this->Pagos()->sum('valor');
+    }
+
+
 
 
 }

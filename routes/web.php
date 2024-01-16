@@ -64,4 +64,4 @@ Auth::routes();
 
 //Route::get('/', [HomeController::class, 'index'])->name('home');
 Route::any('{any?}', [HomeController::class, 'index'])->name('home');
-Route::resource('tickets.servicio',ServicioController::class);
+//Route::resource('tickets.servicio',ServicioController::class);
