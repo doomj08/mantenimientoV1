@@ -126,7 +126,7 @@ const getSelects=async () =>{
           <div class="w-11 h-6 bg-red-300 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-green-300 dark:peer-focus:ring-green-800 rounded-full peer dark:bg-red-700 peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all dark:border-gray-600 peer-checked:bg-green-600"></div>
           <span class="ml-3 text-sm font-medium text-gray-900 dark:text-gray-300">{{ (form.is_component)?'Si':'No'}}</span>
         </label>
-          <Select size="sm" v-if="form.is_component" v-model="form.articulo_padre_id" :options="options_tipo_articulos" label="Artículo Principal" :validationStatus="(form.errors.articulo_padre_id?'error':'')">
+          <Select size="sm" v-if="form.is_component" v-model="form.articulo_padre_id" :options="options_articulos" label="Artículo Principal" :validationStatus="(form.errors.articulo_padre_id?'error':'')">
             <template #validationMessage v-if="form.errors.articulo_padre_id">
                   <ul>
                       <li v-for="(error,index) in form.errors.articulo_padre_id" :key="index">{{ error }}</li>
@@ -147,7 +147,7 @@ const getSelects=async () =>{
                 </ul>
             </template>
         </Input>
-        <Select v-model="form.tipo_articulo_id" :options="tipo_articulos" label="Categoría (Tipo de artículo)" :validationStatus="(form.errors.nombre_interno?'error':'')">
+        <Select v-model="form.tipo_articulo_id" :options="options_tipo_articulos" label="Categoría (Tipo de artículo)" :validationStatus="(form.errors.tipo_articulo_id?'error':'')">
           <template #validationMessage v-if="form.errors.tipo_articulo_id">
                 <ul>
                     <li v-for="(error,index) in form.errors.tipo_articulo_id" :key="index">{{ error }}</li>
