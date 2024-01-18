@@ -59,7 +59,7 @@
                 <span>
                   <i class="ti ti-article"></i>
                 </span>
-                <span class="hide-menu">Tickets</span>
+                <span class="hide-menu">Orden de servicio</span>
               </router-link>
             </li>
             <li class="nav-small-cap" v-if="authStore.user">

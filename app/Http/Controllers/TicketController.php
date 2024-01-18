@@ -122,7 +122,8 @@ class TicketController extends Controller
             "fecha_consulta"=>Carbon::now(),
             "encabezado"=>$encabezado,
             "ticket"=>$ticket,
-            "tecnicos"=>$tecnicos
+            "tecnicos"=>$tecnicos,
+            "logo"=>$ticket->Empresa->logo
         ];
 
         $pdf = Pdf::loadView('pdf.ticket', $data);

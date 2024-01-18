@@ -12,7 +12,7 @@
         <div class="card-body px-4 py-3">
             <div class="row align-items-center">
                 <div class="col-9">
-                    <h4 class="fw-semibold mb-8">Tickets</h4>
+                    <h4 class="fw-semibold mb-8">Orden de Servicio</h4>
                     <nav aria-label="breadcrumb">
                     <ol class="breadcrumb">
                         <li class="breadcrumb-item">
@@ -20,7 +20,7 @@
                                 Home
                             </RouterLink>
                         </li>
-                        <li class="breadcrumb-item" aria-current="page">Tickets</li>
+                        <li class="breadcrumb-item" aria-current="page">Orden de Servicio</li>
                     </ol>
                     </nav>
                 </div>
