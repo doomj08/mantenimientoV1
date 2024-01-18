@@ -63,6 +63,7 @@ class ServicioController extends Controller
             'fecha_inicio'=>$request->fecha_inicio,
             'fecha_fin'=>$request->fecha_fin,
             'precio'=>$request->precio,
+            'tiene_iva'=>$request->tiene_iva,
         ]);
 
         return response()->json([
@@ -106,7 +107,7 @@ class ServicioController extends Controller
             'fecha_inicio'=>$request->fecha_inicio,
             'fecha_fin'=>$request->fecha_fin,
             'precio'=>$request->precio,
-
+            'tiene_iva'=>$request->tiene_iva,
         ]);
     }
 

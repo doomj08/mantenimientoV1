@@ -10,7 +10,7 @@ class Servicio extends Model
 {
     use HasFactory;
 
-    protected $fillable=['empresa_id','ticket_id','user_id','descripcion','fecha_programada','fecha_inicio','fecha_fin','precio'];
+    protected $fillable=['empresa_id','ticket_id','user_id','descripcion','fecha_programada','fecha_inicio','fecha_fin','precio','tiene_iva'];
 
     protected $appends = ['estado-servicio','pago-total','count-pagos'];
 

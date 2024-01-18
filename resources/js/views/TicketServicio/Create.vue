@@ -27,7 +27,7 @@ const authStore = useAuthStore();
 onMounted(()=>{getCliente()})
 
 const isShowModal = ref(false)
-const form = ref({ticket_id:null,descripcion:'',fecha_programada:null,fecha_inicio:null,fecha_fin:null,precio:null,errors:[]});
+const form = ref({ticket_id:null,descripcion:'',fecha_programada:null,fecha_inicio:null,fecha_fin:null,tiene_iva:false,precio:null,errors:[]});
 
 const config= {
           masked: false,
@@ -135,12 +135,11 @@ const getCliente=async () =>{
             </button>
     <Modal :size="size" v-if="isShowModal" @close="closeModal">
       <template #header>
-        <div class="flex items-center text-lg">
+        <div class="flex items-center text-md">
           Nuevo Servicio
-          <br> {{ formatoMoneda }}
         </div>
       </template>
-      <template #body>
+      <template #body class="text-left">
         
         <Textarea size="" class="w-full" v-model="form.descripcion" label="Descripcion" :validationStatus="(form.errors.descripcion?'error':'')">
             <template #validationMessage v-if="form.errors.descripcion">
@@ -174,11 +173,20 @@ const getCliente=async () =>{
             </Input>
         </div>
         <br>
-        <br>
         <label for="" class="text-black">Precio</label>
         <money3 class="w-full" v-model="form.precio" v-bind="config"></money3>
         <br>
+        <br>
+        <label class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300">IVA</label>
+        <label class="relative inline-flex items-center cursor-pointer">
+          <input type="checkbox"  v-model="form.tiene_iva"  class="sr-only peer">
+          <div class="w-11 h-6 bg-red-300 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-green-300 dark:peer-focus:ring-green-800 rounded-full peer dark:bg-red-700 peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all dark:border-gray-600 peer-checked:bg-green-600"></div>
+          <span class="ml-3 text-sm font-medium text-gray-900 dark:text-gray-300">{{ (form.tiene_iva)?'Más IVA':'Sin IVA'}}</span>
+        </label>
 
+
+        <br>
+        
 
         
       </template>

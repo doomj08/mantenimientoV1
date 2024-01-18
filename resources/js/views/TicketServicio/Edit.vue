@@ -16,7 +16,7 @@ const authStore = useAuthStore();
 const emit = defineEmits('update');
 
 const isShowModal = ref(false)
-const form = ref({ticket_id:null,descripcion:'',fecha_programada:null,fecha_inicio:null,fecha_fin:null,precio:null,errors:[]});
+const form = ref({ticket_id:null,descripcion:'',fecha_programada:null,fecha_inicio:null,fecha_fin:null,precio:null,tiene_iva:false,errors:[]});
 const options_clientes=ref([]);
 
 function closeModal() {
@@ -92,6 +92,7 @@ const getServicio=async () =>{
                 form.value.fecha_inicio=response.data.data.servicio.fecha_inicio
                 form.value.fecha_fin=response.data.data.servicio.fecha_fin
                 form.value.precio=response.data.data.servicio.precio
+                form.value.tiene_iva=(response.data.data.servicio.tiene_iva==1)?true:false,
                 options_clientes.value=response.data.data.clientes
                 
                 console.log(response)
@@ -116,12 +117,12 @@ const getServicio=async () =>{
     </button>
     <Modal :size="size" v-if="isShowModal" @close="closeModal">
       <template #header>
-        <div class="flex items-center text-lg">
+        <div class="flex items-center text-md">
           Editando Servicio
         </div>
       </template>
       <template #body>
-        <Textarea size="sm" v-model="form.descripcion" label="Descripcion" :validationStatus="(form.errors.descripcion?'error':'')">
+        <Textarea size="sm" class="w-full" v-model="form.descripcion" label="Descripcion" :validationStatus="(form.errors.descripcion?'error':'')">
             <template #validationMessage v-if="form.errors.descripcion">
                 <ul>
                     <li v-for="(error,index) in form.errors.descripcion" :key="index">{{ error }}</li>
@@ -153,21 +154,29 @@ const getServicio=async () =>{
             </Input>
         </div>
         <br>
-        <Input type="number" size="sm" v-model="form.precio" label="Precios" :validationStatus="(form.errors.precio?'error':'')">
-            <template #validationMessage v-if="form.errors.precio">
-                <ul>
-                    <li v-for="(error,index) in form.errors.fecha_hora" :key="index">{{ error }}</li>
-                </ul>
-            </template>
-        </Input>
+        <label for="" class="text-black">Precio</label>
+        <money3 class="w-full" v-model="form.precio" v-bind="config"></money3>
         <br>
-        <label class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300">Estado</label>
-        <label class="relative inline-flex items-center cursor-pointer">
-          <input type="checkbox"  v-model="form.estado_ticket"  class="sr-only peer">
-          <div class="w-11 h-6 bg-red-300 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-green-300 dark:peer-focus:ring-green-800 rounded-full peer dark:bg-red-700 peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all dark:border-gray-600 peer-checked:bg-green-600"></div>
-          <span class="ml-3 text-sm font-medium text-gray-900 dark:text-gray-300">{{ (form.estado_ticket)?'Cerrado':'Abierto'}}</span>
-        </label>
+        
+            <br>
+            <label class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300">Estado</label>
+            <label class="relative inline-flex items-center cursor-pointer">
+            <input type="checkbox"  v-model="form.tiene_iva"  class="sr-only peer">
+            <div class="w-11 h-6 bg-red-300 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-green-300 dark:peer-focus:ring-green-800 rounded-full peer dark:bg-red-700 peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all dark:border-gray-600 peer-checked:bg-green-600"></div>
+            <span class="ml-3 text-sm font-medium text-gray-900 dark:text-gray-300">{{ (form.tiene_iva==1)?'Más IVA':'Sin IVA'}}</span>
+            </label>
 
+
+            <br>
+        <div v-if="false">
+        <br>
+            <label class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300">Estado</label>
+            <label class="relative inline-flex items-center cursor-pointer">
+            <input type="checkbox"  v-model="form.estado_ticket"  class="sr-only peer">
+            <div class="w-11 h-6 bg-red-300 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-green-300 dark:peer-focus:ring-green-800 rounded-full peer dark:bg-red-700 peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all dark:border-gray-600 peer-checked:bg-green-600"></div>
+            <span class="ml-3 text-sm font-medium text-gray-900 dark:text-gray-300">{{ (form.estado_ticket)?'Cerrado':'Abierto'}}</span>
+            </label>
+        </div>
         
       </template>
       <template #footer>
