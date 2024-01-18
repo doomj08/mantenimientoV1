@@ -1,14 +1,25 @@
 <script setup>
 import { Modal } from 'flowbite-vue'
-import { ref, onMounted } from 'vue';
+import { ref, onMounted, computed  } from 'vue';
 import axios from 'axios'
 import { Input, Button, Select, Textarea  } from 'flowbite-vue'
 import { useAuthStore } from '../../stores/auth';
 import {show_alerta, show_toast } from '../../functions';
+import money from 'v-money3'
 
 const props = defineProps({
         ticket_id: Number,
     })
+
+const f = new Intl.NumberFormat('es-CO',{
+    style:'currency',
+    currency:'COP',
+    minimumFractionDigits:2
+});
+
+const formatoMoneda = computed(() => {
+  return f.format(form.value.precio)
+})
 
 const emit = defineEmits('update');
 
@@ -17,6 +28,23 @@ onMounted(()=>{getCliente()})
 
 const isShowModal = ref(false)
 const form = ref({ticket_id:null,descripcion:'',fecha_programada:null,fecha_inicio:null,fecha_fin:null,precio:null,errors:[]});
+
+const config= {
+          masked: false,
+          prefix: '$',
+          suffix: '',
+          thousands: '.',
+          decimal: ',',
+          precision: 2,
+          disableNegative: false,
+          disabled: false,
+          min: null,
+          max: null,
+          allowBlank: false,
+          minimumNumberOfCharacters: 0,
+          shouldRound: false,
+          focusOnRight: false,
+        }
 
 const options_clientes=ref([]);
 
@@ -109,11 +137,12 @@ const getCliente=async () =>{
       <template #header>
         <div class="flex items-center text-lg">
           Nuevo Servicio
+          <br> {{ formatoMoneda }}
         </div>
       </template>
       <template #body>
         
-        <Textarea size="sm" v-model="form.descripcion" label="Descripcion" :validationStatus="(form.errors.descripcion?'error':'')">
+        <Textarea size="" class="w-full" v-model="form.descripcion" label="Descripcion" :validationStatus="(form.errors.descripcion?'error':'')">
             <template #validationMessage v-if="form.errors.descripcion">
                 <ul>
                     <li v-for="(error,index) in form.errors.descripcion" :key="index">{{ error }}</li>
@@ -145,13 +174,9 @@ const getCliente=async () =>{
             </Input>
         </div>
         <br>
-        <Input type="number" size="sm" v-model="form.precio" label="Precios" :validationStatus="(form.errors.precio?'error':'')">
-            <template #validationMessage v-if="form.errors.precio">
-                <ul>
-                    <li v-for="(error,index) in form.errors.fecha_hora" :key="index">{{ error }}</li>
-                </ul>
-            </template>
-        </Input>
+        <br>
+        <label for="" class="text-black">Precio</label>
+        <money3 class="w-full" v-model="form.precio" v-bind="config"></money3>
         <br>
 
 

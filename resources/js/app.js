@@ -12,6 +12,10 @@ import createPersistedState from 'pinia-plugin-persistedstate'
 import router from './router/index'
 import axios from 'axios'
 
+import money from 'v-money3'
+
+
+
 window.axios = axios
 //window.axios.defaults.baseURL='http://127.0.0.1:8000'
 window.axios.defaults.baseURL='https://api21.itcomn.com/'
@@ -36,5 +40,6 @@ pinia.use(createPersistedState)
 
 app.use(pinia)
 app.use(router)
+app.use(money)
 
 app.mount('#app')

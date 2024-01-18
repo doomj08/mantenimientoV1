@@ -27,7 +27,9 @@
         "pinia": "^2.1.7",
         "pinia-plugin-persistedstate": "^3.2.0",
         "sweetalert2": "^11.7.32",
+        "v-money3": "^3.24.0",
         "vue": "^3.3.4",
+        "vue-intl": "^6.4.27",
         "vue-router": "^4.2.5"
     }
 }

@@ -53,7 +53,9 @@ class ServicioController extends Controller
      */
     public function store($ticket_id,ServicioCreateRequest $request)
     {
+        $empresa_id=auth()->user()->empresa_id;
         $servicio=Servicio::create([
+            'empresa_id'=>$empresa_id,
             'ticket_id'=>$ticket_id,
             'user_id'=>auth()->user()->id,
             'descripcion'=>$request->descripcion,
