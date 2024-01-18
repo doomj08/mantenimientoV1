@@ -11,7 +11,7 @@ class TipoArticulo extends Model
 {
     use HasFactory;
 
-    protected $fillable=['tipo'];
+    protected $fillable=['tipo','empresa_id'];
 
     protected static function boot()
     {

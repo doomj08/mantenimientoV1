@@ -22,7 +22,7 @@ class TipoArticuloCreateRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'tipo'=>'required|unique:tipo_articulos'
+            'tipo'=>'required|unique:tipo_articulos,empresa_id'
         ];
     }
 }

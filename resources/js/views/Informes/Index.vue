@@ -62,7 +62,7 @@
                             </td>
                             <td>
                                 <div class="d-flex align-items-center text-wrap">
-                                    {{ informe.formato_id }}
+                                    {{ informe.formato.version }}
                                 </div>
                             </td>
                           

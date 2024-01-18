@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use App\Models\Scopes\ActiveScope;
 
 class ActividadTicket extends Model
 {
@@ -17,6 +18,17 @@ class ActividadTicket extends Model
         "descripcion",
         "tecnico_user_id"
     ];
+
+    protected static function boot()
+    {
+        parent::boot();
+        static::addGlobalScope(new ActiveScope);
+        if(auth()->user())
+            $empresa_id=auth()->user()->empresa_id;
+        else
+            $empresa_id=null;
+
+    }
 
     public function Ticket(){
         return $this->belongsTo('App\Models\Ticket');

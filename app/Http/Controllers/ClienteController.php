@@ -25,7 +25,20 @@ class ClienteController extends Controller
 
     public function store(ClienteCreateRequest $request)
     {
-        $cliente=Cliente::create($request->all());
+        $empresa_id=auth()->user()->empresa_id;
+        $cliente=Cliente::create(
+            [
+                'empresa_id'=>$empresa_id,
+                'nombre'=>$request->nombre,
+                'tipo_documento'=>$request->tipo_documento,
+                'num_documento'=>$request->num_documento,
+                'contacto'=>$request->contacto,
+                'correo'=>$request->correo,
+                'telefono'=>$request->telefono,
+                'direccion'=>$request->direccion,
+                'ciudad'=>$request->ciudad
+            ]
+        );
         return response()->json([
             'status'=>true,
             'message' => 'Cliente creado correctamente',

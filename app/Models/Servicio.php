@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use App\Models\Scopes\ActiveScope;
 
 class Servicio extends Model
 {
@@ -12,6 +13,17 @@ class Servicio extends Model
     protected $fillable=['ticket_id','user_id','descripcion','fecha_programada','fecha_inicio','fecha_fin','precio'];
 
     protected $appends = ['estado-servicio','pago-total','count-pagos'];
+
+    protected static function boot()
+    {
+        parent::boot();
+        static::addGlobalScope(new ActiveScope);
+        if(auth()->user())
+            $empresa_id=auth()->user()->empresa_id;
+        else
+            $empresa_id=null;
+
+    }
 
     public function Recomendacion(){
         return $this->hasMany('App\Models\Recomendacion');

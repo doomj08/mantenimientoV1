@@ -37,7 +37,12 @@ class FormatoController extends Controller
 
     public function store(Request $request)
     {
-        $formato=Formato::create($request->all());
+        $empresa_id=auth()->user()->empresa_id;
+        $formato=Formato::create([
+            'empresa_id'=>$empresa_id,
+            'cliente_id'=>$request->cliente_id,
+            'version'=>$request->version
+        ]);
         return response()->json([
             'status'=>true,
             'message' => 'Coordenadas cargadas sin errores en mapas'

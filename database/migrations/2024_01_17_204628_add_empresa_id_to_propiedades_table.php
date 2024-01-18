@@ -11,10 +11,11 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::table('tipo_articulos', function (Blueprint $table) {
+        Schema::table('propiedades', function (Blueprint $table) {
             $table->unsignedBigInteger('empresa_id')->nullable()->after('id');
             $table->foreign('empresa_id')->on('empresas')->references('id');
-            $table->unique(['empresa_id','tipo']);
+            //$table->unique(['empresa_id','articulo_id','campo_propiedad_id']);
+
         });
     }
 
@@ -23,11 +24,9 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::table('tipo_articulos', function (Blueprint $table) {
-            
-            $table->dropUnique(['empresa_id','tipo']);
-            //$table->dropConstrainedForeignId('empresa_id');
-            //$table->dropColumn('empresa_id');
+        Schema::table('propiedades', function (Blueprint $table) {
+            // $table->unique(['empresa_id','articulo_id','campo_propiedad_id']);
+            // $table->dropUnique('propiedades_empresa_id_articulo_id_unique');
         });
     }
 };

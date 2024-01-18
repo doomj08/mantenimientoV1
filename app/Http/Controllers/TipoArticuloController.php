@@ -5,12 +5,21 @@ namespace App\Http\Controllers;
 use App\Http\Requests\TipoArticuloCreateRequest;
 use App\Models\TipoArticulo;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use App\Models\User;
+
+use App\Models\Cliente;
+use App\Models\Ticket;
+use Barryvdh\DomPDF\Facade\Pdf;
+use Carbon\Carbon;
+use Illuminate\Support\Facades\DB;
 
 class TipoArticuloController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
+    //private $empresa_id=auth()->user()->empresa_id;
     public function index()
     {
         $tipoArticulos=TipoArticulo::get();
@@ -25,7 +34,13 @@ class TipoArticuloController extends Controller
 
     public function store(TipoArticuloCreateRequest $request)
     {
-        $tipo=TipoArticulo::create($request->all());
+        //return response(auth()->user()->empresa_id);
+        $empresa_id=auth()->user()->empresa_id;
+        $tipo=TipoArticulo::create([
+            'empresa_id'=>$empresa_id,
+            'tipo'=>$request->tipo
+            ]
+        );
         return response()->json([
             'status'=>true,
             'message' => 'Coordenadas cargadas sin errores en mapas',

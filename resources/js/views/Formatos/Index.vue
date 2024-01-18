@@ -26,7 +26,7 @@
                 </div>
                 <div class="col-3">
                     <div class="text-center mb-n5">
-                        <CreateForm  @update="getFormatos()"/>
+                        <CreateForm  :clientes="clientes" @update="getFormatos()"/>
                     </div>
                 </div>
             </div>

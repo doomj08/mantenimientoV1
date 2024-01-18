@@ -125,7 +125,9 @@ class ArticuloController extends Controller
 
     public function store(ArticuloRequest $request)
     {
+        $empresa_id=auth()->user()->empresa_id;
         $articulo=Articulo::create([
+            'empresa_id'=>$empresa_id,
             "nombre_interno"=>$request->input('nombre_interno'),
             "tipo_articulo_id"=>$request->input('tipo_articulo_id'),
             "cliente_id"=>$request->input('cliente_id'),

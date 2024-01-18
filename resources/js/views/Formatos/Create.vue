@@ -7,8 +7,7 @@ import { useAuthStore } from '../../stores/auth';
 import {show_alerta, show_toast } from '../../functions';
 
 const props = defineProps({
-  clientes:Array,
-  size:String
+  clientes:Array
 })
 
 const emit = defineEmits('update');
@@ -78,15 +77,15 @@ const save=()=>{
     <Modal :size="size" v-if="isShowModal" @close="closeModal">
       <template #header>
         <div class="flex items-center text-lg">
-          Nuevo Formato
+          Nuevo Formato {{ props.clientes }}
         </div>
       </template>
       <template #body>
 
-        <Select v-model="form.cliente_id" :options="clientes" label="Cliente" :validationStatus="(form.errors.cliente_id?'error':'')">
-          <template #validationMessage v-if="form.errors.tipo_articulo_id">
+        <Select v-model="form.cliente_id" :options="props.clientes" label="Cliente" :validationStatus="(form.errors.cliente_id?'error':'')">
+          <template #validationMessage v-if="form.errors.cliente_id">
                 <ul>
-                    <li v-for="(error,index) in form.errors.tipo_articulo_id" :key="index">{{ error }}</li>
+                    <li v-for="(error,index) in form.errors.cliente_id" :key="index">{{ error }}</li>
                 </ul>
             </template>
         </Select>

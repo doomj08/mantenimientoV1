@@ -51,7 +51,7 @@ class InformeController extends Controller
     }
     public function index()
     {
-        $informes=Informe::get();
+        $informes=Informe::with('Formato')->get();
         return response()->json([
             'status'=>true,
             'message' => 'Lista de artículos completada',
@@ -63,7 +63,13 @@ class InformeController extends Controller
 
     public function store(Request $request)
     {
-        $informe=Informe::create($request->all());
+        $empresa_id=auth()->user()->empresa_id;
+        $informe=Informe::create(
+            ['empresa_id'=>$empresa_id,
+            'articulo_id'=>$request->articulo_id
+            ,'formato_id'=>$request->formato_id
+            ]
+        );
         return response()->json([
             'status'=>true,
             'message' => 'Informe creado correctamente'
