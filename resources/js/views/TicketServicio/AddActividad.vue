@@ -113,7 +113,7 @@ const getCliente=async () =>{
         </div>
       </template>
       <template #body>
-        <Textarea size="sm" v-model="form.descripcion" label="Descripcion / Falla" :validationStatus="(form.errors.descripcion?'error':'')">
+        <Textarea size="sm" class="w-full" v-model="form.descripcion" label="Descripcion / Falla" :validationStatus="(form.errors.descripcion?'error':'')">
             <template #validationMessage v-if="form.errors.descripcion">
                 <ul>
                     <li v-for="(error,index) in form.errors.descripcion" :key="index">{{ error }}</li>

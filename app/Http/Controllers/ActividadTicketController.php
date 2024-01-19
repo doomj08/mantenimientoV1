@@ -8,6 +8,7 @@ use App\Models\Servicio;
 use App\Models\Ticket;
 use App\Models\TicketArticulo;
 use Illuminate\Http\Request;
+use Carbon\Carbon;
 
 class ActividadTicketController extends Controller
 {
@@ -49,8 +50,10 @@ class ActividadTicketController extends Controller
         
 
         $estado=$request->input('estado_ticket');
-        if($estado)
+        if($estado){
             $estado_ticket='cerrado';
+            $fecha_cierre=Carbon::now();
+        }
         else
             $estado_ticket='abierto';
 
@@ -60,11 +63,15 @@ class ActividadTicketController extends Controller
                 
             // ],200);
         $tecnico_id=auth()->user()->id;
+        $empresa_id=auth()->user()->empresa_id;
+        
         $actividadTicket=ActividadTicket::create([
+            'empresa_id'=>$empresa_id,
             'servicio_id'=>$servicio->id,
             'ticket_id'=>$servicio->ticket_id,
             'fecha_hora'=>$request->input('fecha_hora'),
             "estado_ticket"=>$estado_ticket,
+            'fecha_cierre'=>($estado_ticket=='cerrado')?$fecha_cierre:null,
             "descripcion"=>$request->input('descripcion'),
             'tecnico_user_id'=>$tecnico_id
         ]);
@@ -103,14 +110,20 @@ class ActividadTicketController extends Controller
      */
     public function update(Request $request, $ticket, ActividadTicket $actividadTicket)
     {
+        $empresa_id=auth()->user()->empresa_id;
+        
         $estado=$request->input('estado_ticket');
-        if($estado)
+        if($estado){
             $estado_ticket='cerrado';
+            $fecha_cierre=Carbon::now();
+        }
         else
             $estado_ticket='abierto';
         $actividadTicket->update([
             //'servicio_id'=>$servicio->id,
             //'ticket_id'=>$servicio->ticket_id,
+            'empresa_id'=>$empresa_id,
+            'fecha_cierre'=>($actividadTicket->estado_ticket=='abierto')?$fecha_cierre:$actividadTicket->fecha_cierre,
             'fecha_hora'=>$request->input('fecha_hora'),
             "estado_ticket"=>$estado_ticket,
             "descripcion"=>$request->input('descripcion'),

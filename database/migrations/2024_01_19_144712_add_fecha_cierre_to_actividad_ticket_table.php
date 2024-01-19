@@ -11,8 +11,8 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::table('empresas', function (Blueprint $table) {
-            $table->uuid('key_empresa');
+        Schema::table('actividad_tickets', function (Blueprint $table) {
+            $table->datetime('fecha_cierre')->nullable()->after('estado_ticket');
         });
     }
 
@@ -21,8 +21,8 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::table('empresas', function (Blueprint $table) {
-            $table->dropColumn('key_empresa');
+        Schema::table('actividad_tickets', function (Blueprint $table) {
+            $table->dropColumn('fecha_cierre');
         });
     }
 };

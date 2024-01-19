@@ -54,7 +54,14 @@ class Ticket extends Model
     }
 
     public function getEstadoTicketAttribute(){
-        return  $this->ActividadTicket()->where('estado_ticket','cerrado')->count();
+        $count_servicios=$this->Servicio()->count();
+        if($count_servicios>0){
+            return  ($this->ActividadTicket()->where('estado_ticket','abierto')->count()>0)?'Abierto':'Cerrado';
+        }else{
+            return 'Abierto';
+        }
+
+        
     }
 
     public function getMinTiempoInicialAttribute(){

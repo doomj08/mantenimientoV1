@@ -168,7 +168,7 @@
 
 
 </style>
-@if($ticket['estado-ticket'])
+@if($ticket['estado-ticket']=='Cerrado')
 
 
         @if($ticket['max-tiempo-final']<=$ticket->fecha_estimada)

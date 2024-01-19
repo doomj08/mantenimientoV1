@@ -11,24 +11,17 @@ class ActividadTicket extends Model
     use HasFactory;
 
     protected $fillable=[
+        'empresa_id',
         'ticket_id',
         'servicio_id',
         'fecha_hora',
         "estado_ticket",
+        'fecha_cierre',
         "descripcion",
         "tecnico_user_id"
     ];
 
-    protected static function boot()
-    {
-        parent::boot();
-        static::addGlobalScope(new ActiveScope);
-        if(auth()->user())
-            $empresa_id=auth()->user()->empresa_id;
-        else
-            $empresa_id=null;
 
-    }
 
     public function Ticket(){
         return $this->belongsTo('App\Models\Ticket');
