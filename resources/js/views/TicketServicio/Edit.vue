@@ -76,7 +76,6 @@ async function sendRequestWithFiles(method, params, url, redirect=''){
     .catch((e)=>{
         let desc='';
         res = e.data;
-        console.log('errores')
         console.log(e)
         
     });
