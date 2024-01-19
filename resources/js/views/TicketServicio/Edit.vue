@@ -19,6 +19,23 @@ const isShowModal = ref(false)
 const form = ref({ticket_id:null,descripcion:'',fecha_programada:null,fecha_inicio:null,fecha_fin:null,precio:null,tiene_iva:false,errors:[]});
 const options_clientes=ref([]);
 
+const config= {
+          masked: false,
+          prefix: '$',
+          suffix: '',
+          thousands: '.',
+          decimal: ',',
+          precision: 2,
+          disableNegative: false,
+          disabled: false,
+          min: null,
+          max: null,
+          allowBlank: false,
+          minimumNumberOfCharacters: 0,
+          shouldRound: false,
+          focusOnRight: false,
+        }
+
 function closeModal() {
   isShowModal.value = false
 }
