@@ -10,6 +10,9 @@ use App\Http\Controllers\TicketController;
 use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\Route;
+use App\Models\Empresa;
+use Illuminate\Support\Str;
+
 
 /*
 |--------------------------------------------------------------------------
@@ -39,34 +42,57 @@ Route::get('/search/ticket/',[TicketController::class,'search_index']);
 Route::post('/search/ticket/',[TicketController::class,'search_show']);
 
 // Muestra el formulario
-Route::get('/search', [TicketController::class, 'showForm'])->name('search.form');
+Route::get('/search/{key?}', [TicketController::class, 'showForm'])->name('search.form');
 
 // Procesa la búsqueda
-Route::post('/search', [TicketController::class, 'search'])->name('search');
+Route::post('/search/{key?}', [TicketController::class, 'search'])->name('search');
+
+Route::group(['middleware'=>'auth'],function (){
+    Route::get('/clear-cache', function() {
+        $exitCode = Artisan::call('config:clear');
+        $exitCode = Artisan::call('cache:clear');
+        $exitCode = Artisan::call('config:cache');
+        return 'DONE'; //Return anything
+    });
+
+    Route::get('/migrate', function() {
+        $exitCode = Artisan::call('migrate');
+        return 'DONE'; //Return anything
+    });
+    Route::get('/rollback', function() {
+        $exitCode = Artisan::call('rollback');
+        return 'DONE'; //Return anything
+    });
+
+    Route::get('/generate_uuid/{id}', function($id) {
+        $empresa=Empresa::find($id);
+        $empresa->key_empresa=Str::uuid();
+        $empresa->save();
+        return route('search.form').'/'.$empresa->key_empresa;
+    });
+
+    Route::get('/get_uuid/{id}', function($id) {
+        $empresa=Empresa::where('nit',$id)->get()->first();
+        //$empresa->key_empresa=Str::uuid();
+        //$empresa->save();
+        return route('search.form').'/'.$empresa->key_empresa;
+    });
 
 
-Route::get('/clear-cache', function() {
-    $exitCode = Artisan::call('config:clear');
-    $exitCode = Artisan::call('cache:clear');
-    $exitCode = Artisan::call('config:cache');
-    return 'DONE'; //Return anything
 });
 
-Route::get('/migrate', function() {
-    $exitCode = Artisan::call('migrate');
-    return 'DONE'; //Return anything
-});
-Route::get('/rollback', function() {
-    $exitCode = Artisan::call('rollback');
-    return 'DONE'; //Return anything
-});
+
+
 
 Route::get('/sello', function() {
     return view('pdf.sello');
     return 'DONE'; //Return anything
 });
+
 Auth::routes();
 
 //Route::get('/', [HomeController::class, 'index'])->name('home');
 Route::any('{any?}', [HomeController::class, 'index'])->name('home');
 //Route::resource('tickets.servicio',ServicioController::class);
+
+

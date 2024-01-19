@@ -169,10 +169,10 @@
             },
             methods: {
                 search() {
-                    axios.post('/search', { search: this.searchTerm })
+                    axios.post('/search/{{$uuid}}', { search: this.searchTerm })
                         .then(response => {
                             this.results = response.data.data.tickets;
-                            console.log(response.data.data.tickets)
+                            console.log(response.data.data)
                             this.searched = true;
                         })
                         .catch(error => {

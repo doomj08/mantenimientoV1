@@ -174,19 +174,24 @@ class TicketController extends Controller
         ],200);
     }
 
-    public function showForm()
+    public function showForm($uuid)
     {
-        return view('pdf.search');
+        Auth::logout();
+        return view('pdf.search',compact('uuid'));
     }
 
-    public function search(Request $request)
+    public function search(Request $request,$uuid)
     {
+        Auth::logout();
         $search_key=$request->input('search');
         $tickets=Ticket::with('Cliente','Empresa','Servicio.ServicioArticulos')
         ->withCount('Servicio','ActividadTicket')
         ->orderBy('num_ticket')
         ->whereHas('Cliente', function($q)  use($search_key){
             $q->where('num_documento',$search_key);
+        })
+        ->whereHas('Empresa', function($q)  use($uuid){
+            $q->where('key_empresa',$uuid);
         })
         ->get();
         return response()->json([
