@@ -264,6 +264,8 @@
     @if($index>0)
         <hr class="separador_delgado">
     @endif
+
+    
 <table class="body">
     
     <tbody>
@@ -272,12 +274,21 @@
                 <th colspan="2">Servicio</th>
                 <th colspan="2">Novedad reportada</th>
                 <th>Precio</th>
+                <th>¿Tiene IVA?</th>
             </tr>
         
         <tr>
             <td colspan="2">{{$servicio->descripcion}}</td>
             <td colspan="2">{{$ticket->descripcion}}</td>
-            <td>{{$servicio->precio?'$'.$servicio->precio:''}}</td>
+            
+            <td>
+                
+                
+                    
+                @money($servicio->precio) 
+                
+            </td>
+            <td>{{$servicio->tiene_iva?'Si':'No'}}</td>
             
         </tr>
         <div class="separador"></div>
@@ -305,7 +316,7 @@
         <tr>
             <td colspan="3">
                 @foreach($servicio->pagos as $index=>$pagos)
-                    <span>{{$pagos->concepto}}: ${{$pagos->valor}}
+                    <span>{{$pagos->concepto}}: @money($pagos->valor)
                     @if($servicio['count-pagos']>0 && $index<$servicio['count-pagos']-1)
                     ,
                     @endif
@@ -313,10 +324,12 @@
                 @endforeach
             </td>
             <td>
-                ${{($servicio['pago-total']*1)}}
+                @money($servicio['pago-total'])
+                
             </td>
             <td>
-                ${{($servicio->precio*1)-($servicio['pago-total']*1)}}
+            @money(($servicio->precio*1)-($servicio['pago-total']*1))
+                
             </td>
 
         </tr>

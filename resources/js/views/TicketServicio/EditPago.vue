@@ -18,7 +18,22 @@ const emit = defineEmits('update');
 const isShowModal = ref(false)
 const form = ref({servicio_id:props.servicio_id,fecha:null,tipo_pago:null,entidad_bancaria:null,num_cuenta:null,referencia:null, concepto:null, valor:null ,ticket_id:props.ticket_id,errors:[]});
 
-
+const config= {
+          masked: false,
+          prefix: '$',
+          suffix: '',
+          thousands: '.',
+          decimal: ',',
+          precision: 2,
+          disableNegative: false,
+          disabled: false,
+          min: null,
+          max: null,
+          allowBlank: false,
+          minimumNumberOfCharacters: 0,
+          shouldRound: false,
+          focusOnRight: false,
+        }
 function closeModal() {
   isShowModal.value = false
 }
@@ -197,13 +212,10 @@ const getPagos=async () =>{
                 </ul>
             </template>
         </Input>
-        <Input type="number" step="0.1" size="sm" v-model="form.valor" label="Valor" :validationStatus="(form.errors.valor?'error':'')">
-            <template #validationMessage v-if="form.errors.valor">
-                <ul>
-                    <li v-for="(error,index) in form.errors.valor" :key="index">{{ error }}</li>
-                </ul>
-            </template>
-        </Input>
+        <br>
+        <label for="" class="text-black">Valor</label>
+        <money3 class="w-full" v-model="form.valor" v-bind="config"></money3>
+        <br>
         
 
 
