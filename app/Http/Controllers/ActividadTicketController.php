@@ -54,8 +54,11 @@ class ActividadTicketController extends Controller
             $estado_ticket='cerrado';
             $fecha_cierre=Carbon::now();
         }
-        else
+        else{
             $estado_ticket='abierto';
+            $fecha_cierre=null;
+        }
+            
 
             // return response()->json([
             //     'status'=>true,
@@ -71,7 +74,7 @@ class ActividadTicketController extends Controller
             'ticket_id'=>$servicio->ticket_id,
             'fecha_hora'=>$request->input('fecha_hora'),
             "estado_ticket"=>$estado_ticket,
-            'fecha_cierre'=>($estado_ticket=='cerrado')?$fecha_cierre:null,
+            'fecha_cierre'=>$fecha_cierre,
             "descripcion"=>$request->input('descripcion'),
             'tecnico_user_id'=>$tecnico_id
         ]);
@@ -117,13 +120,16 @@ class ActividadTicketController extends Controller
             $estado_ticket='cerrado';
             $fecha_cierre=Carbon::now();
         }
-        else
+        else{
             $estado_ticket='abierto';
+            $fecha_cierre=$actividadTicket->fecha_cierre;
+        }
+            
         $actividadTicket->update([
             //'servicio_id'=>$servicio->id,
             //'ticket_id'=>$servicio->ticket_id,
             'empresa_id'=>$empresa_id,
-            'fecha_cierre'=>($actividadTicket->estado_ticket=='abierto')?$fecha_cierre:$actividadTicket->fecha_cierre,
+            'fecha_cierre'=>$fecha_cierre,
             'fecha_hora'=>$request->input('fecha_hora'),
             "estado_ticket"=>$estado_ticket,
             "descripcion"=>$request->input('descripcion'),

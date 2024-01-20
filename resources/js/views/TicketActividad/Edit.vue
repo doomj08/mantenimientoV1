@@ -88,7 +88,7 @@ const getActividad=async () =>{
             (response) => {
                 form.value.descripcion=response.data.data.actividad_ticket.descripcion
                 form.value.fecha_hora =response.data.data.actividad_ticket.fecha_hora
-                form.value.estado_ticket=response.data.data.actividad_ticket.estado_ticket
+                form.value.estado_ticket=(response.data.data.actividad_ticket.estado_ticket=='Cerrado')?True:False
                 
                 
                 options_clientes.value=response.data.data.clientes
@@ -116,7 +116,7 @@ const getActividad=async () =>{
     <Modal :size="size" v-if="isShowModal" @close="closeModal">
       <template #header>
         <div class="flex items-center text-lg">
-          Editando Actividad
+          Editando Actividad 
         </div>
       </template>
       <template #body>
