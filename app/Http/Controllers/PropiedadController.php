@@ -35,7 +35,7 @@ class PropiedadController extends Controller
 
     public function store(Request $request)
     {
- 
+        $empresa_id=auth()->user()->empresa_id;
         foreach($request->campos as $key=>$campo){
 
             $propiedad=Propiedad::updateOrCreate(
@@ -43,6 +43,7 @@ class PropiedadController extends Controller
                     'campo_propiedad_id'=>$key,
                     'articulo_id'=>$request->input('articulo_id')
                 ],[
+                'empresa_id'=>$empresa_id,
                 'campo_propiedad_id'=>$key,
                 'propiedad'=>$campo,
                 'articulo_id'=>$request->input('articulo_id')

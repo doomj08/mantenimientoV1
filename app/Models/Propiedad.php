@@ -12,7 +12,7 @@ class Propiedad extends Model
 
     protected $table = "propiedades";
 
-    protected $fillable = ['campo_propiedad_id','propiedad','articulo_id','visible'];
+    protected $fillable = ['empresa_id','campo_propiedad_id','propiedad','articulo_id','visible'];
 
     protected static function boot()
     {
