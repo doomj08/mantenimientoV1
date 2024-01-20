@@ -54,8 +54,8 @@ class Ticket extends Model
     }
 
     public function getEstadoTicketAttribute(){
-        $count_servicios=$this->Servicio()->count();
-        if($count_servicios>0){
+        $count_actividades=$this->ActividadTicket()->count();
+        if($count_actividades>0){
             return  ($this->ActividadTicket()->where('estado_ticket','abierto')->count()>0)?'Abierto':'Cerrado';
         }else{
             return 'Abierto';
