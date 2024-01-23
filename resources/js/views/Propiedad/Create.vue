@@ -111,7 +111,7 @@ const getCampos=async () =>{
     <Modal :size="size" v-if="isShowModal" @close="closeModal">
       <template #header>
         <div class="flex items-center text-lg">
-          Agregando / Editanado Información
+          Agregando / Editando Información
         </div>
       </template>
       <template #body>
