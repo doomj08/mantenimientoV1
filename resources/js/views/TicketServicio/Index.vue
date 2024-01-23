@@ -48,6 +48,8 @@
             <li v-for="(recomendacion,index) in ticket.recomendaciones" :key="index">
                 {{ recomendacion.recomendacion }}
                 <EditRecomendacion @update="getActividades()" :recomendacion_id="recomendacion.id" :ticket_id="ticket.id"/>
+                <DeleteRecomendacon @date="getActividades()" :recomendacion_id="recomendacion.id" :name="recomendacion.id" :url="'tickets/'+props.ticket_id+'/servicio'" :id="servicio.id"/>
+
             </li>
         </ul>
        
@@ -191,6 +193,7 @@
     import EditForm from './Edit.vue';
     import AddRecomendacion from './../TicketRecomendacion/Create.vue';
     import EditRecomendacion from './../TicketRecomendacion/Edit.vue';
+    import DeleteRecomendacon from './../TicketRecomendacion/Delete.vue';
     import DeleteForm from './Delete.vue';
     import TableBodyVue from '../../pages/master/tablabody.vue'
 

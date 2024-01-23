@@ -11,6 +11,7 @@ const props = defineProps({
     name:String,
     url:String,
     redirect:String,
+    recomendacion_id:Number,
     id:Number
 })
 
@@ -61,7 +62,7 @@ const eliminar=(name)=>{
         cancelButtonText:'<i class="fa-solid fa-ban"></i>Cancel',
     }).then( (result)=>{
         if(result.isConfirmed){
-            deleteRequest('DELETE',null,'api/'+props.url+'/'+props.id);
+            deleteRequest('DELETE',null,'api/tickets/'+props.ticket_id+'/recomendacion/'+props.recomendacion_id);
         }        
     })
     
