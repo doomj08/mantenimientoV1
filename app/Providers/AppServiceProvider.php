@@ -24,7 +24,7 @@ class AppServiceProvider extends ServiceProvider
         Carbon::setUTF8(true);
         
         Carbon::setLocale('es');
-
+        date_default_timezone_set('America/Bogota');
         setlocale(LC_ALL, 'es_CO', 'es', 'ES', 'es_CO.utf8');
 
         Blade::directive('money', function ($amount) {
