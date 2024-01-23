@@ -12,7 +12,7 @@ const props = defineProps({
     url:String,
     redirect:String,
     recomendacion_id:Number,
-    id:Number
+
 })
 
 const emit = defineEmits('update');

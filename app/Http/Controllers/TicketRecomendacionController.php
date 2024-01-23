@@ -75,8 +75,9 @@ class TicketRecomendacionController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(TicketRecomendacion $ticketRecomendacion)
+    public function destroy($ticket_id,$ticketRecomendacionId)
     {
-        //
+        $recomendacion=TicketRecomendacion::find($ticketRecomendacionId);
+        $recomendacion->delete();
     }
 }

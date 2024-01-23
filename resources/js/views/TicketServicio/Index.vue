@@ -48,7 +48,7 @@
             <li v-for="(recomendacion,index) in ticket.recomendaciones" :key="index">
                 {{ recomendacion.recomendacion }}
                 <EditRecomendacion @update="getActividades()" :recomendacion_id="recomendacion.id" :ticket_id="ticket.id"/>
-                <DeleteRecomendacon @date="getActividades()" :recomendacion_id="recomendacion.id" :name="recomendacion.id" :url="'tickets/'+props.ticket_id+'/servicio'" :id="servicio.id"/>
+                <DeleteRecomendacon @update="getActividades()" :recomendacion_id="recomendacion.id" :name="recomendacion.id" :url="'tickets/'+props.ticket_id+'/servicio'" :id="recomendacion.id"/>
 
             </li>
         </ul>
