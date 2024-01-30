@@ -176,9 +176,7 @@
             },
             methods: {
                 search() {
-                    axios.post('/search/{{$uuid}}', { search: this.searchTerm },headers: {
-                        'X-CSRF-TOKEN': window.Laravel.csrfToken
-                    })
+                    axios.post('/search/{{$uuid}}', { search: this.searchTerm })
                         .then(response => {
                             this.results = response.data.data.tickets;
                             console.log(response.data.data)
