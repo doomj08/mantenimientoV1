@@ -176,7 +176,11 @@
             },
             methods: {
                 search() {
-                    axios.post('/search/{{$uuid}}', { search: this.searchTerm })
+                    axios.post('/search/{{$uuid}}', { 
+                        search: this.searchTerm,
+                        _token: document.querySelector('meta[name="csrf-token"]').content
+
+                     })
                         .then(response => {
                             this.results = response.data.data.tickets;
                             console.log(response.data.data)
