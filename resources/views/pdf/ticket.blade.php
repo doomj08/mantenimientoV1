@@ -168,6 +168,7 @@
 
 
 </style>
+
 @if($ticket['estado-ticket']=='Cerrado')
 
 
@@ -189,18 +190,18 @@
         @endif
 
 @else
-    @if($ticket['max-tiempo-final']<=$ticket->fecha_estimada)
+    @if($now<=$ticket->fecha_estimada)
     <div class="desgaste abierto_ok" data-text="Cerrado">
         ABIERTO
         <br>
-        <small>            {!! \Carbon\Carbon::parse($ticket['max-tiempo-final'])->diffForHumans(\Carbon\Carbon::parse($ticket->fecha_estimada),false,false,3)!!}<br> de la fecha estimada</small> 
+        <small>            {!! \Carbon\Carbon::parse($now)->diffForHumans(\Carbon\Carbon::parse($ticket->fecha_estimada),false,false,3)!!}<br> de la fecha estimada</small> 
         <br>{{$ticket->fecha_estimada}}
     </div>
     @else
     <div class="desgaste abierto_no_ok" data-text="Cerrado">
         ABIERTO
         <br>
-        <small>            {!! \Carbon\Carbon::parse($ticket['max-tiempo-final'])->diffForHumans(\Carbon\Carbon::parse($ticket->fecha_estimada),false,false,3)!!}<br> de la fecha estimada</small> 
+        <small>            {!! \Carbon\Carbon::parse($now)->diffForHumans(\Carbon\Carbon::parse($ticket->fecha_estimada),false,false,3)!!}<br> de la fecha estimada</small> 
         <br>{{$ticket->fecha_estimada}}
     </div>
     @endif

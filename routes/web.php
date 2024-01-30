@@ -84,10 +84,16 @@ Route::group(['middleware'=>'auth'],function (){
 
 
 Route::get('fecha_hora_actual',function(){
+    $now = Carbon::now()->tz('America/Bogota');
+    $dt = Carbon::create(now());
+ 
+    echo $dt->toDateTimeString(); 
+    //return response()->json(['fecha_hora'=>$dt->toDateTimeString()]);
+
     $fecha_actual = new Carbon();
-    $fecha_actual->setTimezone('America/Bogota');
+    //$fecha_actual->setTimezone('America/Bogota');
     $zona=date_default_timezone_get();//$fecha_actual->setTimezone('America/La_Paz');
-    return response()->json(['fecha_hora'=>$fecha_actual,'zona_hora'=>$fecha_actual->timezone_location_get(),'zona'=>$zona]);
+    return response()->json(['fecha_hora'=>$fecha_actual,'zona_hora'=>$fecha_actual,'zona'=>$zona]);
 });
 
 Route::get('/sello', function() {

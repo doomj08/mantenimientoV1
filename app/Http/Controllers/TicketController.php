@@ -109,6 +109,7 @@ class TicketController extends Controller
     public function getPDF(Ticket $ticket,$view=false)
     {
         //$empresa_id=Ticket->empresa_id;
+        
         $tecnicos=User::with('FirmaDigitalizada')->whereHas('TecnicoActividades', function ($q) use($ticket){
             $q->where('ticket_id',$ticket->id);
         })->get();
@@ -117,13 +118,15 @@ class TicketController extends Controller
             'titulo2'=>'NIT: '.$ticket->Empresa->nit,
             'titulo3'=>'Cel: '.$ticket->Empresa->telefono.'   Email:'.$ticket->Empresa->email
         ];
+        $now = Carbon::now()->tz('America/Bogota');
         
         $data=[
             "fecha_consulta"=>Carbon::now(),
             "encabezado"=>$encabezado,
             "ticket"=>$ticket,
             "tecnicos"=>$tecnicos,
-            "logo"=>$ticket->Empresa->logo
+            "logo"=>$ticket->Empresa->logo,
+            "now"=>$now
         ];
 
         $pdf = Pdf::loadView('pdf.ticket', $data);
