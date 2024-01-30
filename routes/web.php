@@ -12,6 +12,7 @@ use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\Route;
 use App\Models\Empresa;
 use Illuminate\Support\Str;
+use Carbon\Carbon;
 
 
 /*
@@ -82,7 +83,12 @@ Route::group(['middleware'=>'auth'],function (){
 });
 
 
-
+Route::get('fecha_hora_actual',function(){
+    $fecha_actual = new Carbon();
+    $fecha_actual->setTimezone('America/Bogota');
+    $zona=date_default_timezone_get();//$fecha_actual->setTimezone('America/La_Paz');
+    return response()->json(['fecha_hora'=>$fecha_actual,'zona_hora'=>$fecha_actual->timezone_location_get(),'zona'=>$zona]);
+});
 
 Route::get('/sello', function() {
     return view('pdf.sello');
