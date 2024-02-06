@@ -1,10 +1,35 @@
 <template>
     <EncabezadoVue 
         namePage="PDF"  
+        v-if="false"
     >
     
     </EncabezadoVue>
-    
+    <div class="card bg-info-subtle shadow-none position-relative overflow-hidden mb-4">
+        <div class="card-body px-4 py-3">
+            <div class="row align-items-center">
+                <div class="col-9">
+                    <h4 class="fw-semibold mb-8">Vista PDF</h4>
+                    <nav aria-label="breadcrumb">
+                    <ol class="breadcrumb">
+                        <li class="breadcrumb-item">
+                            <RouterLink to="/home" class="text-muted text-decoration-none">
+                                Home
+                            </RouterLink>
+                        </li>
+                        <li class="breadcrumb-item">
+                            <RouterLink to="/ticket" class="text-muted text-decoration-none">
+                                Orden de Servicio
+                            </RouterLink>
+                        </li>
+                        <li class="breadcrumb-item" aria-current="page">Vista PDF</li>
+                    </ol>
+                    </nav>
+                </div>
+
+            </div>
+        </div>
+    </div>
     <div class="flex flex-col">
         <object :data="'data:application/pdf;base64,'+pdf_base64" type="application/pdf" width="100%" height="600px" />
 
