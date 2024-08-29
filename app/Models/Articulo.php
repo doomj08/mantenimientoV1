@@ -39,8 +39,8 @@ class Articulo extends Model
         return $this->belongsToMany('App\Models\Ticket','ticket_articulos');
     }
 
-    public function Servicio(){
-        return $this->belongsToMany('App\Models\ServicioArticulo','servicio_articulos');
+    public function ServicioArticulo(){
+        return $this->hasMany('App\Models\ServicioArticulo');
     }
 
 
