@@ -122,6 +122,7 @@ class InformeController extends Controller
             "articulo"=>$informe->articulo,
             "tickets"=>$informe->articulo->ticket,
             "seccionesformato"=>$seccionesformato
+            
         ];
         $pdf = Pdf::loadView('pdf.invoice', $data);
         $base64 = base64_encode($pdf->stream());
