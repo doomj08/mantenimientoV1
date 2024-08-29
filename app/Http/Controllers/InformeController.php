@@ -110,7 +110,7 @@ class InformeController extends Controller
 
     public function getPDFArticulo($articulo_id)
     {
-        $informe=Informe::with('Articulo.Ticket')->where('articulo_id',$articulo_id)->first();
+        $informe=Informe::with('Articulo.ServicioArticulo.Servicio.Ticket')->where('articulo_id',$articulo_id)->first();
         if($informe==null){
             return "Informe no creado";
             return back()->with('status', 'Informe inexistente');
