@@ -91,7 +91,7 @@
         <tr>
             <th rowspan="2">Núm. ticket</th>
             <th colspan="2" style="text-align:center;">Creado en</th>
-            <th colspan="4">Descripción</th>
+            <th colspan="4">Novedad Reportada</th>
             <th rowspan="2">Estado</th>
         </tr>
         <tr>
@@ -100,13 +100,13 @@
         </tr>
     </thead>
     <tbody>
-        @foreach ($tickets as $index=>$ticket)
+        @foreach ($servicios as $index=>$servicio_articulo)
         <tr>
-            <td style="text-align:center">{{$ticket->num_ticket}}</td>
-            <td>{{date('Y-m-d', strtotime($ticket->fecha_hora))}}</td>
-            <td>{{date('h:m:s A', strtotime($ticket->fecha_hora))}}</td>            
-            <td colspan="4">{{$ticket->descripcion}}</td>
-            <td>{{$ticket['estado-ticket']}}</td>
+            <td style="text-align:center">{{$servicio_articulo->servicio->ticket->num_ticket}}</td>
+            <td>{{date('Y-m-d', strtotime($servicio_articulo->servicio->ticket->fecha_hora))}}</td>
+            <td>{{date('h:m:s A', strtotime($servicio_articulo->servicio->ticket->fecha_hora))}}</td>            
+            <td colspan="4">{{$servicio_articulo->servicio->ticket->descripcion}}</td>
+            <td>{{$servicio_articulo->servicio->ticket['estado-ticket']}}</td>
         </tr>
             
 

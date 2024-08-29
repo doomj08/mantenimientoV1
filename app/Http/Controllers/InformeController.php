@@ -120,10 +120,10 @@ class InformeController extends Controller
         $data=[
             "fecha_consulta"=>Carbon::now(),
             "articulo"=>$informe->articulo,
-            "tickets"=>$informe->articulo->servicio_articulo->servicio,
+            "servicios"=>$informe->articulo->ServicioArticulo,
             "seccionesformato"=>$seccionesformato
-
         ];
+        
         $pdf = Pdf::loadView('pdf.invoice', $data);
         $base64 = base64_encode($pdf->stream());
         return $pdf->stream();
