@@ -120,6 +120,7 @@ class InformeController extends Controller
         $data=[
             "fecha_consulta"=>Carbon::now(),
             "articulo"=>$informe->articulo,
+            "tickets"=>$informe->articulo->ticket,
             "seccionesformato"=>$seccionesformato
         ];
         $pdf = Pdf::loadView('pdf.invoice', $data);
