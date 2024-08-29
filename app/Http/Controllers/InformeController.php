@@ -120,7 +120,7 @@ class InformeController extends Controller
         $data=[
             "fecha_consulta"=>Carbon::now(),
             "articulo"=>$informe->articulo,
-            "tickets"=>$informe->articulo->ticket,
+            "tickets"=>$informe->articulo->servicio_articulo->servicio,
             "seccionesformato"=>$seccionesformato
 
         ];
