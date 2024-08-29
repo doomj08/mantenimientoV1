@@ -85,31 +85,33 @@
 
 </table>
 @endforeach
-<table class="ticket">
-<caption><h1>Tickets asociados</h1></caption>
-    <thead>
-        <tr>
-            <th rowspan="2">Núm. ticket</th>
-            <th colspan="2" style="text-align:center;">Creado en</th>
-            <th colspan="4">Descripción</th>
-            <th rowspan="2">Estado</th>
-        </tr>
-        <tr>
-            <th>Fecha</th>
-            <th>Hora</th>
-        </tr>
-    </thead>
-    <tbody>
-        @foreach ($tickets as $index=>$ticket)
-        <tr>
-            <td style="text-align:center">{{$ticket->num_ticket}}</td>
-            <td>{{date('Y-m-d', strtotime($ticket->fecha_hora))}}</td>
-            <td>{{date('h:m:s A', strtotime($ticket->fecha_hora))}}</td>            
-            <td colspan="4">{{$ticket->descripcion}}</td>
-            <td>{{$ticket['estado-ticket']}}</td>
-        </tr>
-            
+@if($tickets)
+    <table class="ticket">
+    <caption><h1>Tickets asociados</h1></caption>
+        <thead>
+            <tr>
+                <th rowspan="2">Núm. ticket</th>
+                <th colspan="2" style="text-align:center;">Creado en</th>
+                <th colspan="4">Descripción</th>
+                <th rowspan="2">Estado</th>
+            </tr>
+            <tr>
+                <th>Fecha</th>
+                <th>Hora</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach ($tickets as $index=>$ticket)
+            <tr>
+                <td style="text-align:center">{{$ticket->num_ticket}}</td>
+                <td>{{date('Y-m-d', strtotime($ticket->fecha_hora))}}</td>
+                <td>{{date('h:m:s A', strtotime($ticket->fecha_hora))}}</td>            
+                <td colspan="4">{{$ticket->descripcion}}</td>
+                <td>{{$ticket['estado-ticket']}}</td>
+            </tr>
+                
 
-        @endforeach
-    </tbody>
-</table>
+            @endforeach
+        </tbody>
+    </table>
+@endif
