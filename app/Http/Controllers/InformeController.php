@@ -110,7 +110,7 @@ class InformeController extends Controller
 
     public function getPDFArticulo($articulo_id)
     {
-        $informe=Informe::where('articulo_id',$articulo_id)->first();
+        $informe=Informe::with('Articulo.Ticket')->where('articulo_id',$articulo_id)->first();
         if($informe==null){
             return "Informe no creado";
             return back()->with('status', 'Informe inexistente');
@@ -122,7 +122,7 @@ class InformeController extends Controller
             "articulo"=>$informe->articulo,
             "tickets"=>$informe->articulo->ticket,
             "seccionesformato"=>$seccionesformato
-            
+
         ];
         $pdf = Pdf::loadView('pdf.invoice', $data);
         $base64 = base64_encode($pdf->stream());
