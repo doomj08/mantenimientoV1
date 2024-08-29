@@ -38,4 +38,10 @@ class Articulo extends Model
     public function Ticket(){
         return $this->belongsToMany('App\Models\Ticket','ticket_articulos');
     }
+
+    public function Servicio(){
+        return $this->belongsToMany('App\Models\ServicioArticulo');
+    }
+
+
 }
