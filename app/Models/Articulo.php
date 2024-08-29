@@ -40,7 +40,7 @@ class Articulo extends Model
     }
 
     public function Servicio(){
-        return $this->belongsToMany('App\Models\ServicioArticulo');
+        return $this->belongsToMany('App\Models\ServicioArticulo','servicio_articulos');
     }
 
 
