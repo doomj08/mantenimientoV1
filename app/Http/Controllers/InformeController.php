@@ -93,11 +93,13 @@ class InformeController extends Controller
     }
     public function getPDF(Informe $informe)
     {
+        //dd($informe->articulo->ticket);
         $seccionesformato=SeccionFormato::where('formato_id',1)->get();
         
         $data=[
             "fecha_consulta"=>Carbon::now(),
             "articulo"=>$informe->articulo,
+            "tickets"=>$informe->articulo->ticket,
             "seccionesformato"=>$seccionesformato
         ];
         $pdf = Pdf::loadView('pdf.invoice', $data);

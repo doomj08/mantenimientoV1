@@ -34,4 +34,8 @@ class Articulo extends Model
     public function TipoArticulo(){
         return $this->belongsTo('App\Models\TipoArticulo');
     }
+
+    public function Ticket(){
+        return $this->belongsToMany('App\Models\Ticket','ticket_articulos');
+    }
 }
