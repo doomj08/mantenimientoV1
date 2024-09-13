@@ -131,7 +131,7 @@ class TicketController extends Controller
 
         $pdf = Pdf::loadView('pdf.ticket', $data);
         $pdf->setPaper('letter', 'portrait');
-        return $pdf->stream();
+        
         if($view)
             return $pdf->stream();
         else

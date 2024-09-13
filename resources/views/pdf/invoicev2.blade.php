@@ -127,8 +127,8 @@
     <header>
         <small class="url">
             Este documento lo puede consultar en: 
-            <a href="www.api21.itcomn.com">
-                www.api21.itcomn.com
+            <a href="www.api21.itcomn.com/pdf/informe/{{$articulo->id}}">
+            api21.itcomn.com/pdf/informe/{{$articulo->id}}
             </a>
         </small>
     </header>
