@@ -135,7 +135,9 @@
     <main>
         <p class=info>
             <small class="fecha">Fecha de impresión: {{$fecha_consulta}}</small>
-            <small class="cliente">Propiedad de: {{$articulo->cliente->nombre}}</small>
+            @if($articulo->cliente_id)
+                <small class="cliente">Propiedad de: {{$articulo->cliente->nombre}}</small>
+            @endif
         </p>
         
         
