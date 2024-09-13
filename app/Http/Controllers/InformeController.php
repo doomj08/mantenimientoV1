@@ -102,7 +102,7 @@ class InformeController extends Controller
             "tickets"=>$informe->articulo->ticket,
             "seccionesformato"=>$seccionesformato
         ];
-        $pdf = Pdf::loadView('pdf.invoice', $data);
+        $pdf = Pdf::loadView('pdfv2.invoice', $data);
         $base64 = base64_encode($pdf->stream());
         return $pdf->stream();
         //return $pdf->download('invoice.pdf');
@@ -110,7 +110,7 @@ class InformeController extends Controller
 
     public function getPDFArticulo($articulo_id)
     {
-        $informe=Informe::with('Articulo.ServicioArticulo.Servicio.Ticket')->where('articulo_id',$articulo_id)->first();
+        $informe=Informe::with('Articulo.ServicioArticulo.Servicio.Ticket','Articulo.Cliente')->where('articulo_id',$articulo_id)->first();
         if($informe==null){
             return "Informe no creado";
             return back()->with('status', 'Informe inexistente');
@@ -124,7 +124,7 @@ class InformeController extends Controller
             "seccionesformato"=>$seccionesformato
         ];
         
-        $pdf = Pdf::loadView('pdf.invoice', $data);
+        $pdf = Pdf::loadView('pdf.invoicev2', $data);
         $base64 = base64_encode($pdf->stream());
         return $pdf->stream();
         //return $pdf->download('invoice.pdf');

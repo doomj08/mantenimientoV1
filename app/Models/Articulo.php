@@ -43,5 +43,9 @@ class Articulo extends Model
         return $this->hasMany('App\Models\ServicioArticulo');
     }
 
+    public function Cliente(){
+        return $this->belongsTo('App\Models\Cliente');
+    }
+
 
 }
