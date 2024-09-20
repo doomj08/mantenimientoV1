@@ -112,7 +112,7 @@ class TicketController extends Controller
         
         $tecnicos=User::with('FirmaDigitalizada')->whereHas('TecnicoActividades', function ($q) use($ticket){
             $q->where('ticket_id',$ticket->id);
-        })->get();
+        })->orderBy('id','desc')->get();
         $encabezado=[
             'titulo1'=>'ORDEN DE SERVICIO '.$ticket->Empresa->razon_social,
             'titulo2'=>'NIT: '.$ticket->Empresa->nit,
