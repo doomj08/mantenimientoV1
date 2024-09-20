@@ -19,7 +19,7 @@ class TicketController extends Controller
 
     public function index()
     {
-        $tickets=Ticket::with('Cliente')->withCount('Servicio','ActividadTicket')->orderBy('num_ticket')->get();
+        $tickets=Ticket::with('Cliente')->withCount('Servicio','ActividadTicket')->orderBy('num_ticket','desc')->get();
         return response()->json([
             'status'=>true,
             'message' => 'Lista de tickets completada',
@@ -112,7 +112,7 @@ class TicketController extends Controller
         
         $tecnicos=User::with('FirmaDigitalizada')->whereHas('TecnicoActividades', function ($q) use($ticket){
             $q->where('ticket_id',$ticket->id);
-        })->orderBy('id','desc')->get();
+        })->get();
         $encabezado=[
             'titulo1'=>'ORDEN DE SERVICIO '.$ticket->Empresa->razon_social,
             'titulo2'=>'NIT: '.$ticket->Empresa->nit,
